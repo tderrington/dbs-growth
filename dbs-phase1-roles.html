@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Derrington Building Studio — Phase 1 Role Descriptions</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --accent: #c75a3a;
+    --ink: #1a1a1a;
+    --paper: #faf9f7;
+    --warm: #f5f3ef;
+    --rule: #e0ddd8;
+    --blue: #3a5a7c;
+    --green: #4a6a5a;
+    --purple: #6d5a8c;
+    --gold: #8a7a5a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', Calibri, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2.5rem 2.5rem 3rem;
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .firm-name {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.75rem;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .doc-desc {
+    font-size: 0.88rem;
+    color: #888;
+    max-width: 620px;
+    line-height: 1.55;
+  }
+
+  /* ── TABS ── */
+  .tab-container {
+    margin-top: 1.5rem;
+  }
+
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--rule);
+    margin-bottom: 0;
+  }
+
+  .tab-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #999;
+    background: none;
+    border: none;
+    padding: 0.7rem 1.25rem;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover { color: var(--ink); }
+
+  .tab-btn.active {
+    color: var(--ink);
+  }
+
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .tab-btn .tab-tag {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.04em;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    margin-left: 0.4rem;
+    position: relative;
+    top: -1px;
+  }
+
+  .tab-tag.remote { background: rgba(109,90,140,0.1); color: var(--purple); }
+  .tab-tag.contract { background: rgba(58,90,124,0.1); color: var(--blue); }
+
+  .tab-panel {
+    display: none;
+    padding-top: 2rem;
+  }
+
+  .tab-panel.active { display: block; }
+
+  /* ── ROLE CONTENT ── */
+  h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.2rem;
+  }
+
+  h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-top: 2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  h3 .section-num {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    color: var(--accent);
+    font-size: 0.78em;
+    margin-right: 0.4rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    margin-bottom: 0.85rem;
+    color: #444;
+    line-height: 1.65;
+  }
+
+  p em { color: var(--ink); font-style: italic; }
+  p strong { color: var(--ink); }
+
+  /* ── META GRID ── */
+  .role-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    margin: 1.25rem 0 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .meta-cell {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+  }
+
+  .meta-cell:last-child { border-right: none; }
+
+  .meta-cell .mc-label {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #bbb;
+    margin-bottom: 0.1rem;
+  }
+
+  .meta-cell .mc-value {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--ink);
+  }
+
+  .meta-cell .mc-note {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.6rem;
+    color: #bbb;
+    margin-top: 0.05rem;
+  }
+
+  /* ── BUCKET LIST ── */
+  .bucket-list {
+    list-style: none;
+    margin: 0.75rem 0 1.25rem;
+    padding: 0;
+  }
+
+  .bucket-list li {
+    padding: 0.6rem 0.85rem;
+    margin-bottom: 0.35rem;
+    background: var(--warm);
+    border-left: 3px solid var(--rule);
+    border-radius: 0 4px 4px 0;
+    font-size: 0.88rem;
+    color: #444;
+    line-height: 1.55;
+  }
+
+  .bucket-list li strong {
+    color: var(--ink);
+    display: block;
+    font-size: 0.86rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .bucket-list li .bl-desc {
+    font-size: 0.82rem;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  .bucket-list.accent li { border-left-color: var(--accent); }
+  .bucket-list.blue li { border-left-color: var(--blue); }
+  .bucket-list.green li { border-left-color: var(--green); }
+  .bucket-list.gold li { border-left-color: var(--gold); }
+  .bucket-list.purple li { border-left-color: var(--purple); }
+
+  /* ── SIMPLE LIST ── */
+  .simple-list {
+    list-style: none;
+    margin: 0.5rem 0 1rem;
+    padding: 0;
+    columns: 2;
+    column-gap: 1.25rem;
+  }
+
+  .simple-list.single-col { columns: 1; }
+
+  .simple-list li {
+    font-size: 0.85rem;
+    color: #555;
+    padding: 0.3rem 0;
+    padding-left: 1rem;
+    position: relative;
+    break-inside: avoid;
+    line-height: 1.5;
+  }
+
+  .simple-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rule);
+  }
+
+  .simple-list.accent li::before { background: var(--accent); }
+  .simple-list.blue li::before { background: var(--blue); }
+  .simple-list.green li::before { background: var(--green); }
+  .simple-list.gold li::before { background: var(--gold); }
+  .simple-list.red li::before { background: #b54a3a; }
+
+  /* ── DEAL BREAKER ── */
+  .deal-list {
+    list-style: none;
+    margin: 0.75rem 0 1.25rem;
+    padding: 0;
+  }
+
+  .deal-list li {
+    padding: 0.55rem 0.85rem;
+    margin-bottom: 0.3rem;
+    background: rgba(181,74,58,0.04);
+    border-left: 3px solid #b54a3a;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  /* ── KPI ── */
+  .kpi-list {
+    list-style: none;
+    margin: 0.75rem 0 1.25rem;
+    padding: 0;
+  }
+
+  .kpi-list li {
+    padding: 0.55rem 0.85rem;
+    margin-bottom: 0.3rem;
+    background: rgba(74,106,90,0.04);
+    border-left: 3px solid var(--green);
+    border-radius: 0 4px 4px 0;
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  .kpi-list li strong { color: var(--ink); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--warm);
+    border-left: 3px solid var(--accent);
+    padding: 0.85rem 1rem;
+    margin: 1.25rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .callout.blue-c { border-left-color: var(--blue); }
+  .callout.green-c { border-left-color: var(--green); }
+  .callout.gold-c { border-left-color: var(--gold); }
+
+  .callout p { margin-bottom: 0.3rem; font-size: 0.85rem; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── FOOTER ── */
+  .role-footer {
+    margin-top: 2rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.76rem;
+    color: #bbb;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 1.5rem; }
+    .role-meta { grid-template-columns: 1fr 1fr; }
+    .simple-list { columns: 1; }
+    .tab-btn { padding: 0.6rem 0.75rem; font-size: 0.76rem; }
+    .tab-btn .tab-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ════════ DOCUMENT HEADER ════════ -->
+<div class="doc-header">
+  <div class="firm-name">Derrington Building Studio</div>
+  <h1>Phase 1 — Immediate Hires</h1>
+  <div class="doc-desc">Three roles to execute simultaneously. Each removes a specific constraint on the studio's capacity and begins building the infrastructure for the next phase of growth.</div>
+</div>
+
+<!-- ════════ TABS ════════ -->
+<div class="tab-container">
+
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="coordinator">Studio Coordinator <span class="tab-tag remote">REMOTE</span></button>
+    <button class="tab-btn" data-tab="drafter">Contract Drafter <span class="tab-tag contract">CONTRACT</span></button>
+    <button class="tab-btn" data-tab="detailer">Contract Detailer <span class="tab-tag contract">CONTRACT</span></button>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  TAB 1 — STUDIO COORDINATOR                            -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <div class="tab-panel active" id="coordinator">
+
+    <h2>Studio Coordinator</h2>
+    <p style="font-family:'JetBrains Mono',Consolas,monospace; font-size:0.68rem; color:var(--accent); margin-bottom:1rem;">DERRINGTON BUILDING STUDIO</p>
+
+    <p><strong>Company Description:</strong> Derrington Building Studio is a design-focused architecture practice based in Austin, Texas, specializing in experiential venues, recreational facilities, and hospitality projects. We work with operators who understand that the built environment is their product — climbing centers, restaurants, bars, retail experiences — and our job is to turn their culture into place.</p>
+
+    <p><strong>Company Vision:</strong> To build a 13-person studio where every team member goes deeper into what they're best at, producing architecture that shapes how people experience a space — not just how a building looks.</p>
+
+    <div class="role-meta">
+      <div class="meta-cell">
+        <div class="mc-label">Starting Pay</div>
+        <div class="mc-value">$50,000 – $65,000</div>
+        <div class="mc-note">Salary · 90-day performance review</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Location</div>
+        <div class="mc-value">Fully Remote</div>
+        <div class="mc-note">US-based · Any time zone</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Reports To</div>
+        <div class="mc-value">Founding Principal</div>
+        <div class="mc-note">Tim Derrington</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Personality Profile</div>
+        <div class="mc-value">C/S</div>
+        <div class="mc-note">Conscientious · Steady · Detail-driven</div>
+      </div>
+    </div>
+
+    <h3><span class="section-num">01</span> Role Purpose</h3>
+    <p>The Studio Coordinator keeps the financial and administrative engine running so the design team can focus entirely on project delivery and client work.</p>
+
+    <h3><span class="section-num">02</span> Role Description</h3>
+    <p>This is the studio's first dedicated operations hire. Right now, administrative work — invoicing, timesheets, AP/AR, HR paperwork, insurance, contracts — is handled by the founding principal and informal studio support, which means it either takes time away from design leadership and business development or it doesn't get done on time. Neither is sustainable.</p>
+
+    <p>The Studio Coordinator owns all screen-based administrative and financial coordination for the practice. This is a fully remote role with no in-person requirements — all physical building and mail tasks are handled separately. The person in this seat does not interact directly with design clients, but will coordinate with consultants, vendors, insurance carriers, and service providers on behalf of the studio.</p>
+
+    <p>This role is the foundation of the studio's operations infrastructure. As the firm grows from 3 to 13 people, the complexity of financial tracking, HR, and contract administration will increase significantly. The right person will build systems that scale — not just handle today's volume, but create the processes and documentation that support a studio three to four times this size. The trajectory for this role is toward a full Studio Manager position with broader authority over budgets, HR, and operational strategy.</p>
+
+    <h3><span class="section-num">03</span> Buckets of Responsibility</h3>
+    <ul class="bucket-list accent">
+      <li>
+        <strong>Financial Administration</strong>
+        <div class="bl-desc">Accounts payable and receivable. Invoice preparation and tracking. Coordinating with the studio's bookkeeper/CPA. Monitoring outstanding balances and following up on late payments. Managing expense tracking and reimbursements.</div>
+      </li>
+      <li>
+        <strong>Timesheet &amp; Project Accounting Support</strong>
+        <div class="bl-desc">Ensuring all team members submit timesheets accurately and on time through Monograph. Running utilization and budget reports for the principal. Flagging projects approaching or exceeding fee budgets before they become problems.</div>
+      </li>
+      <li>
+        <strong>Contract &amp; Proposal Administration</strong>
+        <div class="bl-desc">Formatting, assembling, and transmitting proposals and contracts from templates the principal prepares. Tracking contract status, executed documents, and insurance certificate requests. Maintaining the studio's contract archive.</div>
+      </li>
+      <li>
+        <strong>HR &amp; Benefits Coordination</strong>
+        <div class="bl-desc">Onboarding paperwork for new hires and contractors. Managing benefits enrollment, PTO tracking, and payroll coordination. Maintaining personnel files and ensuring compliance with employment requirements.</div>
+      </li>
+      <li>
+        <strong>Insurance &amp; Compliance</strong>
+        <div class="bl-desc">Coordinating professional liability, general liability, and workers' compensation renewals. Producing certificates of insurance for clients and project-specific requirements. Tracking license renewals and continuing education deadlines.</div>
+      </li>
+      <li>
+        <strong>Vendor &amp; Consultant Coordination</strong>
+        <div class="bl-desc">Managing subconsultant agreements, W-9 collection, and payment processing. Coordinating with IT, software vendors, and service providers. Maintaining the studio's vendor contact database.</div>
+      </li>
+      <li>
+        <strong>Systems &amp; Process Documentation</strong>
+        <div class="bl-desc">Building and maintaining the studio operations manual. Documenting every recurring administrative process so the studio's operational knowledge lives in a system, not in one person's head. Creating checklists and templates that make the next hire easier.</div>
+      </li>
+    </ul>
+
+    <h3><span class="section-num">04</span> Requirements</h3>
+    <p>Non-negotiable qualifications for this role.</p>
+    <ul class="simple-list accent">
+      <li>Minimum 2 years of administrative, bookkeeping, or office management experience in a professional services firm (architecture, engineering, or design strongly preferred)</li>
+      <li>Demonstrated proficiency with cloud-based financial and project management tools</li>
+      <li>Experience managing accounts payable/receivable and basic bookkeeping</li>
+      <li>Strong written communication — this role produces contracts, invoices, and correspondence that represent the studio</li>
+      <li>Self-directed work habits proven in a remote environment; ability to manage tasks without daily supervision</li>
+      <li>Reliable high-speed internet and a dedicated workspace for handling confidential financial and HR information</li>
+    </ul>
+
+    <h3><span class="section-num">05</span> Desired Attributes</h3>
+    <p>Not required, but will distinguish top candidates.</p>
+    <ul class="simple-list green">
+      <li>Experience in an architecture or design firm specifically — understanding of project phases, consultant structures, and AIA contract formats</li>
+      <li>Familiarity with Monograph or similar architecture-specific project accounting tools</li>
+      <li>Experience supporting a firm through a growth phase (3–5 people scaling to 10+)</li>
+      <li>Comfort with ambiguity — processes may not exist yet and this person will need to build them</li>
+      <li>Bookkeeping certification or coursework (QuickBooks ProAdvisor, etc.)</li>
+      <li>Experience coordinating professional liability insurance in an A/E context</li>
+      <li>Natural inclination toward documentation — the person who writes things down without being asked</li>
+    </ul>
+
+    <h3><span class="section-num">06</span> Additional Tools &amp; Skills</h3>
+    <ul class="simple-list blue">
+      <li>Google Workspace (Gmail, Sheets, Docs, Drive) — primary platform</li>
+      <li>Monograph — project tracking and time management</li>
+      <li>QuickBooks Online or similar cloud accounting</li>
+      <li>Notion — studio knowledge base and operations documentation</li>
+      <li>Slack — studio communication</li>
+      <li>Adobe Acrobat — contract and proposal PDF management</li>
+      <li>Gusto, Justworks, or similar payroll/benefits platform</li>
+      <li>Proficiency with spreadsheets for budget tracking and reporting</li>
+      <li>Familiarity with AIA contract document formats (A101, B101, etc.) is a plus</li>
+    </ul>
+
+    <h3><span class="section-num">07</span> 90-Day Deal Breakers</h3>
+    <p>What must or must not occur for this person to remain in the role past 90 days.</p>
+    <ul class="deal-list">
+      <li><strong>Invoices are late or inaccurate more than twice.</strong> The studio's cash flow depends on timely, correct invoicing. If the person responsible for it can't deliver consistency in the first 90 days, the role isn't working.</li>
+      <li><strong>Requires repeated follow-up on recurring tasks.</strong> This is a self-directed remote role. If the principal has to remind the coordinator to do the same task more than once, the autonomy required for remote work isn't there.</li>
+      <li><strong>No operations manual progress.</strong> By day 90, every recurring administrative process should be documented in at least draft form. If the person hasn't started building the system that makes the studio's operations transferable, they're doing tasks — not building infrastructure.</li>
+      <li><strong>Confidentiality breach or careless handling of financial/HR data.</strong> This role handles sensitive information. Any lapse is immediate and non-negotiable.</li>
+    </ul>
+
+    <h3><span class="section-num">08</span> Key Performance Indicators</h3>
+    <ul class="kpi-list">
+      <li><strong>Invoice accuracy and timeliness:</strong> 100% of invoices sent within 3 business days of billing cycle close, with zero errors requiring correction</li>
+      <li><strong>Timesheet compliance:</strong> All team members submitting complete timesheets weekly, with no more than one late submission per month studio-wide</li>
+      <li><strong>Budget flag rate:</strong> Projects approaching 80% of fee budget flagged to principal before exceeding threshold — zero surprises</li>
+      <li><strong>Operations manual coverage:</strong> All recurring admin processes documented within first 6 months; updated quarterly thereafter</li>
+      <li><strong>AR aging:</strong> No receivable over 60 days without documented follow-up and principal notification</li>
+    </ul>
+
+    <div class="callout">
+      <p><em>Note: This role is critical to the evolution of the studio. As the firm grows from 3 to 13 people, the Studio Coordinator role is expected to evolve into a full Studio Manager position with expanded authority over budgets, HR strategy, and operational decision-making. Job duties will grow with the business.</em></p>
+    </div>
+
+    <div class="role-footer">
+      Derrington Building Studio · Austin, TX · Role descriptions reflect Phase 1 of the studio growth plan. Compensation ranges reflect market rates as of early 2026. — Tim Derrington, Founding Principal
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  TAB 2 — CONTRACT DRAFTER                               -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <div class="tab-panel" id="drafter">
+
+    <h2>Contract Drafter</h2>
+    <p style="font-family:'JetBrains Mono',Consolas,monospace; font-size:0.68rem; color:var(--accent); margin-bottom:1rem;">DERRINGTON BUILDING STUDIO</p>
+
+    <p><strong>Company Description:</strong> Derrington Building Studio is a design-focused architecture practice based in Austin, Texas, specializing in experiential venues, recreational facilities, and hospitality projects. We work with operators who understand that the built environment is their product — climbing centers, restaurants, bars, retail experiences — and our job is to turn their culture into place.</p>
+
+    <p><strong>Company Vision:</strong> To build a 13-person studio where every team member goes deeper into what they're best at, producing architecture that shapes how people experience a space — not just how a building looks.</p>
+
+    <div class="role-meta">
+      <div class="meta-cell">
+        <div class="mc-label">Starting Pay</div>
+        <div class="mc-value">$15 – $25 / hour</div>
+        <div class="mc-note">Contract · Invoiced monthly</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Location</div>
+        <div class="mc-value">Remote — Colombia</div>
+        <div class="mc-note">CDT timezone required</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Reports To</div>
+        <div class="mc-value">Project Team Lead</div>
+        <div class="mc-note">Day-to-day: Minta or Michael</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Personality Profile</div>
+        <div class="mc-value">C/S</div>
+        <div class="mc-note">Precise · Consistent · Production-paced</div>
+      </div>
+    </div>
+
+    <h3><span class="section-num">01</span> Role Purpose</h3>
+    <p>The Contract Drafter provides consistent, high-volume ArchiCAD production so the Austin-based team can focus on design, technical resolution, and field coordination instead of grinding construction document sheets.</p>
+
+    <h3><span class="section-num">02</span> Role Description</h3>
+    <p>This is a production role, and that's said with respect — the studio cannot grow without reliable CD output, and right now that output is bottlenecked through two people who should be doing higher-value work. The Contract Drafter takes over the day-to-day production of construction document sheets: floor plans, reflected ceiling plans, building sections, elevations, schedules, and sheet assembly.</p>
+
+    <p>This person works within the studio's ArchiCAD environment, following established templates, layer standards, and sheet conventions. They do not make design decisions — they translate decisions already made by the project team into clean, permit-ready documents. Speed, consistency, and attention to ArchiCAD standards matter more than design judgment in this seat.</p>
+
+    <p>The drafter works remotely from Colombia, collaborating in real time with the Austin team during overlapping CDT hours. Communication happens through Slack and screen-share reviews. Work is reviewed by the project team lead (Minta or Michael) before incorporation into the set. This role is an independent contractor position with the potential for long-term engagement as the studio grows — high-performing contract drafters will have ongoing work as project volume increases.</p>
+
+    <h3><span class="section-num">03</span> Buckets of Responsibility</h3>
+    <ul class="bucket-list blue">
+      <li>
+        <strong>Construction Document Sheet Production</strong>
+        <div class="bl-desc">Floor plans, reflected ceiling plans, roof plans, building sections, exterior and interior elevations. Working from design development documents and redlines provided by the project team. Producing sheets that are dimensioned, annotated, and ready for permit review.</div>
+      </li>
+      <li>
+        <strong>Schedule Production</strong>
+        <div class="bl-desc">Door schedules, window schedules, finish schedules, room finish matrices, and similar tabular documentation. Extracting and formatting data from the ArchiCAD model into standardized schedule formats.</div>
+      </li>
+      <li>
+        <strong>Sheet Assembly &amp; Standards Compliance</strong>
+        <div class="bl-desc">Setting up sheets per the studio's title block, scale conventions, and annotation standards. Ensuring all sheets follow the established layer structure, pen sets, and graphic conventions. Maintaining consistency across the document set.</div>
+      </li>
+      <li>
+        <strong>Redline Incorporation</strong>
+        <div class="bl-desc">Receiving marked-up PDFs and screen-share review comments from the project team and incorporating revisions accurately. Flagging conflicts or ambiguities in redlines rather than guessing. Tracking revision status across sheets.</div>
+      </li>
+      <li>
+        <strong>Model Hygiene</strong>
+        <div class="bl-desc">Working cleanly within the shared ArchiCAD model. Correct layer usage, object placement, and zone management. Not creating workarounds, custom hacks, or off-standard elements that break the model for others. Asking before improvising.</div>
+      </li>
+    </ul>
+
+    <h3><span class="section-num">04</span> Requirements</h3>
+    <ul class="simple-list accent">
+      <li>Minimum 3 years of professional experience producing construction documents in ArchiCAD</li>
+      <li>Demonstrated ability to work within established ArchiCAD templates, layer structures, and graphic standards — not just model freely</li>
+      <li>Architecture degree or technical drafting certification</li>
+      <li>Portfolio showing completed CD sets (not just renderings or design work) — permit-ready production documents</li>
+      <li>Working English proficiency for written communication (Slack, email, redline notes); conversational English for screen-share reviews</li>
+      <li>CDT-aligned working hours with minimum 6 hours of overlap with Austin business hours (8 AM – 6 PM CDT)</li>
+      <li>Reliable high-speed internet capable of real-time ArchiCAD Teamwork or BIMcloud collaboration</li>
+    </ul>
+
+    <h3><span class="section-num">05</span> Desired Attributes</h3>
+    <ul class="simple-list green">
+      <li>Experience with US construction document conventions (imperial units, CSI divisions, ADA annotations, occupancy classifications)</li>
+      <li>Experience producing documents for commercial interiors, hospitality, or recreational facility projects</li>
+      <li>Familiarity with IBC-referenced occupancy types (A-3, B, M, S-1) and basic code annotations</li>
+      <li>ArchiCAD Teamwork / BIMcloud experience for real-time collaboration on shared models</li>
+      <li>Previous remote contract work with US-based architecture firms</li>
+      <li>Fast, methodical production pace — the ability to produce clean sheets at volume without quality dropping</li>
+    </ul>
+
+    <h3><span class="section-num">06</span> Additional Tools &amp; Skills</h3>
+    <ul class="simple-list blue">
+      <li>ArchiCAD 27+ — primary production tool</li>
+      <li>ArchiCAD Teamwork / BIMcloud — real-time model collaboration</li>
+      <li>Slack — daily communication with the Austin team</li>
+      <li>Google Drive — file sharing and document exchange</li>
+      <li>Bluebeam Revu or Adobe Acrobat — redline review and markup</li>
+      <li>PDF sheet export and print-ready document preparation</li>
+      <li>Basic proficiency with Excel/Sheets for schedule formatting</li>
+    </ul>
+
+    <h3><span class="section-num">07</span> 90-Day Deal Breakers</h3>
+    <ul class="deal-list">
+      <li><strong>Repeated failure to follow ArchiCAD standards.</strong> Custom workarounds, off-layer elements, or non-standard objects that break the model for the rest of the team. The standards exist for a reason — if the drafter can't or won't follow them after onboarding and correction, the collaboration won't work.</li>
+      <li><strong>Guessing instead of asking.</strong> When a redline is ambiguous or a design intent is unclear, the correct move is to flag it and ask. Guessing produces rework. If a drafter consistently fills in blanks without checking, the review burden on the Austin team increases rather than decreases — which defeats the purpose of the hire.</li>
+      <li><strong>Inconsistent availability or unresponsive during agreed working hours.</strong> The value of CDT alignment is real-time collaboration. If the drafter is routinely unreachable during overlap hours, the timezone advantage disappears.</li>
+    </ul>
+
+    <h3><span class="section-num">08</span> Key Performance Indicators</h3>
+    <ul class="kpi-list">
+      <li><strong>Sheet output rate:</strong> Consistent production of 3–5 CD sheets per week (varies by complexity), meeting the project team's delivery schedule</li>
+      <li><strong>Revision cycle time:</strong> Redlines incorporated and returned within 24 hours of receipt for standard markups</li>
+      <li><strong>Standards compliance:</strong> Less than 10% of reviewed sheets requiring standards-related corrections after the first 30 days</li>
+      <li><strong>Communication responsiveness:</strong> Slack messages and review comments acknowledged within 2 hours during overlap working hours</li>
+    </ul>
+
+    <div class="callout blue-c">
+      <p><em>Note: This is a contract position with ongoing engagement potential. High-performing contract drafters will have sustained work as the studio's project volume grows. The role may evolve to include greater responsibility within the production team, including coordinating additional contract staff as the studio scales.</em></p>
+    </div>
+
+    <div class="role-footer">
+      Derrington Building Studio · Austin, TX · Role descriptions reflect Phase 1 of the studio growth plan. Contract rates reflect Bogotá/Medellín market for architects with 3–8 years ArchiCAD experience. — Tim Derrington, Founding Principal
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  TAB 3 — CONTRACT DETAILER                              -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <div class="tab-panel" id="detailer">
+
+    <h2>Contract Detailer</h2>
+    <p style="font-family:'JetBrains Mono',Consolas,monospace; font-size:0.68rem; color:var(--accent); margin-bottom:1rem;">DERRINGTON BUILDING STUDIO</p>
+
+    <p><strong>Company Description:</strong> Derrington Building Studio is a design-focused architecture practice based in Austin, Texas, specializing in experiential venues, recreational facilities, and hospitality projects. We work with operators who understand that the built environment is their product — climbing centers, restaurants, bars, retail experiences — and our job is to turn their culture into place.</p>
+
+    <p><strong>Company Vision:</strong> To build a 13-person studio where every team member goes deeper into what they're best at, producing architecture that shapes how people experience a space — not just how a building looks.</p>
+
+    <div class="role-meta">
+      <div class="meta-cell">
+        <div class="mc-label">Starting Pay</div>
+        <div class="mc-value">$18 – $28 / hour</div>
+        <div class="mc-note">Contract · Invoiced monthly</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Location</div>
+        <div class="mc-value">Remote — Colombia</div>
+        <div class="mc-note">CDT timezone required</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Reports To</div>
+        <div class="mc-value">Project Team Lead</div>
+        <div class="mc-note">Day-to-day: Minta or Michael</div>
+      </div>
+      <div class="meta-cell">
+        <div class="mc-label">Personality Profile</div>
+        <div class="mc-value">C/D</div>
+        <div class="mc-note">Precise · Analytical · Problem-solving</div>
+      </div>
+    </div>
+
+    <h3><span class="section-num">01</span> Role Purpose</h3>
+    <p>The Contract Detailer produces the wall sections, custom assemblies, connection details, and enlarged plans that communicate how the building actually goes together — freeing the project team from the most time-intensive layer of construction documentation.</p>
+
+    <h3><span class="section-num">02</span> Role Description</h3>
+    <p>This is a different role than the Contract Drafter, and the distinction matters. The drafter produces sheets at volume — plans, elevations, schedules. The detailer produces the close-up, technical drawings that show how materials meet, how assemblies are constructed, and how non-standard conditions are resolved. This work is slower, more analytical, and requires a stronger understanding of how buildings are physically put together.</p>
+
+    <p>DBS projects frequently involve non-standard construction: climbing walls with complex structural connections, custom bar and counter assemblies, unusual cladding transitions, mixed-use building envelopes with varied wall types. The detailer works from sketches, reference details, and verbal direction from the project team to produce clear, buildable detail drawings. They do not make design decisions, but they need enough construction knowledge to recognize when a sketched detail won't actually work — and to flag it before it goes to the contractor.</p>
+
+    <p>Like the Contract Drafter, this role works remotely from Colombia in CDT-aligned hours, collaborating through Slack and screen-share reviews. The detailer works within the studio's ArchiCAD environment and detail library, adapting existing standard details and creating project-specific details as needed. Work is reviewed by the project team lead before incorporation into the document set.</p>
+
+    <h3><span class="section-num">03</span> Buckets of Responsibility</h3>
+    <ul class="bucket-list blue">
+      <li>
+        <strong>Wall Section &amp; Building Envelope Details</strong>
+        <div class="bl-desc">Producing full-height wall sections, foundation-to-roof, showing all assembly layers, flashing, waterproofing, insulation, structure, and finish. Exterior wall type details including transitions between cladding systems, window head/jamb/sill conditions, and parapet assemblies.</div>
+      </li>
+      <li>
+        <strong>Custom Assembly Details</strong>
+        <div class="bl-desc">Bar tops, reception desks, climbing wall connections to structure, custom millwork sections, specialty ceiling conditions, and other project-specific assemblies. Working from design team sketches and reference images to produce drawings that a contractor can build from.</div>
+      </li>
+      <li>
+        <strong>Enlarged Plans &amp; Partition Details</strong>
+        <div class="bl-desc">Restroom enlarged plans, entry vestibule details, rated partition assemblies, acoustic separation details, and other conditions that require larger-scale drawing to communicate properly. Coordinating with the drafter to ensure enlarged plans align with the overall floor plan.</div>
+      </li>
+      <li>
+        <strong>Connection &amp; Transition Details</strong>
+        <div class="bl-desc">Steel-to-concrete, wood-to-steel, dissimilar material transitions, expansion joint details, and structural connection conditions. Referencing structural engineer drawings and coordinating detail dimensions with the consultant's design.</div>
+      </li>
+      <li>
+        <strong>Detail Library Maintenance</strong>
+        <div class="bl-desc">Adapting the studio's standard detail library for project-specific conditions. Creating new standard details when a project-specific detail has broader application. Maintaining clean, reusable detail files within the ArchiCAD environment.</div>
+      </li>
+      <li>
+        <strong>Constructability Flagging</strong>
+        <div class="bl-desc">Identifying conditions in sketches or design documents where the indicated assembly may not be buildable, where clearances are insufficient, where material interfaces create maintenance or waterproofing risks, or where the detail contradicts the structural or MEP drawings. Flagging — not solving — is the expectation; resolution is the project team's decision.</div>
+      </li>
+    </ul>
+
+    <h3><span class="section-num">04</span> Requirements</h3>
+    <ul class="simple-list accent">
+      <li>Minimum 4 years of professional experience producing architectural details — wall sections, custom assemblies, and construction details (not just plan/elevation drafting)</li>
+      <li>Demonstrated understanding of building envelope assemblies, waterproofing principles, and material interface conditions</li>
+      <li>Architecture degree with coursework or professional experience in building technology and construction methods</li>
+      <li>ArchiCAD proficiency, specifically in 2D detail drawing and detail library management (not just 3D modeling)</li>
+      <li>Portfolio showing construction-level detail drawings — wall sections, connection details, custom assemblies — at scales of 3/4" = 1'-0" or larger</li>
+      <li>Working English proficiency for written communication; conversational English for screen-share detail reviews</li>
+      <li>CDT-aligned working hours with minimum 6 hours of overlap with Austin business hours (8 AM – 6 PM CDT)</li>
+      <li>Reliable high-speed internet capable of real-time ArchiCAD collaboration</li>
+    </ul>
+
+    <h3><span class="section-num">05</span> Desired Attributes</h3>
+    <ul class="simple-list green">
+      <li>Experience detailing commercial interiors, hospitality, or recreational facility projects — non-standard construction with custom assemblies</li>
+      <li>Familiarity with US construction conventions: steel stud framing, CMU, structural steel connections, commercial waterproofing systems</li>
+      <li>Experience coordinating architectural details with structural and MEP consultant drawings</li>
+      <li>Knowledge of common US material products and systems (Tremco, Sika, Hilti, Dow Corning, etc.) for realistic detailing</li>
+      <li>Experience producing details that have been successfully built — not just drawn. Preference for candidates who have visited construction sites and seen their details in the field</li>
+      <li>Methodical, patient temperament — detailing rewards precision and careful thinking, not speed</li>
+    </ul>
+
+    <h3><span class="section-num">06</span> Additional Tools &amp; Skills</h3>
+    <ul class="simple-list blue">
+      <li>ArchiCAD 27+ — primary production tool, especially 2D detail worksheets and detail library tools</li>
+      <li>ArchiCAD Teamwork / BIMcloud — real-time collaboration</li>
+      <li>Slack — daily communication with the Austin team</li>
+      <li>Google Drive — file sharing, reference material access</li>
+      <li>Bluebeam Revu or Adobe Acrobat — redline review and detail markup</li>
+      <li>Familiarity with manufacturer technical data sheets and installation guides for assembly verification</li>
+      <li>SketchUp or Rhino for quick 3D study of complex assembly conditions (helpful, not required)</li>
+    </ul>
+
+    <h3><span class="section-num">07</span> 90-Day Deal Breakers</h3>
+    <ul class="deal-list">
+      <li><strong>Details that can't be built.</strong> If a detailer consistently produces drawings that ignore material thicknesses, clearance requirements, or basic assembly logic — and doesn't improve after review — the role isn't working. The whole point of this hire is buildable documents.</li>
+      <li><strong>Inability to work from sketches and verbal direction.</strong> The project team won't always provide perfectly drafted reference material. The detailer needs to interpret a hand sketch, a photo of a similar condition, or a screen-share conversation and produce a clean detail from it. If that translation step consistently fails, the review burden on the Austin team increases rather than decreases.</li>
+      <li><strong>Not flagging problems.</strong> A detailer who draws something they know won't work — because it was sketched that way and they didn't want to push back — is more dangerous than a detailer who's slow. The expectation is that problems are surfaced, not hidden.</li>
+    </ul>
+
+    <h3><span class="section-num">08</span> Key Performance Indicators</h3>
+    <ul class="kpi-list">
+      <li><strong>Detail output rate:</strong> Consistent production of 8–15 details per week (varies significantly by complexity), meeting the project team's CD milestone schedule</li>
+      <li><strong>Constructability accuracy:</strong> Less than 15% of reviewed details requiring fundamental rework (proportion vs. annotation corrections are expected and normal)</li>
+      <li><strong>Flag rate:</strong> Proactively identifying at least 2–3 constructability or coordination issues per project set before review — indicating the detailer is reading the drawings critically, not just executing</li>
+      <li><strong>Revision cycle time:</strong> Review comments incorporated and returned within 24–48 hours depending on complexity</li>
+      <li><strong>Detail library contribution:</strong> At least 5 new reusable standard details contributed to the studio library per quarter</li>
+    </ul>
+
+    <div class="callout blue-c">
+      <p><em>Note: This is a contract position with ongoing engagement potential. Detailing work is present at every phase of every project — the studio will always need this capability. High-performing detailers will have sustained, long-term work. The rate range is slightly higher than the drafter role because the work requires deeper construction knowledge and more analytical judgment.</em></p>
+    </div>
+
+    <div class="role-footer">
+      Derrington Building Studio · Austin, TX · Role descriptions reflect Phase 1 of the studio growth plan. Contract rates reflect Bogotá/Medellín market for architects with 4+ years ArchiCAD and construction detailing experience. — Tim Derrington, Founding Principal
+    </div>
+
+  </div>
+
+</div><!-- end tab-container -->
+
+</div><!-- end page -->
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active from all
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      // Activate clicked
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      // Scroll to top of panel
+      window.scrollTo({ top: document.querySelector('.tab-nav').offsetTop - 20, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
