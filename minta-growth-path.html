@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minta — Career Growth Path at DBS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --accent: #c75a3a;
+    --ink: #1a1a1a;
+    --paper: #faf9f7;
+    --warm: #f5f3ef;
+    --rule: #e0ddd8;
+    --blue: #3a5a7c;
+    --green: #4a6a5a;
+    --purple: #6d5a8c;
+    --gold: #8a7a5a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', Calibri, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 3.5rem;
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .firm-name {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.85rem;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+  }
+
+  .doc-meta {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.65rem;
+    color: #aaa;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── BODY ── */
+  h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin-top: 2.25rem;
+    margin-bottom: 0.6rem;
+  }
+
+  h2 .num {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    color: var(--accent);
+    font-size: 0.82em;
+    margin-right: 0.5rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    margin-bottom: 0.9rem;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  p em { color: var(--ink); font-style: italic; }
+  p strong { color: var(--ink); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--warm);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.15rem;
+    margin: 1.25rem 0 1.5rem;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .callout.blue-c { border-left-color: var(--blue); }
+  .callout.green-c { border-left-color: var(--green); }
+  .callout.gold-c { border-left-color: var(--gold); }
+
+  .callout p { margin-bottom: 0.4rem; font-size: 0.88rem; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── EVOLUTION TRACK ── */
+  .evo-section {
+    margin: 1.5rem 0;
+  }
+
+  .evo-phase {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0;
+    margin-bottom: 0;
+  }
+
+  .evo-time {
+    padding: 0.85rem 0;
+    border-right: 2px solid var(--rule);
+    padding-right: 1rem;
+    text-align: right;
+    position: relative;
+  }
+
+  .evo-time::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 1.1rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .evo-phase:first-child .evo-time::after {
+    background: var(--ink);
+    width: 10px;
+    height: 10px;
+    right: -6px;
+  }
+
+  .evo-time .et-label {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #bbb;
+  }
+
+  .evo-time .et-when {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 0.1rem;
+  }
+
+  .evo-content {
+    padding: 0.75rem 0 1.25rem 1.25rem;
+    border-bottom: 1px solid rgba(224,221,216,0.5);
+  }
+
+  .evo-phase:last-child .evo-content {
+    border-bottom: none;
+  }
+
+  .evo-content .ec-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .evo-content .ec-role {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .evo-content .ec-desc {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .evo-content .ec-desc em { color: var(--ink); }
+
+  /* ── SKILLS ── */
+  .skill-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .skill-card {
+    background: var(--warm);
+    padding: 0.65rem 0.85rem;
+    border-radius: 4px;
+    border-left: 3px solid var(--rule);
+  }
+
+  .skill-card.strength { border-left-color: var(--green); }
+  .skill-card.develop { border-left-color: var(--gold); }
+
+  .skill-card .sk-label {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #bbb;
+    margin-bottom: 0.15rem;
+  }
+
+  .skill-card.strength .sk-label { color: var(--green); }
+  .skill-card.develop .sk-label { color: var(--gold); }
+
+  .skill-card .sk-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--ink);
+  }
+
+  /* ── COMP ── */
+  .comp-bar {
+    background: var(--ink);
+    color: #fff;
+    padding: 0.85rem 1rem;
+    border-radius: 5px;
+    margin: 1.25rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .comp-bar .cb-label {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 0.1rem;
+  }
+
+  .comp-bar .cb-val {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .comp-bar .cb-note {
+    font-size: 0.64rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .footer-note {
+    margin-top: 2.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.78rem;
+    color: #bbb;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 1.5rem; }
+    .skill-grid { grid-template-columns: 1fr; }
+    .comp-bar { grid-template-columns: 1fr; }
+    .evo-phase { grid-template-columns: 80px 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="doc-header">
+  <div class="firm-name">Derrington Building Studio</div>
+  <h1>Minta — Career Growth Path</h1>
+  <div class="doc-meta">From Tim · February 2026</div>
+</div>
+
+
+<h2><span class="num">01</span> Where You Are</h2>
+
+<p>Right now you're carrying a lot of roles that have nothing to do with each other — project architecture, field coordination, ArchiCAD management, technical documentation — all because there's nobody else to do them. You're good at this, and you've earned a lot of trust from me because of it. But I don't want you doing everything forever. I want you doing the things that matter most, and doing them at a level you can't reach when you're spread across four jobs.</p>
+
+<p>What I see in you is something I can't easily hire for: you understand how this studio thinks. You know what a DBS project should feel like. You know what I care about, what the clients care about, and how the two connect. That cultural fluency — that instinct for <em>what matters on this project</em> — is the foundation of everything I'm about to describe.</p>
+
+
+<h2><span class="num">02</span> Where You're Headed</h2>
+
+<p>Your path at DBS is toward leading the construction and technical side of the studio. Not as the person who produces every detail and writes every spec — we're going to hire people who are technically excellent at that work — but as the person who <em>directs</em> that work. You'll be the one who tells a detailer what's load-bearing for the design intent and what's standard. You'll be the one who tells a spec writer which product selections are non-negotiable and which have room. You'll be the one on site making sure what was drawn is what gets built.</p>
+
+<p>The title at maturity is something like <strong>Technical Coordinator &amp; BIM Lead / Specifications &amp; Field Lead</strong>. That sounds like two jobs, but they bookend each other in the project lifecycle — you're managing ArchiCAD standards and reviewing documents during DD and CD, then transitioning to specs review and field visits during CA. The work alternates rather than overlaps.</p>
+
+<div class="callout blue-c">
+  <p><strong>The key shift:</strong> from doing the technical work yourself to directing and reviewing it. The people under you produce the details, the specs, the sheets. You make sure those documents serve the project — that they carry the design intent, meet the budget, and build cleanly. That's coordination and judgment, not draftsmanship.</p>
+</div>
+
+
+<h2><span class="num">03</span> The Path, Phase by Phase</h2>
+
+<div class="evo-section">
+
+  <div class="evo-phase">
+    <div class="evo-time">
+      <div class="et-label">Phase 0</div>
+      <div class="et-when">Now</div>
+    </div>
+    <div class="evo-content">
+      <div class="ec-title">Generalist — Carrying Everything</div>
+      <div class="ec-role">Project Architect · Field Lead · ArchiCAD Mgmt · Tech Documentation</div>
+      <div class="ec-desc">You're doing project architecture, field visits, ArchiCAD environment management, and technical documentation across every project. It works, but there's no room to go deeper into any single thing.</div>
+    </div>
+  </div>
+
+  <div class="evo-phase">
+    <div class="evo-time">
+      <div class="et-label">Phase 1</div>
+      <div class="et-when">Immediate</div>
+    </div>
+    <div class="evo-content">
+      <div class="ec-title">Production Pressure Drops</div>
+      <div class="ec-role">Same roles, less grind — Colombia contracts absorb CD volume</div>
+      <div class="ec-desc">Contract drafters and detailers from Colombia take over CD sheet production and detail drawing. You're no longer grinding sheets at night. Your day-to-day shifts toward <em>directing</em> their output — reviewing sheets, redlining details, making sure ArchiCAD standards are followed. This is the first taste of the leadership role. You'll also help me manage the contract staff day-to-day: assigning tasks, reviewing submittals, maintaining the detail library they draw from.</div>
+    </div>
+  </div>
+
+  <div class="evo-phase">
+    <div class="evo-time">
+      <div class="et-label">Phase 2</div>
+      <div class="et-when">6–12 mo</div>
+    </div>
+    <div class="evo-content">
+      <div class="ec-title">Technical Authority Emerges</div>
+      <div class="ec-role">Technical Coordinator &amp; BIM Lead (forming)</div>
+      <div class="ec-desc">A Senior Project Architect joins the studio and takes over project management. You no longer need to run timelines and client meetings. Your role narrows to what you're best at: the ArchiCAD environment, QA/QC across all projects, field coordination, and technical resolution. You become the person every set of drawings passes through before it leaves the studio. The spec consultant continues handling spec writing, but you begin reviewing specs for project-specific accuracy — learning the structure without carrying the production burden.</div>
+    </div>
+  </div>
+
+  <div class="evo-phase">
+    <div class="evo-time">
+      <div class="et-label">Phase 3</div>
+      <div class="et-when">12–24 mo</div>
+    </div>
+    <div class="evo-content">
+      <div class="ec-title">Two Teams, One Technical Standard</div>
+      <div class="ec-role">Technical Coordinator &amp; BIM Lead · Specs &amp; Field Lead (shared across teams)</div>
+      <div class="ec-desc">The studio now runs two project teams. You serve both — owning ArchiCAD standards, QA/QC, and specs review across all projects. You also own the field during CA, running site visits, processing RFIs, reviewing submittals. A dedicated Architectural Designer and additional contract drafters report into your technical framework. <em>You're not producing their work — you're setting the standard it has to meet.</em></div>
+    </div>
+  </div>
+
+  <div class="evo-phase">
+    <div class="evo-time">
+      <div class="et-label">Phase 4</div>
+      <div class="et-when">24+ mo</div>
+    </div>
+    <div class="evo-content">
+      <div class="ec-title">Construction &amp; Technical Leader</div>
+      <div class="ec-role">Technical Coordinator &amp; BIM Lead · Specs &amp; Field Lead · Reports to Studio Director</div>
+      <div class="ec-desc">At full studio, you are the bridge between the digital model and the physical building. Every document goes through your QA before it ships. Every field question routes through you before it escalates. The detailers, contract drafters, and Architectural Designer work within the technical environment you maintain. You manage ArchiCAD standards, review specs produced by the consultant or in-house, and lead construction administration in the field. The person catching the problem in the drawings is the same person catching it on site — that's rare and valuable.</div>
+    </div>
+  </div>
+
+</div>
+
+
+<h2><span class="num">04</span> What I Need From You</h2>
+
+<p>This path depends on you growing into a few specific areas. I'm not asking you to become a master detailer or a spec writer — I'm asking you to become the person who can <em>manage</em> master detailers and spec writers. That's a different skill set.</p>
+
+<div class="skill-grid">
+  <div class="skill-card strength">
+    <div class="sk-label">Strengths to lean into</div>
+    <div class="sk-name">Field instinct</div>
+  </div>
+  <div class="skill-card strength">
+    <div class="sk-label">Strengths to lean into</div>
+    <div class="sk-name">ArchiCAD fluency</div>
+  </div>
+  <div class="skill-card strength">
+    <div class="sk-label">Strengths to lean into</div>
+    <div class="sk-name">Construction awareness</div>
+  </div>
+  <div class="skill-card strength">
+    <div class="sk-label">Strengths to lean into</div>
+    <div class="sk-name">Cultural fluency with DBS</div>
+  </div>
+  <div class="skill-card develop">
+    <div class="sk-label">Areas to develop</div>
+    <div class="sk-name">Reviewing others' technical work</div>
+  </div>
+  <div class="skill-card develop">
+    <div class="sk-label">Areas to develop</div>
+    <div class="sk-name">Managing contract staff output</div>
+  </div>
+  <div class="skill-card develop">
+    <div class="sk-label">Areas to develop</div>
+    <div class="sk-name">Spec literacy (review, not writing)</div>
+  </div>
+  <div class="skill-card develop">
+    <div class="sk-label">Areas to develop</div>
+    <div class="sk-name">Setting standards others follow</div>
+  </div>
+</div>
+
+<p>The development areas are all variations of the same thing: moving from <em>doing</em> the work to <em>holding the standard</em> for the work. Phase 1 is where this starts in practice — when the Colombia contracts arrive, your daily job will include redlining someone else's drawings, not producing your own. That's the muscle we're building.</p>
+
+
+<h2><span class="num">05</span> Compensation Trajectory</h2>
+
+<p>As the role deepens and the studio grows, compensation follows. These ranges reflect Austin market rates for the responsibilities described, not title inflation.</p>
+
+<div class="comp-bar">
+  <div>
+    <div class="cb-label">Phase 1–2</div>
+    <div class="cb-val">Current → +10–15%</div>
+    <div class="cb-note">As production load shifts</div>
+  </div>
+  <div>
+    <div class="cb-label">Phase 3</div>
+    <div class="cb-val">$95 – 115K</div>
+    <div class="cb-note">Tech Coord + Field Lead</div>
+  </div>
+  <div>
+    <div class="cb-label">Phase 4</div>
+    <div class="cb-val">$110 – 130K</div>
+    <div class="cb-note">Dual authority at maturity</div>
+  </div>
+</div>
+
+<h2><span class="num">06</span> The Long Game</h2>
+
+<p>If you want it, there's a path beyond the technical leadership role. Someone who understands both the digital environment and the physical construction — who can see a project from model to field and back — has the operational instincts to eventually run delivery for the whole studio. That's a Studio Director trajectory. It's a five-plus year horizon, and it's not the only good outcome. Staying as the studio's technical and field authority for a long career is a perfectly valuable path. But I want you to know the door is there if you ever want to walk through it.</p>
+
+<p>The immediate thing I want you to take away from this: the growth plan doesn't ask you to change what you're good at. It asks you to stop doing the three other things you carry because nobody else can, and go deeper into the one thing that's hardest to replace.</p>
+
+
+<div class="footer-note">
+  This is a living document. The timeline depends on revenue, and phases are triggered by work in hand — not by the calendar. Compensation ranges are directional, not commitments, and will be formalized as roles are reached. What won't change is the trajectory: your path here is toward leading the construction and technical side of the studio. — Tim
+</div>
+
+</div>
+</body>
+</html>
