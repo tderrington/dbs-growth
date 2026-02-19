@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Derrington Building Studio — Studio Growth Plan</title>
+<title>Derrington Building Studio — Studio Growth Plan: 3.5 → 21</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -29,18 +29,17 @@
   }
 
   .page {
-    max-width: 1100px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 2.5rem 2.5rem 3rem;
+    padding: 2rem 2.5rem 3rem;
   }
 
   /* ── HEADER ── */
   .doc-header {
-    margin-bottom: 2.25rem;
-    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
     border-bottom: 1px solid var(--rule);
   }
-
   .doc-header .firm-name {
     font-family: 'JetBrains Mono', Consolas, monospace;
     font-size: 0.68rem;
@@ -49,54 +48,150 @@
     color: var(--accent);
     margin-bottom: 0.4rem;
   }
-
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
-    font-size: 1.9rem;
+    font-size: 1.85rem;
     color: var(--ink);
     letter-spacing: -0.02em;
     margin-bottom: 0.3rem;
   }
-
   .doc-header .doc-desc {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: #777;
-    max-width: 700px;
+    max-width: 720px;
     line-height: 1.55;
   }
 
+  /* ── TAB NAVIGATION ── */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--rule);
+    margin-bottom: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .tab-nav::-webkit-scrollbar { height: 3px; }
+  .tab-nav::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+
+  .tab-btn {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.65rem 0.85rem;
+    border: none;
+    background: none;
+    color: #999;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 500;
+  }
+  .tab-btn .tb-num {
+    font-size: 0.56rem;
+    opacity: 0.5;
+    margin-right: 0.3rem;
+  }
+  .tab-btn.exit-tab.active { color: var(--green); border-bottom-color: var(--green); }
+  .tab-btn.fork-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
+
+  .tab-panel { display: none; padding-top: 1.75rem; }
+  .tab-panel.active { display: block; }
+
+  /* ── MINI TIMELINE (inside overview) ── */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    margin: 1rem 0 1.5rem;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .tl-phase { padding: 0.6rem 0.35rem; text-align: center; cursor: pointer; transition: opacity 0.15s; }
+  .tl-phase:hover { opacity: 0.8; }
+  .tl-phase .tl-num { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.5; margin-bottom: 0.1rem; }
+  .tl-phase .tl-label { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.68rem; }
+  .tl-phase .tl-count { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.56rem; opacity: 0.6; margin-top: 0.08rem; }
+  .tl-phase.now { background: var(--ink); color: #fff; }
+  .tl-phase.now .tl-label { color: var(--accent); }
+  .tl-phase.build { background: var(--warm); color: var(--ink); }
+  .tl-phase.fork-t { background: rgba(109,90,140,0.08); color: var(--ink); border: 1.5px solid rgba(109,90,140,0.2); }
+  .tl-phase.fork-t .tl-label { color: var(--purple); }
+  .tl-phase.extend { background: rgba(74,106,90,0.06); color: var(--ink); }
+  .tl-phase.extend .tl-label { color: var(--green); }
+
+  /* ── TYPOGRAPHY ── */
   h2 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
     font-size: 1.35rem;
     color: var(--ink);
-    margin-top: 2.5rem;
     margin-bottom: 0.25rem;
   }
-
   h2 .num {
     font-family: 'JetBrains Mono', Consolas, monospace;
     color: var(--accent);
     font-size: 0.82em;
     margin-right: 0.5rem;
   }
-
+  h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.08rem;
+    color: var(--ink);
+    margin-top: 1.5rem;
+    margin-bottom: 0.4rem;
+  }
   .phase-meta {
     font-family: 'JetBrains Mono', Consolas, monospace;
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     color: #999;
     margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
+    padding-bottom: 0.65rem;
     border-bottom: 1px solid var(--rule);
   }
-
-  p { font-size: 0.9rem; margin-bottom: 0.85rem; color: #444; line-height: 1.6; }
+  p { font-size: 0.88rem; margin-bottom: 0.8rem; color: #444; line-height: 1.6; }
   p em { color: var(--ink); font-style: italic; }
   p strong { color: var(--ink); }
 
+  /* ── SUB TABS (for dense text within a phase) ── */
+  .sub-tabs {
+    display: flex;
+    gap: 0;
+    margin: 1rem 0 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sub-tab-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.5rem 0.9rem;
+    border: none;
+    background: none;
+    color: #aaa;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .sub-tab-btn:hover { color: var(--ink); }
+  .sub-tab-btn.active { color: var(--ink); border-bottom-color: var(--accent); }
+  .sub-panel { display: none; padding-top: 1rem; }
+  .sub-panel.active { display: block; }
+
   /* ── DIAGRAMS ── */
-  .diagram-wrap { width: 100%; overflow-x: auto; margin: 1.25rem 0 0.75rem; }
+  .diagram-wrap { width: 100%; overflow-x: auto; margin: 1rem 0 0.75rem; }
   .zone-bg { rx: 8; ry: 8; stroke-width: 1; }
   .zone-label { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 7.5px; text-transform: uppercase; letter-spacing: 0.1em; }
   .node-box { rx: 5; ry: 5; }
@@ -108,206 +203,224 @@
   .line-influence { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 5 4; fill: none; opacity: 0.25; }
   .line-support { stroke: var(--green); stroke-width: 1; stroke-dasharray: 3 5; fill: none; opacity: 0.25; }
   .new-hire { stroke: var(--accent) !important; stroke-width: 1.8 !important; }
+  .promo-hire { stroke: var(--green) !important; stroke-width: 1.8 !important; }
   .new-badge { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 6.5px; letter-spacing: 0.06em; fill: white; }
-
-  /* ── ROLE CARDS ── */
-  .role-card {
-    background: var(--warm);
-    border-left: 3px solid var(--accent);
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 0 4px 4px 0;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.4rem;
-    align-items: start;
-  }
-
-  .role-card.blue { border-left-color: var(--blue); }
-  .role-card.green { border-left-color: var(--green); }
-  .role-card.gold { border-left-color: var(--gold); }
-
-  .role-card .rn { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--ink); margin-bottom: 0.1rem; }
-  .role-card .rm { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.65rem; color: var(--accent); margin-bottom: 0.3rem; }
-  .role-card.blue .rm { color: var(--blue); }
-  .role-card.green .rm { color: var(--green); }
-  .role-card.gold .rm { color: var(--gold); }
-  .role-card .rd { font-size: 0.82rem; color: #555; line-height: 1.5; }
-  .role-card .rd em { color: var(--ink); }
-  .role-card .rt { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.62rem; color: #aaa; text-align: right; white-space: nowrap; padding-top: 0.1rem; line-height: 1.7; }
-  .role-card .rt span { color: var(--ink); font-weight: 500; }
-
-  .mode-tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', Consolas, monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.05em;
-    padding: 0.1rem 0.35rem;
-    border-radius: 3px;
-    margin-left: 0.3rem;
-    position: relative;
-    top: -1px;
-  }
-
-  .mode-tag.remote { background: rgba(109,90,140,0.1); color: var(--purple); }
-  .mode-tag.hybrid { background: rgba(138,122,90,0.1); color: var(--gold); }
-  .mode-tag.contract { background: rgba(58,90,124,0.1); color: var(--blue); }
-  .mode-tag.new { background: rgba(199,90,58,0.12); color: var(--accent); }
-  .mode-tag.informal { background: rgba(74,106,90,0.1); color: var(--green); }
 
   /* ── CALLOUT ── */
   .callout {
     background: var(--warm);
     border-left: 3px solid var(--accent);
-    padding: 1rem 1.15rem;
-    margin: 1rem 0 1.5rem;
+    padding: 0.85rem 1rem;
+    margin: 0.85rem 0 1.25rem;
     border-radius: 0 4px 4px 0;
   }
   .callout.green-c { border-left-color: var(--green); }
   .callout.blue-c { border-left-color: var(--blue); }
   .callout.gold-c { border-left-color: var(--gold); }
-  .callout p { margin-bottom: 0.4rem; font-size: 0.85rem; }
+  .callout.purple-c { border-left-color: var(--purple); }
+  .callout p { margin-bottom: 0.35rem; font-size: 0.83rem; }
   .callout p:last-child { margin-bottom: 0; }
-
-  /* ── TIMELINE ── */
-  .timeline {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0;
-    margin: 0 0 2rem;
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  .tl-phase { padding: 0.7rem 0.6rem; text-align: center; }
-  .tl-phase .tl-num { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.5; margin-bottom: 0.12rem; }
-  .tl-phase .tl-label { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.76rem; }
-  .tl-phase .tl-count { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.62rem; opacity: 0.6; margin-top: 0.1rem; }
-  .tl-phase.current { background: var(--ink); color: #fff; }
-  .tl-phase.current .tl-label { color: var(--accent); }
-  .tl-phase.future { background: var(--warm); color: var(--ink); }
 
   /* ── SUMMARY BOXES ── */
   .summary-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 0.6rem;
-    margin: 1rem 0 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 0.5rem;
+    margin: 0.85rem 0;
   }
+  .sb { background: var(--ink); color: #fff; padding: 0.7rem 0.8rem; border-radius: 5px; }
+  .sb .sl { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.35); margin-bottom: 0.1rem; }
+  .sb .sv { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.2rem; font-weight: 600; color: var(--accent); }
+  .sb .sn { font-size: 0.64rem; color: rgba(255,255,255,0.4); margin-top: 0.06rem; }
 
-  .sb { background: var(--ink); color: #fff; padding: 0.8rem 0.9rem; border-radius: 5px; }
-  .sb .sl { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.35); margin-bottom: 0.12rem; }
-  .sb .sv { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); }
-  .sb .sn { font-size: 0.66rem; color: rgba(255,255,255,0.4); margin-top: 0.08rem; }
+  /* ── ROLE CARDS ── */
+  .role-card {
+    background: var(--warm);
+    border-left: 3px solid var(--accent);
+    padding: 0.65rem 0.9rem;
+    margin-bottom: 0.45rem;
+    border-radius: 0 4px 4px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.3rem;
+    align-items: start;
+  }
+  .role-card.blue { border-left-color: var(--blue); }
+  .role-card.green { border-left-color: var(--green); }
+  .role-card.gold { border-left-color: var(--gold); }
+  .role-card.purple { border-left-color: var(--purple); }
+  .role-card .rn { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--ink); margin-bottom: 0.08rem; }
+  .role-card .rm { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.63rem; color: var(--accent); margin-bottom: 0.25rem; }
+  .role-card.blue .rm { color: var(--blue); }
+  .role-card.green .rm { color: var(--green); }
+  .role-card.gold .rm { color: var(--gold); }
+  .role-card.purple .rm { color: var(--purple); }
+  .role-card .rd { font-size: 0.8rem; color: #555; line-height: 1.5; }
+  .role-card .rd em { color: var(--ink); }
+  .role-card .rt { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.6rem; color: #aaa; text-align: right; white-space: nowrap; padding-top: 0.1rem; line-height: 1.6; }
+  .role-card .rt span { color: var(--ink); font-weight: 500; }
 
-  /* ── EVOLUTION TRACK ── */
+  .mode-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.05em;
+    padding: 0.08rem 0.3rem;
+    border-radius: 3px;
+    margin-left: 0.25rem;
+    position: relative;
+    top: -1px;
+  }
+  .mode-tag.remote { background: rgba(109,90,140,0.1); color: var(--purple); }
+  .mode-tag.hybrid { background: rgba(138,122,90,0.1); color: var(--gold); }
+  .mode-tag.contract { background: rgba(58,90,124,0.1); color: var(--blue); }
+  .mode-tag.new { background: rgba(199,90,58,0.12); color: var(--accent); }
+  .mode-tag.promo { background: rgba(74,106,90,0.12); color: var(--green); }
+  .mode-tag.informal { background: rgba(74,106,90,0.1); color: var(--green); }
+
+  /* ── EVOLUTION TRACKS ── */
   .evo-track {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 0;
     align-items: center;
-    margin: 0.75rem 0;
+    margin: 0.6rem 0;
   }
-
   .evo-from, .evo-to {
-    padding: 0.6rem 0.8rem;
+    padding: 0.5rem 0.7rem;
     border-radius: 5px;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
-
-  .evo-from {
-    background: var(--warm);
-    border-left: 3px solid var(--rule);
-    color: #888;
-  }
-
-  .evo-to {
-    background: var(--warm);
-    border-left: 3px solid var(--accent);
-    color: var(--ink);
-  }
-
+  .evo-from { background: var(--warm); border-left: 3px solid var(--rule); color: #888; }
+  .evo-to { background: var(--warm); border-left: 3px solid var(--accent); color: var(--ink); }
   .evo-to.blue { border-left-color: var(--blue); }
   .evo-to.green { border-left-color: var(--green); }
-
-  .evo-arrow {
-    padding: 0 0.75rem;
-    font-family: 'JetBrains Mono', Consolas, monospace;
-    font-size: 0.9rem;
-    color: var(--accent);
-  }
-
-  .evo-label {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 0.82rem;
-    margin-bottom: 0.1rem;
-  }
-
-  .evo-detail {
-    font-family: 'JetBrains Mono', Consolas, monospace;
-    font-size: 0.62rem;
-    color: #999;
-  }
-
+  .evo-arrow { padding: 0 0.6rem; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.9rem; color: var(--accent); }
+  .evo-label { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.8rem; margin-bottom: 0.08rem; }
+  .evo-detail { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.6rem; color: #999; }
   .evo-to .evo-detail { color: #777; }
 
+  /* ── FORK DIAGRAM ── */
+  .fork-visual {
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
+    gap: 0;
+    margin: 1.25rem 0;
+    align-items: stretch;
+  }
+  .fork-path { padding: 1.1rem; border-radius: 6px; }
+  .fork-path.left { background: var(--warm); border: 1px solid var(--rule); }
+  .fork-path.right { background: rgba(74,106,90,0.04); border: 1px solid rgba(74,106,90,0.15); }
+  .fork-path .fp-label { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+  .fork-path.left .fp-label { color: var(--gold); }
+  .fork-path.right .fp-label { color: var(--green); }
+  .fork-path .fp-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.4rem; }
+  .fork-path .fp-detail { font-size: 0.78rem; color: #666; line-height: 1.45; margin-bottom: 0.35rem; }
+  .fork-path .fp-detail:last-child { margin-bottom: 0; }
+  .fork-center { display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; color: var(--accent); font-weight: 600; }
+
+  /* ── COMPARE TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.8rem;
+  }
+  .compare-table th { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: #999; text-align: left; padding: 0.45rem 0.65rem; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  .compare-table td { padding: 0.5rem 0.65rem; border-bottom: 1px solid var(--rule); color: #444; vertical-align: top; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table .metric { font-weight: 500; color: var(--ink); }
+  .compare-table .highlight { color: var(--accent); font-weight: 700; }
+  .compare-table .green-val { color: var(--green); font-weight: 700; }
+  .compare-table .muted { color: #aaa; }
+
   .footer-note {
-    margin-top: 2.5rem;
-    padding-top: 0.75rem;
+    margin-top: 2rem;
+    padding-top: 0.65rem;
     border-top: 1px solid var(--rule);
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     color: #bbb;
     font-style: italic;
   }
 
   @media (max-width: 800px) {
-    .page { padding: 1.5rem; }
+    .page { padding: 1.25rem; }
     .role-card { grid-template-columns: 1fr; }
     .role-card .rt { text-align: left; }
-    .timeline { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: repeat(4, 1fr); }
     .summary-row { grid-template-columns: 1fr 1fr; }
-    .evo-track { grid-template-columns: 1fr; gap: 0.4rem; }
+    .fork-visual { grid-template-columns: 1fr; gap: 0.6rem; }
+    .fork-center { transform: rotate(90deg); padding: 0.4rem; }
+    .evo-track { grid-template-columns: 1fr; gap: 0.3rem; }
     .evo-arrow { text-align: center; }
+    .tab-btn { font-size: 0.56rem; padding: 0.55rem 0.6rem; }
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-<!-- ════════ DOCUMENT HEADER ════════ -->
+<!-- ════════ HEADER ════════ -->
 <div class="doc-header">
   <div class="firm-name">Derrington Building Studio</div>
-  <h1>Studio Growth Plan</h1>
-  <div class="doc-desc">A phased roadmap from the current three-person studio to a 13-person practice. Each phase is triggered by revenue — not ambition — and designed so the studio grows without anyone burning out along the way. This document is for everyone in the studio. It describes where we are, where we're headed, and what each person's role looks like at every stage.</div>
+  <h1>Studio Growth Plan: 3.5 → 21</h1>
+  <div class="doc-desc">A phased roadmap from the current 3.5-person studio to a 21-person transferable practice. Phases 0–4 build the studio. Phases 5–6 build the exit. Each phase is triggered by revenue, not ambition.</div>
 </div>
 
-<!-- ════════ TIMELINE ════════ -->
+<!-- ════════ TAB NAVIGATION ════════ -->
+<nav class="tab-nav" id="mainNav">
+  <button class="tab-btn active" data-tab="overview"><span class="tb-num"></span>Overview</button>
+  <button class="tab-btn" data-tab="phase0"><span class="tb-num">00</span>Now</button>
+  <button class="tab-btn" data-tab="phase1"><span class="tb-num">01</span>Relief</button>
+  <button class="tab-btn" data-tab="phase2"><span class="tb-num">02</span>Leverage</button>
+  <button class="tab-btn" data-tab="phase3"><span class="tb-num">03</span>Two Teams</button>
+  <button class="tab-btn fork-tab" data-tab="phase4"><span class="tb-num">04</span>Fork</button>
+  <button class="tab-btn" data-tab="phase5"><span class="tb-num">05</span>Multi-Leader</button>
+  <button class="tab-btn exit-tab" data-tab="phase6"><span class="tb-num">06</span>Transferable</button>
+  <button class="tab-btn exit-tab" data-tab="exit"><span class="tb-num"></span>Exit Math</button>
+</nav>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!--  OVERVIEW TAB                                -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel active" id="overview">
+
 <div class="timeline">
-  <div class="tl-phase current">
+  <div class="tl-phase now" onclick="switchTab('phase0')">
     <div class="tl-num">Phase 0</div>
     <div class="tl-label">Now</div>
-    <div class="tl-count">3 people</div>
+    <div class="tl-count">3.5</div>
   </div>
-  <div class="tl-phase future">
+  <div class="tl-phase build" onclick="switchTab('phase1')">
     <div class="tl-num">Phase 1</div>
-    <div class="tl-label">Immediate</div>
-    <div class="tl-count">3 FTE + contracts + hire</div>
+    <div class="tl-label">Relief</div>
+    <div class="tl-count">3 + contracts</div>
   </div>
-  <div class="tl-phase future">
+  <div class="tl-phase build" onclick="switchTab('phase2')">
     <div class="tl-num">Phase 2</div>
-    <div class="tl-label">6 – 12 mo</div>
-    <div class="tl-count">5–6 FTE + contracts</div>
+    <div class="tl-label">Leverage</div>
+    <div class="tl-count">5–6</div>
   </div>
-  <div class="tl-phase future">
+  <div class="tl-phase build" onclick="switchTab('phase3')">
     <div class="tl-num">Phase 3</div>
-    <div class="tl-label">12 – 24 mo</div>
-    <div class="tl-count">9–10 FTE</div>
+    <div class="tl-label">Two Teams</div>
+    <div class="tl-count">9–10</div>
   </div>
-  <div class="tl-phase future">
+  <div class="tl-phase fork-t" onclick="switchTab('phase4')">
     <div class="tl-num">Phase 4</div>
-    <div class="tl-label">Full Studio</div>
-    <div class="tl-count">13 FTE + contracts</div>
+    <div class="tl-label">Fork</div>
+    <div class="tl-count">13</div>
+  </div>
+  <div class="tl-phase extend" onclick="switchTab('phase5')">
+    <div class="tl-num">Phase 5</div>
+    <div class="tl-label">Multi-Leader</div>
+    <div class="tl-count">17</div>
+  </div>
+  <div class="tl-phase extend" onclick="switchTab('phase6')">
+    <div class="tl-num">Phase 6</div>
+    <div class="tl-label">Transferable</div>
+    <div class="tl-count">21</div>
   </div>
 </div>
 
@@ -315,428 +428,731 @@
   <p><strong>Guiding principle.</strong> No phase is initiated on projected revenue — only on work in hand or under contract. Each hire should pay for itself before the next one is needed. Growth is a consequence of the work, not a goal unto itself.</p>
 </div>
 
+<div class="callout green-c">
+  <p><strong>The plan in one sentence.</strong> Every phase removes roles from people who are overloaded and gives them to people whose full-time job it is to do that work well. The principal goes from seven roles to two — and eventually to optional. The original team members evolve from generalists into leaders. Nobody is asked to do less — everyone is asked to go deeper.</p>
+</div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!--  PHASE 0 — CURRENT STATE                           -->
-<!-- ═══════════════════════════════════════════════════ -->
+<p>Phases 0–4 build a complete, self-sustaining 13-person studio. At Phase 4, the road forks: stop and run a lifestyle studio, or continue to 21 for a transferable practice that can be sold to an external buyer. Click any phase above or use the tabs to navigate.</p>
+
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!--  PHASE 0 — CURRENT STATE                    -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel" id="phase0">
 
 <h2><span class="num">00</span> Current State</h2>
-<div class="phase-meta">3 people · Revenue: ~$600K – 900K</div>
+<div class="phase-meta">3.5 FTE · Revenue: ~$600–800K</div>
 
-<p>The studio currently operates as a three-person team with everyone carrying multiple roles. Tim serves as principal, studio director, marketing lead, technical coordinator, spec writer, detailer, and occasional senior project architect. The two staff members each carry a mix of project architecture, design, field work, interiors, and technical coordination. This works because the team is strong — but it means the firm cannot take on meaningfully more work without someone becoming a bottleneck.</p>
+<div class="sub-tabs">
+  <button class="sub-tab-btn active" data-subtab="p0-chart" data-group="p0">Org Chart</button>
+  <button class="sub-tab-btn" data-subtab="p0-roles" data-group="p0">Role Details</button>
+</div>
+
+<div class="sub-panel active" id="p0-chart" data-group="p0">
+
+<p>The studio currently operates as a 3.5-person team — three full-time architects and a part-time administrator — with everyone carrying multiple roles. Tim serves as principal, studio director, marketing lead, technical coordinator, spec writer, detailer, and occasional senior project architect. Natalia Derrington handles payroll, time entries, Monograph management, invoicing, and HR on a part-time basis. The two staff members each carry a mix of project architecture, design, field work, interiors, and technical coordination. This works because the team is strong — but it means the firm cannot take on meaningfully more work without someone becoming a bottleneck.</p>
 
 <p>The immediate constraint is that the principal's time is split across seven functions. Every hour spent on specs, detailing, or admin is an hour unavailable for business development, design leadership, and client relationships — the activities that generate new revenue and new opportunity for the entire team.</p>
 
 <div class="diagram-wrap">
-<svg viewBox="0 0 780 280" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg">
+  <!-- Legend -->
+  <rect rx="4" ry="4" x="560" y="8" width="210" height="62" fill="var(--warm)" stroke="var(--rule)" stroke-width="0.6"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6px; fill:#999; text-transform:uppercase; letter-spacing:0.1em;" x="572" y="20">Legend</text>
+  <rect x="572" y="26" width="10" height="4" fill="var(--accent)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="588" y="30">Leadership</text>
+  <rect x="572" y="36" width="10" height="4" fill="var(--blue)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="588" y="40">Project Delivery</text>
+  <rect x="660" y="26" width="10" height="4" fill="var(--gold)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="676" y="30">Operations / Admin</text>
+  <line x1="660" y1="43" x2="680" y2="43" style="stroke:var(--ink);stroke-width:1;opacity:0.15;"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="686" y="46">Reports to</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:6px; fill:#aaa; font-style:italic;" x="572" y="62">Solid lines = direct reporting</text>
 
-  <rect class="zone-bg" x="10" y="5" width="760" height="268"
-        fill="rgba(199,90,58,0.02)" stroke="rgba(199,90,58,0.08)"/>
-
-  <!-- Tim -->
-  <rect class="node-box" x="205" y="22" width="370" height="68"
-        fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
-  <rect class="node-bar" x="205" y="22" width="5" height="68" fill="var(--accent)"/>
-  <text class="node-title" x="225" y="44" fill="var(--ink)" style="font-size:12px;">Tim Derrington — Founding Principal</text>
-  <text class="node-sub" x="225" y="59" fill="#888" style="font-size:7.5px;">CARRYING: Principal · Studio Director · Marketing/BD · Tech Coordinator</text>
-  <text class="node-sub" x="225" y="72" fill="#888" style="font-size:7.5px;">Spec Writer · Detailer · Occasional Senior Project Architect</text>
-  <text class="node-tag" x="225" y="84" fill="var(--accent)" style="font-size:6.5px;">7 ROLES</text>
-
-  <line class="line-report" x1="310" y1="90" x2="185" y2="138" style="stroke-width:1.4;"/>
-  <line class="line-report" x1="470" y1="90" x2="580" y2="138" style="stroke-width:1.4;"/>
-
-  <!-- Staff A — Construction / Technical -->
-  <rect class="node-box" x="40" y="140" width="290" height="62"
-        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.2"/>
-  <rect class="node-bar" x="40" y="140" width="5" height="62" fill="var(--blue)"/>
-  <text class="node-title" x="60" y="162" fill="var(--ink)" style="font-size:11px;">Staff A — Construction &amp; Technical</text>
-  <text class="node-sub" x="60" y="176" fill="#888" style="font-size:7.5px;">Project Architect · Field Lead · ArchiCAD mgmt</text>
-  <text class="node-sub" x="60" y="188" fill="#888" style="font-size:7.5px;">Technical documentation · Detailing</text>
-
-  <!-- Staff B — Design / Interiors -->
-  <rect class="node-box" x="450" y="140" width="290" height="62"
-        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.2"/>
-  <rect class="node-bar" x="450" y="140" width="5" height="62" fill="var(--blue)"/>
-  <text class="node-title" x="470" y="162" fill="var(--ink)" style="font-size:11px;">Staff B — Design &amp; Interiors</text>
-  <text class="node-sub" x="470" y="176" fill="#888" style="font-size:7.5px;">Project Designer · Interiors · Client presentations</text>
-  <text class="node-sub" x="470" y="188" fill="#888" style="font-size:7.5px;">Spatial design · Material selections</text>
-
-  <!-- Note -->
-  <rect rx="4" ry="4" x="180" y="224" width="420" height="34"
-        fill="rgba(199,90,58,0.04)" stroke="rgba(199,90,58,0.08)" stroke-width="0.8"/>
-  <text style="font-family:'DM Sans',sans-serif; font-size:8.5px; fill:#888; text-anchor:middle;" x="390" y="240">Everyone carries 3–7 roles. The studio works, but it cannot grow without</text>
-  <text style="font-family:'DM Sans',sans-serif; font-size:8.5px; fill:#888; text-anchor:middle;" x="390" y="252">dedicated support that frees each person to focus on their highest-value work.</text>
-
+  <rect class="zone-bg" x="10" y="5" width="540" height="328" fill="rgba(199,90,58,0.02)" stroke="rgba(199,90,58,0.08)"/>
+  <!-- Principal -->
+  <rect class="node-box" x="105" y="22" width="370" height="68" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
+  <rect class="node-bar" x="105" y="22" width="5" height="68" fill="var(--accent)"/>
+  <text class="node-title" x="125" y="44" fill="var(--ink)" style="font-size:12px;">Tim Derrington — Founding Principal</text>
+  <text class="node-sub" x="125" y="59" fill="#888" style="font-size:7.5px;">CARRYING: Principal · Studio Director · Marketing/BD · Tech Coordinator</text>
+  <text class="node-sub" x="125" y="72" fill="#888" style="font-size:7.5px;">Spec Writer · Detailer · Occasional Senior Project Architect</text>
+  <text class="node-tag" x="125" y="84" fill="var(--accent)" style="font-size:6.5px;">7 ROLES — single point of failure for BD, design, and delivery</text>
+  <!-- Lines: Principal to Staff -->
+  <line class="line-report" x1="220" y1="90" x2="145" y2="138" style="stroke-width:1.4;"/>
+  <line class="line-report" x1="360" y1="90" x2="440" y2="138" style="stroke-width:1.4;"/>
+  <!-- Line: Principal to Natalia -->
+  <line class="line-report" x1="400" y1="90" x2="640" y2="148" style="stroke-width:1.2;"/>
+  <!-- Staff A -->
+  <rect class="node-box" x="20" y="140" width="264" height="62" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.2"/>
+  <rect class="node-bar" x="20" y="140" width="5" height="62" fill="var(--blue)"/>
+  <text class="node-title" x="40" y="162" fill="var(--ink)" style="font-size:11px;">Staff A — Construction &amp; Technical</text>
+  <text class="node-sub" x="40" y="176" fill="#888" style="font-size:7.5px;">Project Architect · Field Lead · ArchiCAD mgmt</text>
+  <text class="node-sub" x="40" y="188" fill="#888" style="font-size:7.5px;">Technical documentation · Detailing</text>
+  <!-- Staff B -->
+  <rect class="node-box" x="310" y="140" width="264" height="62" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.2"/>
+  <rect class="node-bar" x="310" y="140" width="5" height="62" fill="var(--blue)"/>
+  <text class="node-title" x="330" y="162" fill="var(--ink)" style="font-size:11px;">Staff B — Design &amp; Interiors</text>
+  <text class="node-sub" x="330" y="176" fill="#888" style="font-size:7.5px;">Project Designer · Interiors · Client presentations</text>
+  <text class="node-sub" x="330" y="188" fill="#888" style="font-size:7.5px;">Spatial design · Material selections</text>
+  <!-- Natalia -->
+  <rect class="node-box" x="590" y="140" width="178" height="62" fill="var(--paper)" stroke="var(--gold)" stroke-width="1.2"/>
+  <rect class="node-bar" x="590" y="140" width="5" height="62" fill="var(--gold)"/>
+  <text class="node-title" x="610" y="162" fill="var(--ink)" style="font-size:10px;">Natalia — Part-Time Admin</text>
+  <text class="node-sub" x="610" y="176" fill="#888" style="font-size:7px;">Payroll · Monograph · Time tracking</text>
+  <text class="node-sub" x="610" y="188" fill="#888" style="font-size:7px;">Invoicing · HR</text>
+  <rect rx="3" ry="3" x="700" y="148" width="52" height="12" fill="rgba(138,122,90,0.12)" stroke="none"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6px; fill:var(--gold);" x="708" y="157">0.5 FTE</text>
+  <!-- Bottom note -->
+  <rect rx="4" ry="4" x="60" y="224" width="460" height="48" fill="rgba(199,90,58,0.04)" stroke="rgba(199,90,58,0.08)" stroke-width="0.8"/>
+  <text style="font-family:'DM Sans',sans-serif; font-size:8.5px; fill:#888; text-anchor:middle;" x="290" y="242">Everyone carries 3–7 roles. The studio works, but it cannot grow without</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:8.5px; fill:#888; text-anchor:middle;" x="290" y="254">dedicated support that frees each person to focus on their highest-value work.</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:7.5px; fill:var(--accent); font-style:italic; text-anchor:middle;" x="290" y="266">Principal's time is the constraint — every admin hour costs a BD hour.</text>
 </svg>
 </div>
 
+<div class="summary-row">
+  <div class="sb"><div class="sl">People</div><div class="sv">3.5 FTE</div><div class="sn">3 full-time + 1 part-time admin</div></div>
+  <div class="sb"><div class="sl">Revenue</div><div class="sv">$600–800K</div><div class="sn">Net service revenue</div></div>
+  <div class="sb"><div class="sl">Principal's Roles</div><div class="sv">7</div><div class="sn">Everything</div></div>
+  <div class="sb"><div class="sl">Constraint</div><div class="sv">Bottleneck</div><div class="sn">Principal can't be in two places</div></div>
+</div>
+</div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!--  PHASE 1 — IMMEDIATE                               -->
-<!-- ═══════════════════════════════════════════════════ -->
+<div class="sub-panel" id="p0-roles" data-group="p0">
+<div class="role-card">
+  <div><div class="rn">Tim Derrington — Founding Principal</div><div class="rm">Carrying 7 roles · Bottleneck on everything</div>
+  <div class="rd">Principal, studio director, marketing/BD lead, technical coordinator, spec writer, detailer, and occasional senior project architect. Every hour spent on specs or detailing is an hour unavailable for business development, design leadership, and client relationships — the activities that generate new revenue and new opportunity for the entire team. The ceiling of the firm is the ceiling of Tim's calendar.</div></div>
+  <div class="rt">Reports to<br/><span>—</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Staff A — Construction &amp; Technical</div><div class="rm">In-Studio · Full-time</div>
+  <div class="rd">The studio's construction and technical backbone. Manages field visits, the ArchiCAD environment, technical documentation, and detailing. Carries project architecture duties alongside production work. Strong in constructability and field coordination — the foundation of a future Technical Coordinator &amp; BIM Lead role.</div></div>
+  <div class="rt">Reports to<br/><span>Tim</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Staff B — Design &amp; Interiors</div><div class="rm">In-Studio · Full-time</div>
+  <div class="rd">Leads design development, interior architecture, spatial design, material selections, and client presentations. Carries visualization and CD production alongside design work. Strong design instinct and client rapport — the foundation of a future Design &amp; Interiors Lead role.</div></div>
+  <div class="rt">Reports to<br/><span>Tim</span></div>
+</div>
+<div class="role-card gold">
+  <div><div class="rn">Natalia Derrington — Part-Time Administrator</div><div class="rm">0.5 FTE · Handles all studio operations</div>
+  <div class="rd">Manages payroll, time entries and project time tracking, Monograph management, invoicing, HR, and general administrative coordination. Keeps the operational side running so the architects can focus on project work. In Phase 1, a Studio Coordinator will be hired under Natalia to handle day-to-day tasks, with Natalia overseeing the transition before eventually stepping out of the company.</div></div>
+  <div class="rt">Reports to<br/><span>Tim</span></div>
+</div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!--  PHASE 1 — IMMEDIATE RELIEF                 -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel" id="phase1">
 
 <h2><span class="num">01</span> Phase 1 — Immediate Relief</h2>
-<div class="phase-meta">3 FTE + 2 Colombia contracts + 1 remote hire + in-person studio support · Next 1–3 months</div>
+<div class="phase-meta">3.5 FTE + 2 Colombia contracts + 1 remote hire + in-person support · Next 1–3 months</div>
 
-<p>Three moves, executed in parallel. First, contract drafting and detailing support from Colombia — this reduces CD production pressure on the entire team immediately. Second, a remote Studio Coordinator takes over all screen-based administrative work: invoicing, timesheets, AP/AR, HR paperwork, contract administration. Third, a US-based specification consultant or SpecLink platform takes over spec writing, which requires American code fluency that international contracts cannot reliably provide.</p>
+<div class="sub-tabs">
+  <button class="sub-tab-btn active" data-subtab="p1-chart" data-group="p1">Org Chart</button>
+  <button class="sub-tab-btn" data-subtab="p1-roles" data-group="p1">Role Details</button>
+</div>
 
-<p>In-person building tasks — mail, packages, vendor visits, building maintenance — continue to be handled on a flexible, informal basis by studio-adjacent support.</p>
+<div class="sub-panel active" id="p1-chart" data-group="p1">
+
+<p>Three moves, executed in parallel. Contract drafting from Colombia reduces CD pressure immediately. A remote Studio Coordinator — hired under Natalia's oversight — takes over screen-based admin, with Natalia managing the transition before eventually stepping out of the company. A US spec consultant takes over spec writing. Tim drops from seven roles to four.</p>
 
 <div class="diagram-wrap">
-<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Legend -->
+  <rect rx="4" ry="4" x="680" y="8" width="210" height="72" fill="var(--warm)" stroke="var(--rule)" stroke-width="0.6"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6px; fill:#999; text-transform:uppercase; letter-spacing:0.1em;" x="692" y="20">Legend</text>
+  <rect x="692" y="26" width="10" height="4" fill="var(--accent)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="708" y="30">Leadership</text>
+  <rect x="692" y="36" width="10" height="4" fill="var(--blue)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="708" y="40">Project Delivery</text>
+  <rect x="780" y="26" width="10" height="4" fill="var(--green)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="796" y="30">Specialists / Fractional</text>
+  <rect x="780" y="36" width="10" height="4" fill="var(--gold)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="796" y="40">Operations / Admin</text>
+  <line x1="692" y1="50" x2="712" y2="50" style="stroke:var(--ink);stroke-width:1;opacity:0.15;"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="718" y="53">Reports to</text>
+  <line x1="692" y1="60" x2="712" y2="60" style="stroke:var(--accent);stroke-width:1;stroke-dasharray:5 4;opacity:0.35;"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="718" y="63">Day-to-day direction</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:6px; fill:#aaa; font-style:italic;" x="692" y="74">Dashed box borders = contract / fractional</text>
 
-  <rect class="zone-bg" x="10" y="5" width="880" height="400"
-        fill="rgba(199,90,58,0.02)" stroke="rgba(199,90,58,0.08)"/>
-
-  <!-- Tim — reduced -->
-  <rect class="node-box" x="240" y="20" width="370" height="64"
-        fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
-  <rect class="node-bar" x="240" y="20" width="5" height="64" fill="var(--accent)"/>
-  <text class="node-title" x="260" y="42" fill="var(--ink)" style="font-size:12px;">Tim Derrington — Founding Principal</text>
-  <text class="node-sub" x="260" y="57" fill="#888" style="font-size:7.5px;">REMAINING: Principal · Studio Director · Marketing/BD · Partial Tech Coord</text>
-  <text class="node-tag" x="260" y="70" fill="var(--green)" style="font-size:6.5px;">SHED: Specs · Detailing · Studio admin → new support</text>
-
-  <line class="line-report" x1="340" y1="84" x2="175" y2="126" style="stroke-width:1.4;"/>
-  <line class="line-report" x1="510" y1="84" x2="640" y2="126" style="stroke-width:1.4;"/>
-  <path class="line-report" d="M 320,84 Q 160,105 90,170 Q 72,188 72,210"/>
-  <path class="line-report" d="M 530,84 Q 680,105 760,170 Q 790,195 795,218"/>
-  <line class="line-report" x1="425" y1="84" x2="425" y2="260"/>
-  <line class="line-report" x1="418" y1="84" x2="295" y2="260"/>
-
-  <!-- Staff A — Construction / Technical -->
-  <rect class="node-box" x="42" y="128" width="264" height="56"
-        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.2"/>
-  <rect class="node-bar" x="42" y="128" width="5" height="56" fill="var(--blue)"/>
-  <text class="node-title" x="62" y="150" fill="var(--ink)" style="font-size:11px;">Staff A — Construction &amp; Technical</text>
-  <text class="node-sub" x="62" y="164" fill="#888" style="font-size:7.5px;">Project Architect · Field Lead · ArchiCAD mgmt</text>
-  <text class="node-tag" x="62" y="178" fill="var(--green)" style="font-size:6px;">RELIEVED: CD drafting + detailing via Colombia contracts</text>
-
-  <!-- Staff B — Design / Interiors -->
-  <rect class="node-box" x="510" y="128" width="264" height="56"
-        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.2"/>
-  <rect class="node-bar" x="510" y="128" width="5" height="56" fill="var(--blue)"/>
-  <text class="node-title" x="530" y="150" fill="var(--ink)" style="font-size:11px;">Staff B — Design &amp; Interiors</text>
-  <text class="node-sub" x="530" y="164" fill="#888" style="font-size:7.5px;">Project Designer · Interiors · Client presentations</text>
-  <text class="node-tag" x="530" y="178" fill="var(--green)" style="font-size:6px;">RELIEVED: CD production via Colombia contracts</text>
-
+  <rect class="zone-bg" x="10" y="5" width="660" height="440" fill="rgba(199,90,58,0.02)" stroke="rgba(199,90,58,0.08)"/>
+  <!-- Principal -->
+  <rect class="node-box" x="140" y="20" width="370" height="64" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
+  <rect class="node-bar" x="140" y="20" width="5" height="64" fill="var(--accent)"/>
+  <text class="node-title" x="160" y="42" fill="var(--ink)" style="font-size:12px;">Tim Derrington — Founding Principal</text>
+  <text class="node-sub" x="160" y="57" fill="#888" style="font-size:7.5px;">REMAINING: Principal · Studio Director · Marketing/BD · Partial Tech Coord</text>
+  <text class="node-tag" x="160" y="70" fill="var(--green)" style="font-size:6.5px;">SHED: Specs · Detailing · Studio admin → new support</text>
+  <!-- Lines from Principal — carefully routed -->
+  <line class="line-report" x1="240" y1="84" x2="145" y2="126" style="stroke-width:1.4;"/>
+  <line class="line-report" x1="400" y1="84" x2="540" y2="126" style="stroke-width:1.4;"/>
+  <!-- Principal to Colombia (left route, avoiding Staff A box) -->
+  <path class="line-report" d="M 180,84 L 180,108 L 72,108 L 72,218" style="stroke-width:1.2;"/>
+  <!-- Principal to Spec Consultant -->
+  <line class="line-report" x1="325" y1="84" x2="325" y2="280" style="stroke-width:1.2;"/>
+  <!-- Principal to Natalia -->
+  <line class="line-report" x1="440" y1="84" x2="690" y2="126" style="stroke-width:1.2;"/>
+  <!-- Staff A -->
+  <rect class="node-box" x="22" y="128" width="264" height="56" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.2"/>
+  <rect class="node-bar" x="22" y="128" width="5" height="56" fill="var(--blue)"/>
+  <text class="node-title" x="42" y="150" fill="var(--ink)" style="font-size:11px;">Staff A — Construction &amp; Technical</text>
+  <text class="node-sub" x="42" y="164" fill="#888" style="font-size:7.5px;">Project Architect · Field Lead · ArchiCAD mgmt</text>
+  <text class="node-tag" x="42" y="178" fill="var(--green)" style="font-size:6px;">RELIEVED: CD drafting + detailing via Colombia contracts</text>
+  <!-- Staff B -->
+  <rect class="node-box" x="410" y="128" width="264" height="56" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.2"/>
+  <rect class="node-bar" x="410" y="128" width="5" height="56" fill="var(--blue)"/>
+  <text class="node-title" x="430" y="150" fill="var(--ink)" style="font-size:11px;">Staff B — Design &amp; Interiors</text>
+  <text class="node-sub" x="430" y="164" fill="#888" style="font-size:7.5px;">Project Designer · Interiors · Client presentations</text>
+  <text class="node-tag" x="430" y="178" fill="var(--green)" style="font-size:6px;">RELIEVED: CD production via Colombia contracts</text>
+  <!-- Day-to-day lines from Staff to Colombia -->
+  <path class="line-influence" d="M 100,184 L 100,218" style="stroke:var(--blue);"/>
+  <path class="line-influence" d="M 500,184 L 200,218" style="stroke:var(--blue);"/>
+  <!-- Natalia -->
+  <rect class="node-box" x="680" y="128" width="200" height="56" fill="var(--paper)" stroke="var(--gold)" stroke-width="1.2"/>
+  <rect class="node-bar" x="680" y="128" width="5" height="56" fill="var(--gold)"/>
+  <text class="node-title" x="700" y="148" fill="var(--ink)" style="font-size:10px;">Natalia — Admin Oversight</text>
+  <text class="node-sub" x="700" y="162" fill="#888" style="font-size:7px;">Oversees Studio Coordinator</text>
+  <text class="node-sub" x="700" y="174" fill="#888" style="font-size:7px;">Manages transition · Will step out over time</text>
+  <rect rx="3" ry="3" x="815" y="134" width="52" height="12" fill="rgba(138,122,90,0.12)" stroke="none"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6px; fill:var(--gold);" x="823" y="143">0.5 FTE</text>
+  <!-- Line: Natalia to Studio Coordinator -->
+  <line class="line-report" x1="780" y1="184" x2="780" y2="218" style="stroke-width:1.3;"/>
   <!-- Colombia Contracts -->
-  <rect rx="5" ry="5" x="30" y="200" width="124" height="15" fill="var(--accent)"/>
-  <text class="new-badge" x="44" y="210">NEW — CONTRACT</text>
-  <rect class="node-box new-hire" x="30" y="218" width="256" height="60"
-        fill="var(--paper)"/>
-  <rect class="node-bar" x="30" y="218" width="5" height="60" fill="var(--accent)"/>
-  <text class="node-title" x="50" y="240" fill="var(--ink)" style="font-size:10.5px;">Colombia Contract Support</text>
-  <text class="node-sub" x="50" y="254" fill="#888" style="font-size:7.5px;">×1 Drafter · ×1 Detailer · ~$4–6K/mo combined</text>
-  <text class="node-sub" x="50" y="266" fill="#888" style="font-size:7.5px;">CDT timezone · ArchiCAD production + detail sheets</text>
-
+  <rect rx="5" ry="5" x="20" y="200" width="124" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="34" y="210">NEW — CONTRACT</text>
+  <rect class="node-box new-hire" x="20" y="218" width="256" height="60" fill="var(--paper)"/>
+  <rect class="node-bar" x="20" y="218" width="5" height="60" fill="var(--accent)"/>
+  <text class="node-title" x="40" y="240" fill="var(--ink)" style="font-size:10.5px;">Colombia Contract Support</text>
+  <text class="node-sub" x="40" y="254" fill="#888" style="font-size:7.5px;">×1 Drafter · ×1 Detailer · Pricing TBD</text>
+  <text class="node-sub" x="40" y="266" fill="#888" style="font-size:7.5px;">CDT timezone · ArchiCAD production + detail sheets</text>
   <!-- Spec Consultant -->
-  <rect rx="5" ry="5" x="310" y="248" width="124" height="15" fill="var(--green)"/>
-  <text class="new-badge" x="324" y="258">NEW — FRACTIONAL</text>
-  <rect class="node-box" x="310" y="266" width="228" height="48"
-        fill="var(--paper)" stroke="var(--green)" stroke-width="1.2"/>
-  <rect class="node-bar" x="310" y="266" width="5" height="48" fill="var(--green)"/>
-  <text class="node-title" x="330" y="286" fill="var(--ink)" style="font-size:10.5px;">US Spec Consultant / SpecLink</text>
-  <text class="node-sub" x="330" y="300" fill="#888" style="font-size:7.5px;">Project-by-project · $3–5K/project · US code fluency</text>
-
-  <!-- Studio Coordinator -->
-  <rect rx="5" ry="5" x="660" y="200" width="86" height="15" fill="var(--accent)"/>
-  <text class="new-badge" x="672" y="210">NEW — HIRE</text>
-  <rect class="node-box new-hire" x="660" y="218" width="224" height="60"
-        fill="var(--paper)"/>
-  <rect class="node-bar" x="660" y="218" width="5" height="60" fill="var(--gold)"/>
-  <text class="node-title" x="680" y="240" fill="var(--ink)" style="font-size:10.5px;">Studio Coordinator</text>
-  <text class="node-sub" x="680" y="254" fill="#888" style="font-size:7.5px;">×1 FTE · Fully remote · $50–65K</text>
-  <text class="node-sub" x="680" y="266" fill="#888" style="font-size:7.5px;">AP/AR · Invoicing · HR · Contracts · Timesheets</text>
-  <rect rx="3" ry="3" x="800" y="229" width="52" height="13" fill="rgba(109,90,140,0.1)" stroke="none"/>
-  <text class="node-tag" x="806" y="238" fill="var(--purple)" style="font-size:6.5px;">REMOTE</text>
-
-  <!-- In-person support -->
-  <rect class="node-box" x="310" y="338" width="228" height="42"
-        fill="var(--paper)" stroke="var(--gold)" stroke-width="0.7" stroke-dasharray="4 3"/>
-  <rect class="node-bar" x="310" y="338" width="4" height="42" fill="var(--gold)" opacity="0.4"/>
-  <text class="node-title" x="328" y="358" fill="#999" style="font-size:10px;">In-Person Studio Support</text>
-  <text class="node-sub" x="328" y="371" fill="#bbb" style="font-size:7.5px;">Mail · Packages · Building · Vendors · Flexible</text>
-  <rect rx="3" ry="3" x="460" y="348" width="58" height="12" fill="rgba(74,106,90,0.08)" stroke="none"/>
-  <text class="node-tag" x="466" y="357" fill="var(--green)" style="font-size:6px;">INFORMAL</text>
-
+  <rect rx="5" ry="5" x="300" y="268" width="124" height="15" fill="var(--green)"/>
+  <text class="new-badge" x="314" y="278">NEW — FRACTIONAL</text>
+  <rect class="node-box" x="300" y="286" width="228" height="48" fill="var(--paper)" stroke="var(--green)" stroke-width="1.2"/>
+  <rect class="node-bar" x="300" y="286" width="5" height="48" fill="var(--green)"/>
+  <text class="node-title" x="320" y="306" fill="var(--ink)" style="font-size:10.5px;">US Spec Consultant / SpecLink</text>
+  <text class="node-sub" x="320" y="320" fill="#888" style="font-size:7.5px;">Project-by-project · $3–5K/project · US code fluency</text>
+  <!-- Studio Coordinator (under Natalia) -->
+  <rect rx="5" ry="5" x="680" y="200" width="86" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="692" y="210">NEW — HIRE</text>
+  <rect class="node-box new-hire" x="680" y="218" width="200" height="60" fill="var(--paper)"/>
+  <rect class="node-bar" x="680" y="218" width="5" height="60" fill="var(--gold)"/>
+  <text class="node-title" x="700" y="240" fill="var(--ink)" style="font-size:10.5px;">Studio Coordinator</text>
+  <text class="node-sub" x="700" y="254" fill="#888" style="font-size:7.5px;">×1 FTE · Fully remote · $50–65K</text>
+  <text class="node-sub" x="700" y="266" fill="#888" style="font-size:7.5px;">AP/AR · Invoicing · HR · Contracts · Timesheets</text>
+  <rect rx="3" ry="3" x="812" y="229" width="52" height="13" fill="rgba(109,90,140,0.1)" stroke="none"/>
+  <text class="node-tag" x="818" y="238" fill="var(--purple)" style="font-size:6.5px;">REMOTE</text>
+  <!-- Relational note: Natalia → Coordinator -->
+  <text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:var(--gold); font-style:italic;" x="700" y="290">Works under Natalia · Natalia oversees then transitions out</text>
+  <!-- In-Person Support -->
+  <rect class="node-box" x="300" y="358" width="228" height="42" fill="var(--paper)" stroke="var(--gold)" stroke-width="0.7" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="300" y="358" width="4" height="42" fill="var(--gold)" opacity="0.4"/>
+  <text class="node-title" x="318" y="378" fill="#999" style="font-size:10px;">In-Person Studio Support</text>
+  <text class="node-sub" x="318" y="391" fill="#bbb" style="font-size:7.5px;">Mail · Packages · Building · Vendors · Flexible</text>
   <!-- Cost bar -->
-  <rect rx="5" ry="5" x="30" y="412" width="855" height="36"
-        fill="var(--ink)" stroke="none"/>
-  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(255,255,255,0.35);
-        text-transform:uppercase; letter-spacing:0.08em;" x="46" y="427">Phase 1 Added Cost</text>
-  <text style="font-family:'DM Sans',sans-serif; font-size:9px; fill:rgba(255,255,255,0.7);" x="46" y="442">Colombia ~$50–70K/yr · Specs ~$15–25K/yr · Studio Coordinator ~$50–65K/yr → Total: ~$115–160K/yr</text>
-
+  <rect rx="5" ry="5" x="20" y="420" width="860" height="36" fill="var(--ink)" stroke="none"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.08em;" x="36" y="435">Phase 1 Added Cost</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:9px; fill:rgba(255,255,255,0.7);" x="36" y="450">Colombia TBD · Specs ~$15–25K/yr · Studio Coordinator ~$50–65K/yr → Total: estimate pending Colombia pricing</text>
 </svg>
 </div>
 
 <div class="callout green-c">
-  <p><strong>What changes for the team.</strong> The Colombian contracts absorb the CD production grind — drafting sheets and pulling details that currently eat into everyone's evenings. Staff A can focus on field coordination, technical resolution, and ArchiCAD standards. Staff B can focus on design, interiors, and client-facing work. Tim sheds spec writing, detailing, and administrative tasks, dropping from seven roles to four.</p>
+  <p><strong>What changes for the team.</strong> The Colombian contracts absorb the CD production grind. Staff A focuses on field coordination, technical resolution, and ArchiCAD standards. Staff B focuses on design, interiors, and client-facing work. Tim sheds spec writing, detailing, and admin — dropping from seven roles to four. The Studio Coordinator works under Natalia to handle day-to-day operations, with Natalia overseeing the transition before ultimately stepping out of the company.</p>
+</div>
 </div>
 
+<div class="sub-panel" id="p1-roles" data-group="p1">
 <div class="role-card">
-  <div>
-    <div class="rn">Tim Derrington — Founding Principal</div>
-    <div class="rm">Roles reduced from 7 → 4</div>
-    <div class="rd">Spec writing goes to the US consultant. Detailing goes to the Colombia contracts. Screen-based studio admin goes to the remote Studio Coordinator. Still carrying Studio Director, Marketing/BD, partial Technical Coordinator, and occasional Senior PA duties. Those peel off in Phases 2 and 3.</div>
-  </div>
+  <div><div class="rn">Tim Derrington — Founding Principal</div><div class="rm">Roles reduced from 7 → 4</div>
+  <div class="rd">Spec writing goes to the US consultant. Detailing goes to the Colombia contracts. Screen-based studio admin goes to the remote Studio Coordinator. Still carrying Studio Director, Marketing/BD, partial Technical Coordinator, and occasional Senior PA duties. Those peel off in Phases 2 and 3.</div></div>
   <div class="rt">Reports to<br/><span>—</span></div>
 </div>
-
 <div class="role-card blue">
-  <div>
-    <div class="rn">Staff A — Construction &amp; Technical</div>
-    <div class="rm">In-Studio · Workload reduced</div>
-    <div class="rd">Continues as the studio's construction and technical backbone — field visits, ArchiCAD environment management, technical documentation, and project architecture. With Colombian drafting and detailing support handling production volume, the focus shifts toward higher-value technical resolution, constructability, and field coordination.</div>
-  </div>
+  <div><div class="rn">Staff A — Construction &amp; Technical</div><div class="rm">In-Studio · Workload reduced</div>
+  <div class="rd">Continues as the studio's construction and technical backbone — field visits, ArchiCAD environment management, technical documentation, and project architecture. With Colombian support handling production volume, the focus shifts toward higher-value technical resolution, constructability, and field coordination.</div></div>
   <div class="rt">Reports to<br/><span>Tim</span></div>
 </div>
-
 <div class="role-card blue">
-  <div>
-    <div class="rn">Staff B — Design &amp; Interiors</div>
-    <div class="rm">In-Studio · Workload reduced</div>
-    <div class="rd">Continues leading design and interior architecture work — spatial design, material palettes, client presentations, and visualization. With production support in place, more time is available for the design development and interiors work that directly shapes the client experience.</div>
-  </div>
+  <div><div class="rn">Staff B — Design &amp; Interiors</div><div class="rm">In-Studio · Workload reduced</div>
+  <div class="rd">Continues leading design and interior architecture — spatial design, material palettes, client presentations, visualization. With production support in place, more time for design development and interiors work that directly shapes the client experience.</div></div>
   <div class="rt">Reports to<br/><span>Tim</span></div>
 </div>
-
 <div class="role-card blue">
-  <div>
-    <div class="rn">Colombia Contract Drafter &amp; Detailer <span class="mode-tag contract">CONTRACT</span></div>
-    <div class="rm">×2 contracts · Remote (Colombia) · ~$4–6K/mo combined</div>
-    <div class="rd">One drafter for CD sheet production, one detailer for wall sections, custom assemblies, and connection details. Two separate people — production speed and detailing precision are different skills. Colombia's CDT time zone provides real-time collaboration during the Austin workday. Requires clean ArchiCAD standards and onboarding protocols so contract staff can be productive within days.</div>
-  </div>
+  <div><div class="rn">Colombia Contract Drafter &amp; Detailer <span class="mode-tag contract">CONTRACT</span></div><div class="rm">×2 contracts · Remote (Colombia) · Pricing TBD</div>
+  <div class="rd">One drafter for CD sheet production, one detailer for wall sections, custom assemblies, and connection details. Colombia's CDT time zone provides real-time collaboration during the Austin workday. Labor pricing is not yet confirmed — expecting lower than initial estimates.</div></div>
   <div class="rt">Day-to-day to<br/><span>Staff A or B</span></div>
 </div>
-
 <div class="role-card green">
-  <div>
-    <div class="rn">US Spec Consultant / SpecLink <span class="mode-tag contract">FRACTIONAL</span></div>
-    <div class="rm">Project-by-project · ~$3–5K per project</div>
-    <div class="rd">Handles specification writing with full US code fluency — IBC/IRC, Texas amendments, ADA, MasterFormat. The studio reviews and approves; the consultant produces the documents. This keeps spec writing off the principal's desk without the code-knowledge risk of assigning it to international contract staff.</div>
-  </div>
+  <div><div class="rn">US Spec Consultant / SpecLink <span class="mode-tag contract">FRACTIONAL</span></div><div class="rm">Project-by-project · ~$3–5K per project</div>
+  <div class="rd">Handles specification writing with full US code fluency — IBC/IRC, Texas amendments, ADA, MasterFormat. The studio reviews and approves; the consultant produces the documents.</div></div>
   <div class="rt">Engaged by<br/><span>Tim</span></div>
 </div>
-
 <div class="role-card gold">
-  <div>
-    <div class="rn">Studio Coordinator <span class="mode-tag remote">REMOTE</span> <span class="mode-tag new">NEW HIRE</span></div>
-    <div class="rm">×1 FTE · Fully remote · $50–65K</div>
-    <div class="rd">Pure digital administration: AP/AR, invoicing, timesheet tracking, HR paperwork, insurance renewals, contract administration, vendor coordination. All screen work — no physical presence required. Hiring remote widens the talent pool nationally and optimizes for competence over geography.</div>
-  </div>
-  <div class="rt">Reports to<br/><span>Tim</span></div>
+  <div><div class="rn">Studio Coordinator <span class="mode-tag remote">REMOTE</span> <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · Fully remote · $50–65K</div>
+  <div class="rd">Pure digital administration: AP/AR, invoicing, timesheet tracking, HR paperwork, insurance renewals, contract administration, vendor coordination. All screen work — no physical presence required. Works under Natalia, who oversees the transition of administrative duties. Natalia will manage and train this role, then ultimately transition out of the company as the Coordinator becomes self-sufficient.</div></div>
+  <div class="rt">Reports to<br/><span>Natalia → Tim</span></div>
 </div>
-
-<div class="role-card gold">
-  <div>
-    <div class="rn">In-Person Studio Support <span class="mode-tag informal">INFORMAL</span></div>
-    <div class="rm">Flexible · On own schedule</div>
-    <div class="rd">Mail, packages, building maintenance coordination, letting vendors in, receiving deliveries. Light-touch, domestic-adjacent tasks handled on a flexible basis. No screen work, no desk time — that goes to the remote Studio Coordinator.</div>
-  </div>
-  <div class="rt">Informal<br/><span>—</span></div>
+</div>
 </div>
 
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!--  PHASE 2 — THE LEVERAGE HIRE                        -->
-<!-- ═══════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════ -->
+<!--  PHASE 2 — LEVERAGE HIRE                    -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel" id="phase2">
 
 <h2><span class="num">02</span> Phase 2 — The Leverage Hire</h2>
 <div class="phase-meta">5–6 FTE + contracts · 6–12 months out · Revenue trigger: ~$1.4–1.8M</div>
 
-<p>This is the most important phase in the entire plan. A Senior Project Architect joins the studio — someone who can own a project end-to-end, from schematic design through construction administration, without the principal managing day-to-day delivery. This single hire changes the studio's ceiling. It creates a delivery structure that runs while the principal is meeting a client, visiting a site, or developing the next project.</p>
+<p>This is the most important phase in the entire plan. A Senior Project Architect joins — someone who can own a project end-to-end without the principal managing day-to-day delivery. This single hire changes the studio's ceiling. A Project Designer joins alongside to provide dedicated design and visualization capacity.</p>
 
-<p>A Project Designer joins alongside the Senior PA, providing dedicated design and visualization capacity for a full project team. Meanwhile, the existing team begins to specialize along the lines that are already natural.</p>
+<div class="sub-tabs">
+  <button class="sub-tab-btn active" data-subtab="p2-chart" data-group="p2">Org Chart</button>
+  <button class="sub-tab-btn" data-subtab="p2-roles" data-group="p2">Role Details</button>
+</div>
 
+<div class="sub-panel active" id="p2-chart" data-group="p2">
 <div class="diagram-wrap">
-<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Legend -->
+  <rect rx="4" ry="4" x="680" y="8" width="210" height="62" fill="var(--warm)" stroke="var(--rule)" stroke-width="0.6"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6px; fill:#999; text-transform:uppercase; letter-spacing:0.1em;" x="692" y="20">Legend</text>
+  <rect x="692" y="26" width="10" height="4" fill="var(--accent)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="708" y="30">Leadership</text>
+  <rect x="692" y="36" width="10" height="4" fill="var(--blue)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="708" y="40">Project Delivery</text>
+  <rect x="780" y="26" width="10" height="4" fill="var(--green)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="796" y="30">Specialists / Fractional</text>
+  <rect x="780" y="36" width="10" height="4" fill="var(--gold)"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="796" y="40">Operations / Admin</text>
+  <line x1="692" y1="50" x2="712" y2="50" style="stroke:var(--ink);stroke-width:1;opacity:0.15;"/><text style="font-family:'DM Sans',sans-serif; font-size:6.5px; fill:#777;" x="718" y="53">Reports to</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:6px; fill:#aaa; font-style:italic;" x="692" y="64">Dashed borders = contract / fractional</text>
 
-  <rect class="zone-bg" x="10" y="5" width="880" height="330"
-        fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.08)"/>
-
-  <!-- Tim -->
-  <rect class="node-box" x="260" y="18" width="340" height="54"
-        fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
-  <rect class="node-bar" x="260" y="18" width="5" height="54" fill="var(--accent)"/>
-  <text class="node-title" x="280" y="40" fill="var(--ink)" style="font-size:12px;">Tim Derrington — Founding Principal</text>
-  <text class="node-sub" x="280" y="55" fill="#888" style="font-size:7.5px;">Principal · BD/Marketing · Design Leadership</text>
-  <text class="node-tag" x="280" y="66" fill="var(--green)" style="font-size:6px;">SHED: Studio Director (partial) · Senior PA duties → new hire</text>
-
-  <!-- Senior PA — NEW -->
-  <rect rx="5" ry="5" x="310" y="84" width="86" height="15" fill="var(--accent)"/>
-  <text class="new-badge" x="322" y="94">NEW — HIRE</text>
-  <rect class="node-box new-hire" x="310" y="102" width="240" height="48"
-        fill="var(--paper)"/>
-  <rect class="node-bar" x="310" y="102" width="5" height="48" fill="var(--blue)"/>
-  <text class="node-title" x="330" y="123" fill="var(--ink)" style="font-size:11.5px;">Senior Project Architect</text>
-  <text class="node-sub" x="330" y="138" fill="#888" style="font-size:7.5px;">×1 FTE · $120–145K · Runs projects independently</text>
-
-  <line class="line-report" x1="430" y1="72" x2="430" y2="102" style="stroke-width:1.5; opacity:0.2;"/>
-  <path class="line-influence" d="M 380,72 Q 360,88 345,102"/>
-
-  <!-- Lines to team -->
-  <line class="line-report" x1="380" y1="150" x2="200" y2="195"/>
-  <line class="line-report" x1="480" y1="150" x2="615" y2="195"/>
-  <line class="line-report" x1="430" y1="150" x2="430" y2="195"/>
-
-  <!-- Staff A evolving -->
-  <rect class="node-box" x="52" y="197" width="280" height="58"
-        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
-  <rect class="node-bar" x="52" y="197" width="5" height="58" fill="var(--blue)"/>
-  <text class="node-title" x="72" y="219" fill="var(--ink)" style="font-size:10.5px;">Staff A → Technical &amp; Field Lead</text>
-  <text class="node-sub" x="72" y="234" fill="#888" style="font-size:7.5px;">Evolving toward: Specs &amp; Field Lead ·</text>
-  <text class="node-sub" x="72" y="245" fill="#888" style="font-size:7.5px;">Tech Coordinator &amp; BIM Lead</text>
-
-  <!-- Project Designer — NEW -->
-  <rect rx="5" ry="5" x="356" y="183" width="86" height="15" fill="var(--accent)"/>
-  <text class="new-badge" x="366" y="193">NEW — HIRE</text>
-  <rect class="node-box new-hire" x="356" y="200" width="210" height="48"
-        fill="var(--paper)"/>
-  <rect class="node-bar" x="356" y="200" width="4" height="48" fill="var(--blue)"/>
-  <text class="node-title" x="374" y="221" fill="var(--ink)" style="font-size:10px;">Project Designer</text>
-  <text class="node-sub" x="374" y="236" fill="#888" style="font-size:7px;">×1 FTE · $78–92K · Design + Viz</text>
-
-  <!-- Staff B evolving -->
-  <rect class="node-box" x="490" y="197" width="280" height="58"
-        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
-  <rect class="node-bar" x="490" y="197" width="5" height="58" fill="var(--blue)"/>
-  <text class="node-title" x="510" y="219" fill="var(--ink)" style="font-size:10.5px;">Staff B → Design &amp; Interiors Lead</text>
-  <text class="node-sub" x="510" y="234" fill="#888" style="font-size:7.5px;">Evolving toward: Senior design role ·</text>
-  <text class="node-sub" x="510" y="245" fill="#888" style="font-size:7.5px;">Future interiors team lead</text>
-
+  <rect class="zone-bg" x="10" y="5" width="660" height="350" fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.08)"/>
+  <!-- Principal -->
+  <rect class="node-box" x="160" y="18" width="340" height="54" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
+  <rect class="node-bar" x="160" y="18" width="5" height="54" fill="var(--accent)"/>
+  <text class="node-title" x="180" y="40" fill="var(--ink)" style="font-size:12px;">Tim Derrington — Founding Principal</text>
+  <text class="node-sub" x="180" y="55" fill="#888" style="font-size:7.5px;">Principal · BD/Marketing · Design Leadership</text>
+  <text class="node-tag" x="180" y="66" fill="var(--green)" style="font-size:6px;">SHED: Studio Director (partial) · Senior PA duties → new hire</text>
+  <!-- Senior PA -->
+  <rect rx="5" ry="5" x="210" y="84" width="86" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="222" y="94">NEW — HIRE</text>
+  <rect class="node-box new-hire" x="210" y="102" width="240" height="48" fill="var(--paper)"/>
+  <rect class="node-bar" x="210" y="102" width="5" height="48" fill="var(--blue)"/>
+  <text class="node-title" x="230" y="123" fill="var(--ink)" style="font-size:11.5px;">Senior Project Architect</text>
+  <text class="node-sub" x="230" y="138" fill="#888" style="font-size:7.5px;">×1 FTE · $120–145K · Owns production &amp; tech compliance</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:6px; fill:var(--blue); font-style:italic;" x="460" y="128">Design stays with Tim.</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:6px; fill:var(--blue); font-style:italic;" x="460" y="137">This hire owns delivery.</text>
+  <!-- Line: Principal to SPA -->
+  <line class="line-report" x1="330" y1="72" x2="330" y2="102" style="stroke-width:1.5; opacity:0.2;"/>
+  <!-- Lines: SPA to team members -->
+  <line class="line-report" x1="280" y1="150" x2="160" y2="195" style="stroke-width:1.2;"/>
+  <line class="line-report" x1="380" y1="150" x2="530" y2="195" style="stroke-width:1.2;"/>
+  <line class="line-report" x1="330" y1="150" x2="380" y2="195" style="stroke-width:1.2;"/>
+  <!-- Staff A -->
+  <rect class="node-box" x="32" y="197" width="270" height="58" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
+  <rect class="node-bar" x="32" y="197" width="5" height="58" fill="var(--blue)"/>
+  <text class="node-title" x="52" y="219" fill="var(--ink)" style="font-size:10.5px;">Staff A → Technical &amp; Field Lead</text>
+  <text class="node-sub" x="52" y="234" fill="#888" style="font-size:7.5px;">Evolving toward: Specs &amp; Field Lead ·</text>
+  <text class="node-sub" x="52" y="245" fill="#888" style="font-size:7.5px;">Tech Coordinator &amp; BIM Lead</text>
+  <!-- Project Designer -->
+  <rect rx="5" ry="5" x="318" y="183" width="86" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="328" y="193">NEW — HIRE</text>
+  <rect class="node-box new-hire" x="318" y="200" width="200" height="48" fill="var(--paper)"/>
+  <rect class="node-bar" x="318" y="200" width="4" height="48" fill="var(--blue)"/>
+  <text class="node-title" x="336" y="221" fill="var(--ink)" style="font-size:10px;">Project Designer</text>
+  <text class="node-sub" x="336" y="236" fill="#888" style="font-size:7px;">×1 FTE · $78–92K · Design + Viz</text>
+  <!-- Staff B -->
+  <rect class="node-box" x="400" y="197" width="270" height="58" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
+  <rect class="node-bar" x="400" y="197" width="5" height="58" fill="var(--blue)"/>
+  <text class="node-title" x="420" y="219" fill="var(--ink)" style="font-size:10.5px;">Staff B → Design &amp; Interiors Lead</text>
+  <text class="node-sub" x="420" y="234" fill="#888" style="font-size:7.5px;">Evolving toward: Senior design role ·</text>
+  <text class="node-sub" x="420" y="245" fill="#888" style="font-size:7.5px;">Future interiors team lead</text>
   <!-- Continuing support -->
-  <rect class="node-box" x="52" y="275" width="192" height="38"
-        fill="var(--paper)" stroke="rgba(58,90,124,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
-  <rect class="node-bar" x="52" y="275" width="4" height="38" fill="var(--blue)" opacity="0.4"/>
-  <text class="node-title" x="68" y="293" fill="#999" style="font-size:9.5px;">Colombia Contracts</text>
-  <text class="node-sub" x="68" y="305" fill="#bbb" style="font-size:7px;">Continuing · Drafting + Detailing</text>
-
-  <rect class="node-box" x="262" y="275" width="192" height="38"
-        fill="var(--paper)" stroke="rgba(74,106,90,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
-  <rect class="node-bar" x="262" y="275" width="4" height="38" fill="var(--green)" opacity="0.4"/>
-  <text class="node-title" x="278" y="293" fill="#999" style="font-size:9.5px;">Spec Consultant</text>
-  <text class="node-sub" x="278" y="305" fill="#bbb" style="font-size:7px;">Continuing · Project-by-project</text>
-
-  <rect class="node-box" x="472" y="275" width="192" height="38"
-        fill="var(--paper)" stroke="rgba(138,122,90,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
-  <rect class="node-bar" x="472" y="275" width="4" height="38" fill="var(--gold)" opacity="0.4"/>
-  <text class="node-title" x="488" y="293" fill="#999" style="font-size:9.5px;">Studio Coord + Bldg Support</text>
-  <text class="node-sub" x="488" y="305" fill="#bbb" style="font-size:7px;">Continuing from Phase 1</text>
-
+  <rect class="node-box" x="32" y="280" width="180" height="38" fill="var(--paper)" stroke="rgba(58,90,124,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="32" y="280" width="4" height="38" fill="var(--blue)" opacity="0.4"/>
+  <text class="node-title" x="48" y="298" fill="#999" style="font-size:9.5px;">Colombia Contracts</text>
+  <text class="node-sub" x="48" y="310" fill="#bbb" style="font-size:7px;">Continuing · Drafting + Detailing</text>
+  <rect class="node-box" x="228" y="280" width="180" height="38" fill="var(--paper)" stroke="rgba(74,106,90,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="228" y="280" width="4" height="38" fill="var(--green)" opacity="0.4"/>
+  <text class="node-title" x="244" y="298" fill="#999" style="font-size:9.5px;">Spec Consultant</text>
+  <text class="node-sub" x="244" y="310" fill="#bbb" style="font-size:7px;">Continuing · Project-by-project</text>
+  <rect class="node-box" x="424" y="280" width="180" height="38" fill="var(--paper)" stroke="rgba(138,122,90,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="424" y="280" width="4" height="38" fill="var(--gold)" opacity="0.4"/>
+  <text class="node-title" x="440" y="298" fill="#999" style="font-size:9.5px;">Studio Coordinator</text>
+  <text class="node-sub" x="440" y="310" fill="#bbb" style="font-size:7px;">Continuing from Phase 1</text>
   <!-- Cost bar -->
-  <rect rx="5" ry="5" x="30" y="340" width="840" height="28"
-        fill="var(--ink)" stroke="none"/>
-  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(255,255,255,0.35);
-        text-transform:uppercase; letter-spacing:0.08em;" x="46" y="354">Phase 2 Added Cost</text>
-  <text style="font-family:'DM Sans',sans-serif; font-size:9px; fill:rgba(255,255,255,0.7);" x="230" y="354">Senior PA ~$120–145K + Project Designer ~$78–92K → Total payroll now ~$550–700K</text>
-
+  <rect rx="5" ry="5" x="10" y="340" width="660" height="28" fill="var(--ink)" stroke="none"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.08em;" x="26" y="354">Phase 2 Added Cost</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:9px; fill:rgba(255,255,255,0.7);" x="200" y="354">Senior PA ~$120–145K + Project Designer ~$78–92K → Total payroll now ~$550–700K</text>
 </svg>
 </div>
 
 <div class="callout blue-c">
-  <p><strong>Why this hire changes everything.</strong> A Senior PA who can own delivery end-to-end creates a project team that runs without the principal in the room. That frees the principal to pursue work the studio couldn't take before — which is the only way revenue grows beyond the current ceiling. Every subsequent hire in this plan depends on this one working.</p>
-</div>
-
-<p>The existing team's evolution becomes explicit in this phase. Staff A's natural strengths in construction, field coordination, and ArchiCAD management position them on a trajectory toward the studio's Technical Coordinator &amp; BIM Lead and eventually the Specifications &amp; Field Lead role. Staff B's design and interiors strengths position them as the future lead of the studio's interiors and experience design capability — with the eventual authority to manage a dedicated interiors team member.</p>
-
-<div class="evo-track">
-  <div class="evo-from">
-    <div class="evo-label">Staff A — Current</div>
-    <div class="evo-detail">Project Arch · Field · ArchiCAD · Detailing</div>
-  </div>
-  <div class="evo-arrow">→</div>
-  <div class="evo-to blue">
-    <div class="evo-label">Staff A — Trajectory</div>
-    <div class="evo-detail">Tech Coordinator &amp; BIM Lead · Specs &amp; Field Lead</div>
-  </div>
+  <p><strong>Why this hire changes everything.</strong> A Senior PA who can own delivery end-to-end creates a project team that runs without the principal in the room. That frees the principal to pursue work the studio couldn't take before. Every subsequent hire depends on this one working.</p>
 </div>
 
 <div class="evo-track">
-  <div class="evo-from">
-    <div class="evo-label">Staff B — Current</div>
-    <div class="evo-detail">Project Designer · Interiors · Presentations</div>
-  </div>
+  <div class="evo-from"><div class="evo-label">Staff A — Current</div><div class="evo-detail">Project Arch · Field · ArchiCAD · Detailing</div></div>
   <div class="evo-arrow">→</div>
-  <div class="evo-to green">
-    <div class="evo-label">Staff B — Trajectory</div>
-    <div class="evo-detail">Design Lead · Interiors Team Lead · Experience Design</div>
-  </div>
+  <div class="evo-to blue"><div class="evo-label">Staff A — Trajectory</div><div class="evo-detail">Tech Coordinator &amp; BIM Lead · Specs &amp; Field Lead</div></div>
+</div>
+<div class="evo-track">
+  <div class="evo-from"><div class="evo-label">Staff B — Current</div><div class="evo-detail">Project Designer · Interiors · Presentations</div></div>
+  <div class="evo-arrow">→</div>
+  <div class="evo-to green"><div class="evo-label">Staff B — Trajectory</div><div class="evo-detail">Design Lead · Interiors Team Lead · Experience Design</div></div>
 </div>
 
-<p>These are not reassignments — they are formalizations of the roles each person already gravitates toward. The growth plan creates room for each team member to go deeper into their strengths rather than continuing to spread across every function.</p>
+<p>These are not reassignments — they are formalizations of the roles each person already gravitates toward. The growth plan creates room for each team member to go deeper into their strengths.</p>
+</div>
+
+<div class="sub-panel" id="p2-roles" data-group="p2">
+<div class="role-card">
+  <div><div class="rn">Tim Derrington — Founding Principal</div><div class="rm">Roles reduced from 4 → 3</div>
+  <div class="rd">With a Senior PA managing day-to-day delivery, the principal sheds remaining project architect duties. Focus narrows to three activities: principal-level BD and client relationships, design leadership and critique, and marketing/firm positioning. The Senior PA handles production and technical compliance — Tim stays in design.</div></div>
+  <div class="rt">Reports to<br/><span>—</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Senior Project Architect <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · In-studio · $120–145K</div>
+  <div class="rd">Owns production and technical compliance end-to-end — from SD through CA — without the principal managing day-to-day delivery. Runs project teams, coordinates consultants, manages scope and schedule. <em>This role owns the production and technical execution. Design leadership remains with the principal.</em> The Senior PA ensures what Tim designs gets built correctly, on time, and on budget. Every subsequent hire in the plan depends on this one working.</div></div>
+  <div class="rt">Reports to<br/><span>Tim</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Project Designer <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · In-studio · $78–92K</div>
+  <div class="rd">Dedicated design and visualization capacity. Develops design concepts under Tim's direction and the Senior PA's project management. Produces renderings, presentation materials, and design development documents. Frees both staff members from visualization grind so they can focus on their evolving specializations.</div></div>
+  <div class="rt">Reports to<br/><span>Senior PA</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Staff A — Technical &amp; Field Lead</div><div class="rm">Evolving role · In-studio</div>
+  <div class="rd">With a Senior PA handling project delivery management, Staff A's role clarifies around technical coordination, ArchiCAD environment management, and field work. Growing toward a formal Technical Coordinator &amp; BIM Lead position. Continues handling specs and construction documentation quality alongside the Senior PA.</div></div>
+  <div class="rt">Reports to<br/><span>Senior PA</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Staff B — Design &amp; Interiors Lead</div><div class="rm">Evolving role · In-studio</div>
+  <div class="rd">With a Project Designer providing visualization support, Staff B focuses on higher-value design work — interiors, material palettes, client experience touchpoints, and spatial design. Growing toward a formal Design &amp; Interiors Lead role. The foundation of the firm's future interiors capability.</div></div>
+  <div class="rt">Reports to<br/><span>Senior PA</span></div>
+</div>
+<div class="role-card">
+  <div><div class="rn">Continuing Support</div><div class="rm">Colombia Contracts · Spec Consultant · Studio Coordinator</div>
+  <div class="rd">All Phase 1 support continues. Colombia contracts handle drafting and detailing. The US Spec Consultant handles specifications on a project-by-project basis. The Studio Coordinator (now fully transitioned from Natalia's oversight) manages all administrative functions independently.</div></div>
+  <div class="rt">Status<br/><span>Continuing</span></div>
+</div>
+
+<div class="callout blue-c">
+  <p><strong>Design stays with the principal.</strong> The Senior PA owns production, technical compliance, schedule, and budget. Tim retains design authority — critiques, concept direction, material decisions, spatial quality. The PA ensures the design gets built right. Tim ensures the design is right. This split is what makes the hire transformative rather than just additive.</p>
+</div>
+</div>
+</div>
 
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!--  PHASE 3 — TWO TEAMS                               -->
-<!-- ═══════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════ -->
+<!--  PHASE 3 — TWO TEAMS                        -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel" id="phase3">
 
 <h2><span class="num">03</span> Phase 3 — Two Project Teams</h2>
 <div class="phase-meta">9–10 FTE + contracts · 12–24 months out · Revenue trigger: ~$2.0–2.6M</div>
 
-<p>The studio now has enough sustained work to support two distinct project teams. A second Senior PA joins to lead Team B. The original team members have fully specialized: Staff A operates as the studio's Technical Coordinator, BIM Lead, and growing Specifications &amp; Field authority. Staff B leads design and interiors, now with a dedicated Experience &amp; Interiors Designer reporting to them — the team member they've been building toward leading.</p>
-
-<p>Additional hires this phase include a second Project Designer, a dedicated Architectural Designer (FTE), and potentially a remote Marketing &amp; BD Coordinator to take that responsibility entirely off the principal's plate. The Studio Coordinator role may expand to a full Studio Manager if operational complexity warrants it.</p>
-
-<div class="summary-row">
-  <div class="sb">
-    <div class="sl">FTE</div>
-    <div class="sv">9–10</div>
-    <div class="sn">+ Colombia contracts continuing</div>
-  </div>
-  <div class="sb">
-    <div class="sl">New Hires This Phase</div>
-    <div class="sv">3–4</div>
-    <div class="sn">2nd SPA · Interiors · Arch Designer · Mktg</div>
-  </div>
-  <div class="sb">
-    <div class="sl">Revenue Needed</div>
-    <div class="sv">$2.0 – 2.6M</div>
-    <div class="sn">Net service revenue</div>
-  </div>
-  <div class="sb">
-    <div class="sl">Principal's Roles</div>
-    <div class="sv">2–3</div>
-    <div class="sn">Vision · BD · Design Leadership</div>
-  </div>
+<div class="sub-tabs">
+  <button class="sub-tab-btn active" data-subtab="p3-chart" data-group="p3">Org Chart</button>
+  <button class="sub-tab-btn" data-subtab="p3-roles" data-group="p3">Role Details</button>
 </div>
 
-<p>The Studio Director role emerges in this phase — either promoted from one of the Senior PAs or hired externally. This is the person who runs all delivery, staffing, and scheduling so the principal can focus entirely on vision, relationships, and growth. Key hires and their approximate cost: second Senior PA ($120–145K), Experience &amp; Interiors Designer ($90–115K), Architectural Designer ($62–78K), second Project Designer ($78–92K), and Marketing &amp; BD Coordinator ($62–80K, remote).</p>
+<div class="sub-panel active" id="p3-chart" data-group="p3">
 
-<div class="callout green-c">
-  <p><strong>What Staff B has been building toward.</strong> The Experience &amp; Interiors Designer hire in this phase reports to Staff B, who by now has the design authority and client rapport to lead an interiors team. For a studio focused on experiential venues and hospitality, in-house interiors is the competitive moat — and Staff B is the person who builds it.</p>
-</div>
-
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!--  PHASE 4 — FULL STUDIO                             -->
-<!-- ═══════════════════════════════════════════════════ -->
-
-<h2><span class="num">04</span> Phase 4 — Full Studio</h2>
-<div class="phase-meta">13 FTE + contracts · 24+ months · Revenue trigger: $2.9–3.3M</div>
-
-<p>The complete structure. Two full project teams, each led by a Senior PA, with a Project Architect as swing capacity and bench depth. A dedicated Technical Coordinator &amp; BIM Lead — the role Staff A has grown into — owns QA/QC and ArchiCAD standards across both teams. The Experience &amp; Interiors Designer and Specifications &amp; Field Lead are fully dedicated specialist roles. Operations is covered by a Studio Manager and a remote Marketing &amp; BD Coordinator. Colombian contract drafters continue as surge capacity. In-person building support continues on a flexible basis.</p>
+<p>The studio now supports two distinct project teams. A second Senior PA joins to lead Team B. Staff A operates as Technical Coordinator, BIM Lead, and growing Specs &amp; Field authority. Staff B leads design and interiors with a dedicated Experience &amp; Interiors Designer reporting to them. A Studio Director emerges between the principal and the teams.</p>
 
 <div class="diagram-wrap">
-<svg viewBox="0 0 1060 660" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 1060 620" xmlns="http://www.w3.org/2000/svg">
 
-  <!-- Zone backgrounds -->
-  <rect class="zone-bg" x="280" y="8" width="500" height="140"
+  <!-- Zone: Leadership -->
+  <rect class="zone-bg" x="280" y="8" width="500" height="128"
         fill="rgba(199,90,58,0.04)" stroke="rgba(199,90,58,0.12)"/>
   <text class="zone-label" x="296" y="24" fill="rgba(199,90,58,0.45)">01 Leadership</text>
 
-  <rect class="zone-bg" x="30" y="180" width="690" height="458"
+  <!-- Zone: Delivery -->
+  <rect class="zone-bg" x="30" y="164" width="690" height="340"
         fill="rgba(58,90,124,0.03)" stroke="rgba(58,90,124,0.1)"/>
-  <text class="zone-label" x="46" y="196" fill="rgba(58,90,124,0.4)">02 Project Delivery</text>
+  <text class="zone-label" x="46" y="180" fill="rgba(58,90,124,0.4)">02 Project Delivery</text>
 
-  <rect class="zone-bg" x="750" y="180" width="280" height="270"
+  <!-- Zone: Specialists -->
+  <rect class="zone-bg" x="750" y="164" width="280" height="208"
         fill="rgba(74,106,90,0.04)" stroke="rgba(74,106,90,0.1)"/>
-  <text class="zone-label" x="766" y="196" fill="rgba(74,106,90,0.4)">03 Specialists</text>
+  <text class="zone-label" x="766" y="180" fill="rgba(74,106,90,0.4)">03 Specialists</text>
 
-  <rect class="zone-bg" x="750" y="478" width="280" height="160"
+  <!-- Zone: Operations -->
+  <rect class="zone-bg" x="750" y="398" width="280" height="148"
         fill="rgba(138,122,90,0.04)" stroke="rgba(138,122,90,0.1)"/>
-  <text class="zone-label" x="766" y="494" fill="rgba(138,122,90,0.4)">04 Operations</text>
+  <text class="zone-label" x="766" y="414" fill="rgba(138,122,90,0.4)">04 Operations</text>
 
-  <!-- Reporting lines -->
+
+  <!-- ── Principal ── -->
+  <rect class="node-box" x="375" y="30" width="310" height="46"
+        fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
+  <rect class="node-bar" x="375" y="30" width="5" height="46" fill="var(--accent)"/>
+  <text class="node-title" x="395" y="50" fill="var(--ink)" style="font-size:12px;">Founding Principal</text>
+  <text class="node-sub" x="395" y="65" fill="#888" style="font-size:7.5px;">Vision · BD · Client Relationships · Design Leadership</text>
+
+  <!-- ── Studio Director ── -->
+  <rect class="node-box" x="375" y="90" width="310" height="40"
+        fill="var(--paper)" stroke="var(--accent)" stroke-width="1"/>
+  <rect class="node-bar" x="375" y="90" width="5" height="40" fill="var(--accent)"/>
+  <text class="node-title" x="395" y="108" fill="var(--ink)" style="font-size:11px;">Studio Director</text>
+  <text class="node-sub" x="395" y="121" fill="#888" style="font-size:7.5px;">Delivery oversight · Staffing · Budget · Promoted or hired</text>
+
+  <!-- Line: Principal → Studio Dir -->
+  <line class="line-report" x1="530" y1="76" x2="530" y2="90" style="stroke-width:1.5; opacity:0.2;"/>
+
+  <!-- Lines: Studio Dir → Teams -->
+  <path class="line-report" d="M 440,130 Q 440,150 230,200"/>
+  <path class="line-report" d="M 610,130 Q 610,150 560,200"/>
+
+  <!-- Lines: Principal → Specialists & Ops -->
+  <path class="line-report" d="M 620,76 Q 730,120 812,195"/>
+  <path class="line-report" d="M 640,76 Q 740,180 812,290"/>
+  <path class="line-report" d="M 610,130 Q 720,280 812,425"/>
+  <path class="line-report" d="M 620,130 Q 730,310 812,500"/>
+
+
+  <!-- ═══ TEAM A ═══ -->
+  <rect rx="6" ry="6" x="42" y="188" width="338" height="240"
+        fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.1)" stroke-width="1"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(58,90,124,0.5);
+        letter-spacing:0.1em; text-transform:uppercase;" x="56" y="202">Team A</text>
+
+  <!-- Senior PA (from Phase 2) -->
+  <rect class="node-box" x="54" y="212" width="314" height="48"
+        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
+  <rect class="node-bar" x="54" y="212" width="5" height="48" fill="var(--blue)"/>
+  <text class="node-title" x="74" y="232" fill="var(--ink)" style="font-size:10.5px;">Senior Project Architect — Team A Lead</text>
+  <text class="node-sub" x="74" y="246" fill="#888" style="font-size:7.5px;">×1 · From Phase 2 · Owns SD → CA delivery</text>
+
+  <!-- Lines from SPA-A to team members -->
+  <line class="line-report" x1="140" y1="260" x2="110" y2="280"/>
+  <line class="line-report" x1="270" y1="260" x2="280" y2="280"/>
+
+  <!-- Staff A evolved -->
+  <rect class="node-box" x="54" y="282" width="180" height="56"
+        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
+  <rect class="node-bar" x="54" y="282" width="5" height="56" fill="var(--blue)"/>
+  <text class="node-title" x="74" y="302" fill="var(--ink)" style="font-size:10px;">Staff A — Tech Coord &amp; BIM Lead</text>
+  <text class="node-sub" x="74" y="315" fill="#888" style="font-size:7px;">QA/QC · ArchiCAD env. · Field</text>
+  <text class="node-sub" x="74" y="326" fill="#888" style="font-size:7px;">Shared across both teams</text>
+
+  <!-- Project Designer (from Phase 2) -->
+  <rect class="node-box" x="248" y="282" width="120" height="44"
+        fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.8"/>
+  <rect class="node-bar" x="248" y="282" width="4" height="44" fill="var(--blue)"/>
+  <text class="node-title" x="264" y="302" fill="var(--ink)" style="font-size:10px;">Project Designer</text>
+  <text class="node-sub" x="264" y="315" fill="#888" style="font-size:7px;">×1 · From Phase 2 · Design + Viz</text>
+
+  <!-- Architectural Designer — NEW -->
+  <rect rx="5" ry="5" x="54" y="350" width="86" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="64" y="360">NEW — HIRE</text>
+  <rect class="node-box new-hire" x="54" y="368" width="180" height="44"
+        fill="var(--paper)"/>
+  <rect class="node-bar" x="54" y="368" width="4" height="44" fill="var(--blue)"/>
+  <text class="node-title" x="72" y="388" fill="var(--ink)" style="font-size:10px;">Architectural Designer</text>
+  <text class="node-sub" x="72" y="401" fill="#888" style="font-size:7px;">×1 FTE · $62–78K · CD production</text>
+
+  <line class="line-report" x1="110" y1="338" x2="110" y2="368"/>
+
+
+  <!-- ═══ TEAM B ═══ -->
+  <rect rx="6" ry="6" x="396" y="188" width="314" height="240"
+        fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.1)" stroke-width="1"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(58,90,124,0.5);
+        letter-spacing:0.1em; text-transform:uppercase;" x="410" y="202">Team B</text>
+
+  <!-- Senior PA — NEW -->
+  <rect rx="5" ry="5" x="408" y="196" width="86" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="418" y="206">NEW — HIRE</text>
+  <rect class="node-box new-hire" x="408" y="212" width="290" height="48"
+        fill="var(--paper)"/>
+  <rect class="node-bar" x="408" y="212" width="5" height="48" fill="var(--blue)"/>
+  <text class="node-title" x="428" y="232" fill="var(--ink)" style="font-size:10.5px;">Senior Project Architect — Team B Lead</text>
+  <text class="node-sub" x="428" y="246" fill="#888" style="font-size:7.5px;">×1 · New hire · $120–145K · Owns SD → CA delivery</text>
+
+  <!-- Lines from SPA-B to team members -->
+  <line class="line-report" x1="490" y1="260" x2="470" y2="280"/>
+  <line class="line-report" x1="620" y1="260" x2="620" y2="280"/>
+
+  <!-- Staff B evolved -->
+  <rect class="node-box" x="408" y="282" width="180" height="56"
+        fill="var(--paper)" stroke="var(--green)" stroke-width="1.1"/>
+  <rect class="node-bar" x="408" y="282" width="5" height="56" fill="var(--green)"/>
+  <text class="node-title" x="428" y="302" fill="var(--ink)" style="font-size:10px;">Staff B — Design &amp; Interiors Lead</text>
+  <text class="node-sub" x="428" y="315" fill="#888" style="font-size:7px;">Senior design role · Client-facing</text>
+  <text class="node-sub" x="428" y="326" fill="#888" style="font-size:7px;">Leads interiors capability</text>
+
+  <!-- Project Designer 2 — NEW -->
+  <rect rx="5" ry="5" x="600" y="270" width="86" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="610" y="280">NEW — HIRE</text>
+  <rect class="node-box new-hire" x="600" y="286" width="100" height="44"
+        fill="var(--paper)"/>
+  <rect class="node-bar" x="600" y="286" width="4" height="44" fill="var(--blue)"/>
+  <text class="node-title" x="614" y="306" fill="var(--ink)" style="font-size:9px;">Proj. Designer</text>
+  <text class="node-sub" x="614" y="318" fill="#888" style="font-size:7px;">×1 · $78–92K</text>
+
+  <!-- Colombia contracts -->
+  <rect class="node-box" x="42" y="440" width="192" height="38"
+        fill="var(--paper)" stroke="rgba(58,90,124,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="42" y="440" width="4" height="38" fill="var(--blue)" opacity="0.4"/>
+  <text class="node-title" x="58" y="458" fill="#999" style="font-size:9.5px;">Colombia Contracts</text>
+  <text class="node-sub" x="58" y="470" fill="#bbb" style="font-size:7px;">×2 · Continuing · Surge support both teams</text>
+
+  <!-- Spec Consultant -->
+  <rect class="node-box" x="250" y="440" width="192" height="38"
+        fill="var(--paper)" stroke="rgba(74,106,90,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="250" y="440" width="4" height="38" fill="var(--green)" opacity="0.4"/>
+  <text class="node-title" x="266" y="458" fill="#999" style="font-size:9.5px;">Spec Consultant</text>
+  <text class="node-sub" x="266" y="470" fill="#bbb" style="font-size:7px;">Continuing · Project-by-project</text>
+
+  <!-- Support line from Staff A across both teams -->
+  <path class="line-support" d="M 234,310 Q 360,350 408,310"/>
+
+
+  <!-- ── Specialists ── -->
+
+  <!-- Experience & Interiors Designer — NEW -->
+  <rect rx="5" ry="5" x="762" y="187" width="86" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="772" y="197">NEW — HIRE</text>
+  <rect class="node-box new-hire" x="762" y="204" width="256" height="56"
+        fill="var(--paper)"/>
+  <rect class="node-bar" x="762" y="204" width="5" height="56" fill="var(--green)"/>
+  <text class="node-title" x="782" y="226" fill="var(--ink)" style="font-size:10.5px;">Experience &amp; Interiors Designer</text>
+  <text class="node-sub" x="782" y="240" fill="#888" style="font-size:7.5px;">×1 FTE · $90–115K · FF&amp;E · Wayfinding · Client exp.</text>
+  <text class="node-sub" x="782" y="252" fill="var(--green)" style="font-size:6.5px;">Reports to Staff B (Design &amp; Interiors Lead)</text>
+
+  <!-- Dotted line Staff B → Interiors -->
+  <path class="line-influence" d="M 588,316 Q 680,316 762,234" style="stroke:var(--green);"/>
+
+  <!-- Specs & Field Lead — emerging -->
+  <rect class="node-box" x="762" y="274" width="256" height="48"
+        fill="var(--paper)" stroke="var(--green)" stroke-width="0.8"/>
+  <rect class="node-bar" x="762" y="274" width="5" height="48" fill="var(--green)"/>
+  <text class="node-title" x="782" y="296" fill="var(--ink)" style="font-size:10.5px;">Specs &amp; Field Lead</text>
+  <text class="node-sub" x="782" y="310" fill="#888" style="font-size:7.5px;">Evolving from Staff A authority · Specs in CD · CA in field</text>
+  <rect rx="3" ry="3" x="962" y="282" width="45" height="12" fill="rgba(74,106,90,0.1)"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:5.5px; fill:var(--green);" x="967" y="291">EMERGING</text>
+
+
+  <!-- ── Operations ── -->
+
+  <!-- Studio Coordinator (continuing) -->
+  <rect class="node-box" x="762" y="428" width="256" height="42"
+        fill="var(--paper)" stroke="var(--gold)" stroke-width="0.8"/>
+  <rect class="node-bar" x="762" y="428" width="5" height="42" fill="var(--gold)"/>
+  <text class="node-title" x="782" y="448" fill="var(--ink)" style="font-size:10px;">Studio Coordinator</text>
+  <text class="node-sub" x="782" y="461" fill="#888" style="font-size:7.5px;">×1 · Remote · Continuing from Phase 1 · AP/AR · Admin</text>
+
+  <!-- Marketing & BD Coordinator — NEW -->
+  <rect rx="5" ry="5" x="762" y="480" width="86" height="15" fill="var(--accent)"/>
+  <text class="new-badge" x="772" y="490">NEW — HIRE</text>
+  <rect class="node-box new-hire" x="762" y="498" width="256" height="44"
+        fill="var(--paper)"/>
+  <rect class="node-bar" x="762" y="498" width="5" height="44" fill="var(--gold)"/>
+  <text class="node-title" x="782" y="518" fill="var(--ink)" style="font-size:10px;">Marketing &amp; BD Coordinator</text>
+  <text class="node-sub" x="782" y="531" fill="#888" style="font-size:7.5px;">×1 FTE · Remote · $62–80K · Proposals · CRM · Content</text>
+
+
+  <!-- ── Cost bar ── -->
+  <rect rx="5" ry="5" x="30" y="568" width="1000" height="36"
+        fill="var(--ink)" stroke="none"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(255,255,255,0.35);
+        text-transform:uppercase; letter-spacing:0.08em;" x="46" y="582">Phase 3 Added Cost</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:8.5px; fill:rgba(255,255,255,0.7);" x="46" y="596">2nd SPA ~$120–145K · Interiors ~$90–115K · Arch Designer ~$62–78K · Proj. Designer ~$78–92K · Mktg Coord ~$62–80K → Total payroll now ~$1.2–1.6M</text>
+
+</svg>
+</div>
+
+<div class="summary-row">
+  <div class="sb"><div class="sl">FTE</div><div class="sv">9–10</div><div class="sn">+ Colombia contracts continuing</div></div>
+  <div class="sb"><div class="sl">New Hires</div><div class="sv">4–5</div><div class="sn">2nd SPA · Interiors · Arch Designer · PD · Mktg</div></div>
+  <div class="sb"><div class="sl">Revenue</div><div class="sv">$2.0 – 2.6M</div><div class="sn">Net service revenue</div></div>
+  <div class="sb"><div class="sl">Principal's Roles</div><div class="sv">2–3</div><div class="sn">Vision · BD · Design Leadership</div></div>
+</div>
+
+<div class="callout green-c">
+  <p><strong>What Staff B has been building toward.</strong> The Experience &amp; Interiors Designer hire reports to Staff B, who by now has the design authority and client rapport to lead an interiors team. For a studio focused on experiential venues and hospitality, in-house interiors is the competitive moat — and Staff B is the person who builds it.</p>
+</div>
+
+<div class="callout blue-c">
+  <p><strong>Staff A's expanding authority.</strong> Staff A now serves both teams as Technical Coordinator &amp; BIM Lead — owning the ArchiCAD environment, QA/QC, and field coordination studio-wide. The Specs &amp; Field Lead role is emerging from their growing authority over construction documentation and CA activities. By Phase 4, this becomes a formal specialist position.</p>
+</div>
+
+</div>
+
+<div class="sub-panel" id="p3-roles" data-group="p3">
+<div class="role-card">
+  <div><div class="rn">Tim Derrington — Founding Principal</div><div class="rm">Roles reduced from 4 → 2–3</div>
+  <div class="rd">With a Studio Director managing delivery and two team leads running projects, the principal's day-to-day narrows to vision, BD/client relationships, and design leadership. Studio Director duties have peeled off — either to a promoted Senior PA or an external hire.</div></div>
+  <div class="rt">Reports to<br/><span>—</span></div>
+</div>
+<div class="role-card">
+  <div><div class="rn">Studio Director</div><div class="rm">Promoted from Senior PA or external hire</div>
+  <div class="rd">Owns delivery oversight across both teams — staffing, scheduling, project budgets, and scope management. Serves as the buffer between client-facing principal and production teams. First step toward the Associate Principal role in Phase 5.</div></div>
+  <div class="rt">Reports to<br/><span>Principal</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Senior Project Architect — Team A Lead</div><div class="rm">From Phase 2 · In-Studio · $120–145K</div>
+  <div class="rd">Continues leading Team A through SD → CA. Now managing a Project Designer and new Architectural Designer. Proven delivery capacity from Phase 2 makes them the backbone of the studio's project throughput.</div></div>
+  <div class="rt">Reports to<br/><span>Studio Director</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Senior Project Architect — Team B Lead <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · In-studio · $120–145K</div>
+  <div class="rd">Leads the second project team — must be capable of owning a project from SD through CA without principal oversight. 10+ years experience, strong client presence, and comfort operating as a true team lead. This hire creates the second revenue engine.</div></div>
+  <div class="rt">Reports to<br/><span>Studio Director</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Staff A — Technical Coordinator &amp; BIM Lead</div><div class="rm">Evolved role · Shared across both teams</div>
+  <div class="rd">Now the studio's technical spine. Manages the ArchiCAD environment, runs QA/QC on both teams' documents, coordinates field visits. Growing authority over specifications and CA — the Specs &amp; Field Lead role is emerging from this foundation.</div></div>
+  <div class="rt">Reports to<br/><span>Studio Director</span></div>
+</div>
+<div class="role-card green">
+  <div><div class="rn">Staff B — Design &amp; Interiors Lead</div><div class="rm">Evolved role · Team B + Interiors authority</div>
+  <div class="rd">Senior design authority on Team B and the person building the firm's interiors capability. The new Experience &amp; Interiors Designer reports here — Staff B manages their work, trains them in the studio's design language, and owns the FF&amp;E and wayfinding output.</div></div>
+  <div class="rt">Reports to<br/><span>SPA — Team B</span></div>
+</div>
+<div class="role-card green">
+  <div><div class="rn">Experience &amp; Interiors Designer <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · In-studio · $90–115K</div>
+  <div class="rd">Dedicated interiors and experience design capacity — FF&amp;E specifications, wayfinding, material palettes, client experience touchpoints. For climbing centers and hospitality, this is revenue-generating capability, not overhead. Reports to Staff B.</div></div>
+  <div class="rt">Reports to<br/><span>Staff B</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Project Designer (×2) + Architectural Designer <span class="mode-tag new">NEW HIRES</span></div><div class="rm">PD: $78–92K each · Arch Designer: $62–78K</div>
+  <div class="rd">One Project Designer continues from Phase 2 on Team A. A second joins Team B. The Architectural Designer provides CD production support, primarily on Team A, freeing the Senior PA and Staff A from production grind.</div></div>
+  <div class="rt">Reports to<br/><span>Team leads</span></div>
+</div>
+<div class="role-card gold">
+  <div><div class="rn">Marketing &amp; BD Coordinator <span class="mode-tag remote">REMOTE</span> <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · Fully remote · $62–80K</div>
+  <div class="rd">Proposals, CRM management, social content, conference logistics, project photography coordination. Takes the BD administrative load off the principal so client relationship time isn't consumed by production tasks.</div></div>
+  <div class="rt">Reports to<br/><span>Principal</span></div>
+</div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!--  PHASE 4 — THE FORK                         -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel" id="phase4">
+
+<h2><span class="num">04</span> Phase 4 — Full Studio / The Fork</h2>
+<div class="phase-meta">13 FTE + contracts · 24+ months · Revenue trigger: $2.9–3.3M</div>
+
+<div class="sub-tabs">
+  <button class="sub-tab-btn active" data-subtab="p4-chart" data-group="p4">Org Chart</button>
+  <button class="sub-tab-btn" data-subtab="p4-roles" data-group="p4">Role Details</button>
+  <button class="sub-tab-btn" data-subtab="p4-fork" data-group="p4">The Fork</button>
+</div>
+
+<div class="sub-panel active" id="p4-chart" data-group="p4">
+
+<p>The complete Phase 4 structure. Two full project teams, a Technical Coordinator &amp; BIM Lead, Experience &amp; Interiors Designer, Specifications &amp; Field Lead, Studio Manager, and remote Marketing Coordinator. The principal's role has narrowed to vision, BD, and design leadership.</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 1060 660" xmlns="http://www.w3.org/2000/svg">
+  <rect class="zone-bg" x="280" y="8" width="500" height="140" fill="rgba(199,90,58,0.04)" stroke="rgba(199,90,58,0.12)"/>
+  <text class="zone-label" x="296" y="24" fill="rgba(199,90,58,0.45)">01 Leadership</text>
+  <rect class="zone-bg" x="30" y="180" width="690" height="458" fill="rgba(58,90,124,0.03)" stroke="rgba(58,90,124,0.1)"/>
+  <text class="zone-label" x="46" y="196" fill="rgba(58,90,124,0.4)">02 Project Delivery</text>
+  <rect class="zone-bg" x="750" y="180" width="280" height="270" fill="rgba(74,106,90,0.04)" stroke="rgba(74,106,90,0.1)"/>
+  <text class="zone-label" x="766" y="196" fill="rgba(74,106,90,0.4)">03 Specialists</text>
+  <rect class="zone-bg" x="750" y="478" width="280" height="160" fill="rgba(138,122,90,0.04)" stroke="rgba(138,122,90,0.1)"/>
+  <text class="zone-label" x="766" y="494" fill="rgba(138,122,90,0.4)">04 Operations</text>
   <line class="line-report" x1="530" y1="82" x2="530" y2="102" style="stroke-width:1.6; opacity:0.2;"/>
   <path class="line-report" d="M 485,140 Q 485,160 250,215"/>
   <path class="line-report" d="M 575,140 Q 575,160 565,215"/>
@@ -745,171 +1161,627 @@
   <path class="line-report" d="M 595,140 Q 710,215 812,335"/>
   <path class="line-report" d="M 580,140 Q 700,300 812,498"/>
   <path class="line-report" d="M 575,140 Q 690,330 812,572"/>
-
-  <!-- Design influence -->
-  <path class="line-influence" d="M 410,62 Q 300,62 260,110 Q 242,140 242,195 L 244,215"/>
-  <path class="line-influence" d="M 650,62 Q 700,62 700,110 Q 690,160 572,215"/>
-  <path class="line-influence" d="M 655,50 Q 740,50 780,100 Q 820,155 848,228"/>
-
-  <!-- Team A reporting -->
-  <path class="line-report" d="M 195,278 Q 195,300 130,348"/>
-  <path class="line-report" d="M 300,278 Q 300,300 340,348"/>
-  <!-- Team B reporting -->
-  <path class="line-report" d="M 520,278 Q 520,300 455,348"/>
-  <path class="line-report" d="M 620,278 Q 620,300 645,348"/>
-  <path class="line-report" d="M 455,404 Q 455,430 455,462"/>
-
-  <!-- Support lines -->
-  <path class="line-support" d="M 330,555 Q 220,548 150,500 Q 125,485 120,404"/>
-  <path class="line-support" d="M 470,555 Q 580,548 640,500 Q 660,485 660,404"/>
-  <path class="line-support" d="M 812,365 Q 740,375 690,380"/>
-
-  <!-- ── PRINCIPAL ── -->
-  <rect class="node-box" x="415" y="26" width="230" height="56"
-        fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
+  <rect class="node-box" x="415" y="26" width="230" height="56" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
   <rect class="node-bar" x="415" y="26" width="5" height="56" fill="var(--accent)"/>
   <text class="node-title" x="435" y="48" fill="var(--ink)" style="font-size:12px;">Founding Principal</text>
   <text class="node-sub" x="435" y="63" fill="#888" style="font-size:7.5px;">Vision · BD · Client Relationships · Design Leadership</text>
-
-  <!-- ── STUDIO DIRECTOR ── -->
-  <rect class="node-box" x="415" y="102" width="230" height="42"
-        fill="var(--paper)" stroke="var(--accent)"/>
+  <rect class="node-box" x="415" y="102" width="230" height="42" fill="var(--paper)" stroke="var(--accent)"/>
   <rect class="node-bar" x="415" y="102" width="5" height="42" fill="var(--accent)"/>
   <text class="node-title" x="435" y="121" fill="var(--ink)" style="font-size:11px;">Studio Director</text>
   <text class="node-sub" x="435" y="135" fill="#888" style="font-size:7.5px;">Delivery · Staffing · Budget</text>
-
-  <!-- ── TEAM A ── -->
-  <rect rx="6" ry="6" x="52" y="207" width="330" height="78"
-        fill="rgba(58,90,124,0.03)" stroke="rgba(58,90,124,0.1)" stroke-width="1"/>
+  <!-- Team A -->
+  <rect rx="6" ry="6" x="52" y="207" width="330" height="78" fill="rgba(58,90,124,0.03)" stroke="rgba(58,90,124,0.1)" stroke-width="1"/>
   <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(58,90,124,0.5); letter-spacing:0.1em; text-transform:uppercase;" x="66" y="220">Team A</text>
-  <rect class="node-box" x="64" y="228" width="306" height="48"
-        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
+  <rect class="node-box" x="64" y="228" width="306" height="48" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
   <rect class="node-bar" x="64" y="228" width="5" height="48" fill="var(--blue)"/>
   <text class="node-title" x="82" y="249" fill="var(--ink)" style="font-size:10.5px;">Senior Project Architect</text>
   <text class="node-sub" x="82" y="264" fill="#888" style="font-size:7.5px;">×1 · Team lead · SD → CA</text>
-
-  <rect class="node-box" x="52" y="350" width="172" height="44"
-        fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.8"/>
+  <path class="line-report" d="M 195,278 Q 195,300 130,348"/>
+  <path class="line-report" d="M 300,278 Q 300,300 340,348"/>
+  <rect class="node-box" x="52" y="350" width="172" height="44" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.8"/>
   <rect class="node-bar" x="52" y="350" width="4" height="44" fill="var(--blue)"/>
   <text class="node-title" x="68" y="370" fill="var(--ink)" style="font-size:10px;">Project Designer</text>
   <text class="node-sub" x="68" y="384" fill="#999" style="font-size:7px;">×1 · Design + Viz</text>
-
-  <rect class="node-box" x="240" y="350" width="172" height="44"
-        fill="var(--paper)" stroke="rgba(58,90,124,0.4)" stroke-width="0.8"/>
+  <rect class="node-box" x="240" y="350" width="172" height="44" fill="var(--paper)" stroke="rgba(58,90,124,0.4)" stroke-width="0.8"/>
   <rect class="node-bar" x="240" y="350" width="4" height="44" fill="var(--blue)"/>
   <text class="node-title" x="256" y="370" fill="var(--ink)" style="font-size:10px;">Architectural Designer</text>
   <text class="node-sub" x="256" y="384" fill="#999" style="font-size:7px;">×1 FTE · CD production</text>
-
-  <!-- ── TEAM B ── -->
-  <rect rx="6" ry="6" x="400" y="207" width="310" height="78"
-        fill="rgba(58,90,124,0.03)" stroke="rgba(58,90,124,0.1)" stroke-width="1"/>
+  <!-- Team B -->
+  <rect rx="6" ry="6" x="400" y="207" width="310" height="78" fill="rgba(58,90,124,0.03)" stroke="rgba(58,90,124,0.1)" stroke-width="1"/>
   <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(58,90,124,0.5); letter-spacing:0.1em; text-transform:uppercase;" x="414" y="220">Team B</text>
-  <rect class="node-box" x="412" y="228" width="286" height="48"
-        fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
+  <rect class="node-box" x="412" y="228" width="286" height="48" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.1"/>
   <rect class="node-bar" x="412" y="228" width="5" height="48" fill="var(--blue)"/>
   <text class="node-title" x="430" y="249" fill="var(--ink)" style="font-size:10.5px;">Senior Project Architect</text>
   <text class="node-sub" x="430" y="264" fill="#888" style="font-size:7.5px;">×1 · Team lead · SD → CA</text>
-
-  <rect class="node-box" x="380" y="350" width="172" height="44"
-        fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.8"/>
+  <path class="line-report" d="M 520,278 Q 520,300 455,348"/>
+  <path class="line-report" d="M 620,278 Q 620,300 645,348"/>
+  <path class="line-report" d="M 455,404 Q 455,430 455,462"/>
+  <rect class="node-box" x="380" y="350" width="172" height="44" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.8"/>
   <rect class="node-bar" x="380" y="350" width="4" height="44" fill="var(--blue)"/>
   <text class="node-title" x="396" y="370" fill="var(--ink)" style="font-size:10px;">Project Architect</text>
   <text class="node-sub" x="396" y="384" fill="#999" style="font-size:7px;">×1 · Swing + bench</text>
-
-  <rect class="node-box" x="568" y="350" width="172" height="44"
-        fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.8"/>
+  <rect class="node-box" x="568" y="350" width="172" height="44" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.8"/>
   <rect class="node-bar" x="568" y="350" width="4" height="44" fill="var(--blue)"/>
   <text class="node-title" x="584" y="370" fill="var(--ink)" style="font-size:10px;">Project Designer</text>
   <text class="node-sub" x="584" y="384" fill="#999" style="font-size:7px;">×1 · Design + Viz</text>
-
-  <!-- Contract Drafters -->
-  <rect class="node-box" x="380" y="464" width="172" height="40"
-        fill="var(--paper)" stroke="rgba(58,90,124,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <rect class="node-box" x="380" y="464" width="172" height="40" fill="var(--paper)" stroke="rgba(58,90,124,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
   <rect class="node-bar" x="380" y="464" width="4" height="40" fill="var(--blue)" opacity="0.4"/>
   <text class="node-title" x="396" y="482" fill="#999" style="font-size:9.5px;">Contract Drafter(s)</text>
   <text class="node-sub" x="396" y="495" fill="#bbb" style="font-size:7px;">×1–2 · Colombia · CD surge</text>
-
-  <!-- ── TECH COORDINATOR (Staff A's evolved role) ── -->
-  <rect rx="5" ry="5" x="110" y="535" width="500" height="48"
-        fill="var(--warm)" stroke="var(--blue)" stroke-width="1" stroke-dasharray="5 3"/>
+  <!-- Shared -->
+  <path class="line-support" d="M 330,555 Q 220,548 150,500 Q 125,485 120,404"/>
+  <path class="line-support" d="M 470,555 Q 580,548 640,500 Q 660,485 660,404"/>
+  <path class="line-support" d="M 812,365 Q 740,375 690,380"/>
+  <rect rx="5" ry="5" x="110" y="535" width="500" height="48" fill="var(--warm)" stroke="var(--blue)" stroke-width="1" stroke-dasharray="5 3"/>
   <rect class="node-bar" x="110" y="535" width="5" height="48" fill="var(--blue)"/>
   <text class="node-title" x="130" y="556" fill="var(--ink)" style="font-size:10.5px;">Technical Coordinator &amp; BIM Lead</text>
   <text class="node-sub" x="130" y="571" fill="#888" style="font-size:7.5px;">×1 · QA/QC · ArchiCAD environment · Shared across both teams</text>
-
-  <!-- ── SPECIALISTS ── -->
-  <rect class="node-box" x="768" y="228" width="244" height="48"
-        fill="var(--paper)" stroke="var(--green)" stroke-width="1"/>
+  <!-- Specialists -->
+  <rect class="node-box" x="768" y="228" width="244" height="48" fill="var(--paper)" stroke="var(--green)" stroke-width="1"/>
   <rect class="node-bar" x="768" y="228" width="5" height="48" fill="var(--green)"/>
   <text class="node-title" x="788" y="248" fill="var(--ink)" style="font-size:10px;">Experience &amp; Interiors Designer</text>
   <text class="node-sub" x="788" y="264" fill="#888" style="font-size:7.5px;">×1 · FF&amp;E · Interiors · Wayfinding</text>
-
-  <rect class="node-box" x="768" y="332" width="244" height="48"
-        fill="var(--paper)" stroke="var(--green)" stroke-width="1"/>
+  <rect class="node-box" x="768" y="332" width="244" height="48" fill="var(--paper)" stroke="var(--green)" stroke-width="1"/>
   <rect class="node-bar" x="768" y="332" width="5" height="48" fill="var(--green)"/>
   <text class="node-title" x="788" y="352" fill="var(--ink)" style="font-size:10px;">Specifications &amp; Field Lead</text>
   <text class="node-sub" x="788" y="368" fill="#888" style="font-size:7.5px;">×1 · Specs in CD · CA in field</text>
-
-  <!-- Phase note -->
-  <rect rx="4" ry="4" x="773" y="392" width="234" height="42"
-        fill="rgba(74,106,90,0.04)" stroke="rgba(74,106,90,0.1)" stroke-width="0.8"/>
-  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:var(--green); letter-spacing:0.06em; text-transform:uppercase;" x="785" y="407">Phase utilization</text>
-  <text style="font-family:'DM Sans',sans-serif; font-size:8px; fill:#999;" x="785" y="420">DD/CD → specs · CA → field</text>
-
-  <!-- ── OPERATIONS ── -->
-  <rect class="node-box" x="768" y="498" width="244" height="44"
-        fill="var(--paper)" stroke="var(--gold)" stroke-width="0.8"/>
+  <!-- Operations -->
+  <rect class="node-box" x="768" y="498" width="244" height="44" fill="var(--paper)" stroke="var(--gold)" stroke-width="0.8"/>
   <rect class="node-bar" x="768" y="498" width="5" height="44" fill="var(--gold)"/>
   <text class="node-title" x="788" y="518" fill="var(--ink)" style="font-size:10px;">Studio Manager</text>
   <text class="node-sub" x="788" y="532" fill="#888" style="font-size:7.5px;">×1 · Finance · HR · Contracts</text>
-
-  <rect class="node-box" x="768" y="572" width="244" height="44"
-        fill="var(--paper)" stroke="var(--gold)" stroke-width="0.8"/>
+  <rect class="node-box" x="768" y="572" width="244" height="44" fill="var(--paper)" stroke="var(--gold)" stroke-width="0.8"/>
   <rect class="node-bar" x="768" y="572" width="5" height="44" fill="var(--gold)"/>
   <text class="node-title" x="788" y="592" fill="var(--ink)" style="font-size:10px;">Marketing &amp; BD Coordinator</text>
   <text class="node-sub" x="788" y="606" fill="#888" style="font-size:7.5px;">×1 · Proposals · CRM · Content</text>
-  <rect rx="3" ry="3" x="932" y="582" width="48" height="12" fill="rgba(109,90,140,0.1)" stroke="none"/>
-  <text class="node-tag" x="938" y="591" fill="var(--purple)" style="font-size:6px;">REMOTE</text>
-
-  <!-- In-person support -->
-  <rect class="node-box" x="768" y="628" width="244" height="24"
-        fill="var(--paper)" stroke="var(--gold)" stroke-width="0.5" stroke-dasharray="4 3"/>
-  <rect class="node-bar" x="768" y="628" width="4" height="24" fill="var(--gold)" opacity="0.3"/>
-  <text class="node-title" x="786" y="644" fill="#bbb" style="font-size:8.5px;">In-person building support (informal)</text>
-
 </svg>
 </div>
 
 <div class="summary-row">
-  <div class="sb">
-    <div class="sl">Full-Time</div>
-    <div class="sv">13</div>
-    <div class="sn">11 in-studio · 1 remote · 1 hybrid</div>
+  <div class="sb"><div class="sl">Full-Time</div><div class="sv">13</div><div class="sn">11 in-studio · 1 remote · 1 hybrid</div></div>
+  <div class="sb"><div class="sl">Contracts</div><div class="sv">1–2</div><div class="sn">Colombia drafting + surge</div></div>
+  <div class="sb"><div class="sl">Revenue Target</div><div class="sv">$2.9 – 3.3M</div><div class="sn">Net service revenue</div></div>
+  <div class="sb"><div class="sl">Principal's Role</div><div class="sv">Principal</div><div class="sn">Vision · BD · Design · That's it.</div></div>
+</div>
+</div>
+
+<div class="sub-panel" id="p4-roles" data-group="p4">
+<div class="role-card">
+  <div><div class="rn">Tim Derrington — Founding Principal</div><div class="rm">Roles: Vision · BD · Design Leadership</div>
+  <div class="rd">The principal's day-to-day has narrowed to the three activities that only the founder can do: vision and firm direction, business development and client acquisition, and design leadership. The Studio Director handles delivery oversight. Two team leads manage projects independently. This is the most the principal has ever been freed up — and it's the minimum needed to pursue the work that funds growth to Phase 5.</div></div>
+  <div class="rt">Reports to<br/><span>—</span></div>
+</div>
+<div class="role-card">
+  <div><div class="rn">Studio Director</div><div class="rm">Promoted from Senior PA or external hire</div>
+  <div class="rd">Owns delivery oversight across both teams — staffing, scheduling, project budgets, and scope management. Serves as the buffer between client-facing principal and production teams. At 13 people, this role is carrying meaningful operational weight. If the firm continues to Phase 5, this person becomes a candidate for Associate Principal — Delivery.</div></div>
+  <div class="rt">Reports to<br/><span>Principal</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Senior Project Architect — Team A Lead</div><div class="rm">From Phase 2 · In-studio · $120–145K</div>
+  <div class="rd">Proven delivery capacity from Phase 2. Now leading Team A with a Project Designer and Architectural Designer. Owns production and technical compliance for their projects from SD through CA. Candidate for promotion to Associate Principal — Delivery in Phase 5 if the firm continues on the exit path.</div></div>
+  <div class="rt">Reports to<br/><span>Studio Director</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Senior Project Architect — Team B Lead</div><div class="rm">From Phase 3 · In-studio · $120–145K</div>
+  <div class="rd">Leads the second project team with a Project Architect and Project Designer. 10+ years experience, strong client presence, operates as a true team lead. Candidate for promotion to Associate Principal — Design in Phase 5 if the firm continues on the exit path.</div></div>
+  <div class="rt">Reports to<br/><span>Studio Director</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Staff A — Technical Coordinator &amp; BIM Lead</div><div class="rm">Evolved role · Shared across both teams</div>
+  <div class="rd">The studio's technical spine. Manages the ArchiCAD environment, runs QA/QC across both teams' documents, coordinates field visits studio-wide. The Specifications &amp; Field Lead role has now emerged as a formal specialist position from Staff A's growing authority.</div></div>
+  <div class="rt">Reports to<br/><span>Studio Director</span></div>
+</div>
+<div class="role-card green">
+  <div><div class="rn">Staff B — Design &amp; Interiors Lead</div><div class="rm">Evolved role · Team B + Interiors authority</div>
+  <div class="rd">Senior design authority on Team B and the person who built the firm's interiors capability. Manages the Experience &amp; Interiors Designer, owns FF&amp;E and wayfinding output, and is the client-facing design voice on Team B projects.</div></div>
+  <div class="rt">Reports to<br/><span>SPA — Team B</span></div>
+</div>
+<div class="role-card green">
+  <div><div class="rn">Experience &amp; Interiors Designer</div><div class="rm">From Phase 3 · In-studio · $90–115K</div>
+  <div class="rd">Dedicated interiors and experience design — FF&amp;E specifications, wayfinding, material palettes, client experience touchpoints. Revenue-generating capability for climbing centers and hospitality projects, not overhead.</div></div>
+  <div class="rt">Reports to<br/><span>Staff B</span></div>
+</div>
+<div class="role-card green">
+  <div><div class="rn">Specifications &amp; Field Lead</div><div class="rm">×1 FTE · In-studio or hybrid</div>
+  <div class="rd">Specifications within CD sets and field lead during CA. Emerged from Staff A's growing authority over construction documentation and field coordination. Shared across both teams. Replaces the fractional spec consultant from earlier phases.</div></div>
+  <div class="rt">Reports to<br/><span>Studio Director</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Project Designer (×2) + Architectural Designer + Project Architect</div><div class="rm">Production core across both teams</div>
+  <div class="rd">Two Project Designers ($78–92K each) handle design development and visualization for Teams A and B. One Architectural Designer ($62–78K) provides CD production support on Team A. One Project Architect ($85–105K) on Team B serves as swing capacity and bench strength.</div></div>
+  <div class="rt">Reports to<br/><span>Team leads</span></div>
+</div>
+<div class="role-card gold">
+  <div><div class="rn">Studio Manager</div><div class="rm">Evolved from Studio Coordinator · $65–85K</div>
+  <div class="rd">The remote Studio Coordinator from Phase 1 has grown into a full Studio Manager role covering finance, HR, and contracts. At 13 people the administrative load justifies a more senior position. Handles budgets, benefits, recruiting coordination, and compliance.</div></div>
+  <div class="rt">Reports to<br/><span>Studio Director</span></div>
+</div>
+<div class="role-card gold">
+  <div><div class="rn">Marketing &amp; BD Coordinator <span class="mode-tag remote">REMOTE</span></div><div class="rm">From Phase 3 · $62–80K</div>
+  <div class="rd">Proposals, CRM management, social content, conference logistics, project photography coordination. Takes the BD administrative load off the principal so client relationship time isn't consumed by production tasks.</div></div>
+  <div class="rt">Reports to<br/><span>Principal</span></div>
+</div>
+</div>
+
+<div class="sub-panel" id="p4-fork" data-group="p4">
+
+<h3>The Decision Point</h3>
+<p>Phase 4 is where the road forks. Everything before this is identical regardless of which path you choose. The question is what you build on top of it — and the answer depends entirely on whether you intend to exit the practice.</p>
+
+<div class="fork-visual">
+  <div class="fork-path left">
+    <div class="fp-label">Path A — Lifestyle Studio</div>
+    <div class="fp-title">Stop at 13</div>
+    <div class="fp-detail">A well-run design studio that funds a good life. The principal stays involved in design leadership and client relationships indefinitely. Revenue: $2.9–3.3M. Exit is internal — a managed wind-down, or a below-market sale to loyal senior staff.</div>
+    <div class="fp-detail"><em>Nothing wrong with this. Most architecture firms take this path.</em></div>
   </div>
-  <div class="sb">
-    <div class="sl">Contracts</div>
-    <div class="sv">1–2</div>
-    <div class="sn">Colombia drafting + surge</div>
+  <div class="fork-center">or</div>
+  <div class="fork-path right">
+    <div class="fp-label">Path B — Transferable Practice</div>
+    <div class="fp-title">Continue to 21</div>
+    <div class="fp-detail">A multi-leader firm with operational maturity to survive a change in ownership. Two Associate Principals share client relationships and design authority. Real EBITDA attracts external buyers — a larger firm, a regional consolidator, a PE-backed platform.</div>
+    <div class="fp-detail"><em>More complexity. But the firm becomes an asset that can be sold, not just a job that can be quit.</em></div>
   </div>
-  <div class="sb">
-    <div class="sl">Revenue Target</div>
-    <div class="sv">$2.9 – 3.3M</div>
-    <div class="sn">Net service revenue</div>
-  </div>
-  <div class="sb">
-    <div class="sl">Principal's Role</div>
-    <div class="sv">Principal</div>
-    <div class="sn">Vision · BD · Design · That's it.</div>
-  </div>
+</div>
+
+<div class="callout">
+  <p><strong>Why 13 is dangerous for an exit.</strong> At 13 people the firm is too large to run without real overhead but too small to spread that overhead across enough revenue-generating staff for meaningful profit margin. Key-person dependency is very high. EBITDA is $330–500K at best. Likely sale value: $1.0–2.0M. The buyer pool is essentially internal only.</p>
 </div>
 
 <div class="callout green-c">
-  <p><strong>The plan in one sentence.</strong> Every phase removes roles from people who are overloaded and gives them to people whose full-time job it is to do that work well. The principal goes from seven roles to two. The original team members evolve from generalists into leaders of the capabilities they're already best at. Nobody is asked to do less — everyone is asked to go deeper.</p>
+  <p><strong>Why 21 changes the math.</strong> At 21, two equity-holding principals hold independent client relationships. EBITDA reaches $770K–1.17M. With DBS's niche premium in experiential recreation, enterprise value reaches $3.1–6.4M. The buyer pool opens to consolidators, PE platforms, and larger firms looking to acquire a market position.</p>
 </div>
 
+<p><em>The decision to pursue the exit path should be made at or before Phase 4, even if the actual sale is a decade away.</em> The structural changes in Phases 5 and 6 — equity sharing, leadership development, BD institutionalization — each take 2–3 years to mature.</p>
+</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!--  PHASE 5 — MULTI-LEADER                     -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel" id="phase5">
+
+<h2><span class="num">05</span> Phase 5 — Multi-Leader Studio</h2>
+<div class="phase-meta">17 FTE + contracts · 3–4 years out · Revenue trigger: $4.0–4.8M</div>
+
+<div class="sub-tabs">
+  <button class="sub-tab-btn active" data-subtab="p5-chart" data-group="p5">Org Chart</button>
+  <button class="sub-tab-btn" data-subtab="p5-roles" data-group="p5">Role Details</button>
+</div>
+
+<div class="sub-panel active" id="p5-chart" data-group="p5">
+
+<p>Two Senior PAs from Phase 3–4 are promoted to Associate Principal — each with client-facing authority and project ownership. A third project team forms around a new Senior PA for repeat-client work. A Business Development Manager systematizes the pipeline that has lived in the principal's head.</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 1100 580" xmlns="http://www.w3.org/2000/svg">
+  <rect class="zone-bg" x="300" y="8" width="500" height="72" fill="rgba(199,90,58,0.04)" stroke="rgba(199,90,58,0.12)"/>
+  <text class="zone-label" x="316" y="22" fill="rgba(199,90,58,0.45)">01 Principal</text>
+  <rect class="zone-bg" x="160" y="90" width="780" height="54" fill="rgba(109,90,140,0.03)" stroke="rgba(109,90,140,0.1)"/>
+  <text class="zone-label" x="176" y="104" fill="rgba(109,90,140,0.45)">02 Associate Principals</text>
+  <rect class="zone-bg" x="30" y="158" width="770" height="310" fill="rgba(58,90,124,0.03)" stroke="rgba(58,90,124,0.1)"/>
+  <text class="zone-label" x="46" y="174" fill="rgba(58,90,124,0.4)">03 Three Project Teams + Shared</text>
+  <rect class="zone-bg" x="830" y="158" width="250" height="155" fill="rgba(74,106,90,0.04)" stroke="rgba(74,106,90,0.1)"/>
+  <text class="zone-label" x="846" y="174" fill="rgba(74,106,90,0.4)">04 Specialists</text>
+  <rect class="zone-bg" x="830" y="328" width="250" height="195" fill="rgba(138,122,90,0.04)" stroke="rgba(138,122,90,0.1)"/>
+  <text class="zone-label" x="846" y="344" fill="rgba(138,122,90,0.4)">05 Operations &amp; BD</text>
+  <!-- Principal -->
+  <rect class="node-box" x="400" y="26" width="300" height="42" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
+  <rect class="node-bar" x="400" y="26" width="5" height="42" fill="var(--accent)"/>
+  <text class="node-title" x="420" y="44" fill="var(--ink)" style="font-size:11px;">Founding Principal</text>
+  <text class="node-sub" x="420" y="58" fill="#888" style="font-size:7px;">Vision · BD Strategy · Design Review</text>
+  <!-- APs -->
+  <rect rx="5" ry="5" x="200" y="90" width="62" height="13" fill="var(--green)"/>
+  <text class="new-badge" x="208" y="99" style="font-size:5.5px;">PROMOTED</text>
+  <rect class="node-box promo-hire" x="195" y="106" width="300" height="34" fill="var(--paper)"/>
+  <rect class="node-bar" x="195" y="106" width="5" height="34" fill="var(--purple)"/>
+  <text class="node-title" x="215" y="122" fill="var(--ink)" style="font-size:10px;">Associate Principal — Delivery</text>
+  <text class="node-sub" x="215" y="134" fill="#888" style="font-size:6.5px;">Studio Director · Staffing · Budget · Client relationships</text>
+  <rect rx="5" ry="5" x="615" y="90" width="62" height="13" fill="var(--green)"/>
+  <text class="new-badge" x="623" y="99" style="font-size:5.5px;">PROMOTED</text>
+  <rect class="node-box promo-hire" x="605" y="106" width="300" height="34" fill="var(--paper)"/>
+  <rect class="node-bar" x="605" y="106" width="5" height="34" fill="var(--purple)"/>
+  <text class="node-title" x="625" y="122" fill="var(--ink)" style="font-size:10px;">Associate Principal — Design</text>
+  <text class="node-sub" x="625" y="134" fill="#888" style="font-size:6.5px;">Design quality · Interiors · Client experience · Awards</text>
+  <!-- Lines -->
+  <line class="line-report" x1="470" y1="68" x2="350" y2="106" style="stroke-width:1.2; opacity:0.15;"/>
+  <line class="line-report" x1="630" y1="68" x2="750" y2="106" style="stroke-width:1.2; opacity:0.15;"/>
+  <path class="line-report" d="M 300,140 Q 300,152 170,185"/>
+  <path class="line-report" d="M 400,140 Q 420,155 420,185"/>
+  <path class="line-report" d="M 700,140 Q 680,155 660,185"/>
+  <!-- Team A -->
+  <rect rx="5" ry="5" x="42" y="178" width="248" height="115" fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.08)" stroke-width="0.8"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6.5px; fill:rgba(58,90,124,0.5); letter-spacing:0.1em; text-transform:uppercase;" x="54" y="190">Team A</text>
+  <rect class="node-box" x="50" y="196" width="232" height="32" fill="var(--paper)" stroke="var(--blue)" stroke-width="0.8"/>
+  <rect class="node-bar" x="50" y="196" width="4" height="32" fill="var(--blue)"/>
+  <text class="node-title" x="66" y="212" fill="var(--ink)" style="font-size:9px;">Senior Project Architect</text>
+  <text class="node-sub" x="66" y="222" fill="#888" style="font-size:6.5px;">×1 · Team lead</text>
+  <rect class="node-box" x="50" y="234" width="112" height="28" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="50" y="234" width="3" height="28" fill="var(--blue)"/>
+  <text class="node-title" x="62" y="249" fill="var(--ink)" style="font-size:8px;">Proj. Designer</text>
+  <text class="node-sub" x="62" y="258" fill="#999" style="font-size:6px;">×1</text>
+  <rect class="node-box" x="170" y="234" width="112" height="28" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="170" y="234" width="3" height="28" fill="var(--blue)"/>
+  <text class="node-title" x="182" y="249" fill="var(--ink)" style="font-size:8px;">Arch. Designer</text>
+  <text class="node-sub" x="182" y="258" fill="#999" style="font-size:6px;">×1</text>
+  <!-- Team B -->
+  <rect rx="5" ry="5" x="302" y="178" width="248" height="115" fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.08)" stroke-width="0.8"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6.5px; fill:rgba(58,90,124,0.5); letter-spacing:0.1em; text-transform:uppercase;" x="314" y="190">Team B</text>
+  <rect class="node-box" x="310" y="196" width="232" height="32" fill="var(--paper)" stroke="var(--blue)" stroke-width="0.8"/>
+  <rect class="node-bar" x="310" y="196" width="4" height="32" fill="var(--blue)"/>
+  <text class="node-title" x="326" y="212" fill="var(--ink)" style="font-size:9px;">Senior Project Architect</text>
+  <text class="node-sub" x="326" y="222" fill="#888" style="font-size:6.5px;">×1 · Team lead</text>
+  <rect class="node-box" x="310" y="234" width="112" height="28" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="310" y="234" width="3" height="28" fill="var(--blue)"/>
+  <text class="node-title" x="322" y="249" fill="var(--ink)" style="font-size:8px;">Proj. Architect</text>
+  <text class="node-sub" x="322" y="258" fill="#999" style="font-size:6px;">×1 · Swing</text>
+  <rect class="node-box" x="430" y="234" width="112" height="28" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="430" y="234" width="3" height="28" fill="var(--blue)"/>
+  <text class="node-title" x="442" y="249" fill="var(--ink)" style="font-size:8px;">Proj. Designer</text>
+  <text class="node-sub" x="442" y="258" fill="#999" style="font-size:6px;">×1</text>
+  <!-- Team C -->
+  <rect rx="5" ry="5" x="562" y="168" width="60" height="13" fill="var(--accent)"/>
+  <text class="new-badge" x="569" y="178" style="font-size:5.5px;">NEW TEAM</text>
+  <rect rx="5" ry="5" x="562" y="184" width="232" height="109" fill="rgba(199,90,58,0.02)" stroke="rgba(199,90,58,0.1)" stroke-width="0.8"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6.5px; fill:rgba(199,90,58,0.5); letter-spacing:0.1em; text-transform:uppercase;" x="574" y="196">Team C</text>
+  <rect class="node-box new-hire" x="570" y="202" width="216" height="32" fill="var(--paper)"/>
+  <rect class="node-bar" x="570" y="202" width="4" height="32" fill="var(--accent)"/>
+  <text class="node-title" x="586" y="218" fill="var(--ink)" style="font-size:9px;">Sr. Project Architect</text>
+  <text class="node-sub" x="586" y="228" fill="#888" style="font-size:6.5px;">×1 · New hire · Repeat clients</text>
+  <rect class="node-box new-hire" x="570" y="240" width="216" height="28" fill="var(--paper)"/>
+  <rect class="node-bar" x="570" y="240" width="3" height="28" fill="var(--accent)"/>
+  <text class="node-title" x="586" y="255" fill="var(--ink)" style="font-size:8px;">Assoc. Designer</text>
+  <text class="node-sub" x="586" y="264" fill="#999" style="font-size:6px;">×1 · New hire · Flex</text>
+  <!-- Shared row -->
+  <rect class="node-box" x="42" y="316" width="228" height="32" fill="var(--paper)" stroke="rgba(58,90,124,0.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="42" y="316" width="3" height="32" fill="var(--blue)" opacity="0.4"/>
+  <text class="node-title" x="56" y="332" fill="#999" style="font-size:8.5px;">Colombia Contracts ×2–3</text>
+  <text class="node-sub" x="56" y="342" fill="#bbb" style="font-size:6px;">CD surge · All teams</text>
+  <rect rx="5" ry="5" x="286" y="316" width="508" height="32" fill="var(--warm)" stroke="var(--blue)" stroke-width="0.8" stroke-dasharray="5 3"/>
+  <rect class="node-bar" x="286" y="316" width="4" height="32" fill="var(--blue)"/>
+  <text class="node-title" x="302" y="332" fill="var(--ink)" style="font-size:9px;">Technical Coordinator &amp; BIM Lead</text>
+  <text class="node-sub" x="302" y="342" fill="#888" style="font-size:6.5px;">×1 · QA/QC · ArchiCAD · Shared across all teams</text>
+  <!-- Specialists -->
+  <rect class="node-box" x="842" y="180" width="226" height="36" fill="var(--paper)" stroke="var(--green)" stroke-width="0.8"/>
+  <rect class="node-bar" x="842" y="180" width="4" height="36" fill="var(--green)"/>
+  <text class="node-title" x="858" y="197" fill="var(--ink)" style="font-size:9px;">Experience &amp; Interiors Designer</text>
+  <text class="node-sub" x="858" y="208" fill="#888" style="font-size:6.5px;">×1 · FF&amp;E · Interiors</text>
+  <rect class="node-box" x="842" y="224" width="226" height="36" fill="var(--paper)" stroke="var(--green)" stroke-width="0.8"/>
+  <rect class="node-bar" x="842" y="224" width="4" height="36" fill="var(--green)"/>
+  <text class="node-title" x="858" y="241" fill="var(--ink)" style="font-size:9px;">Specifications &amp; Field Lead</text>
+  <text class="node-sub" x="858" y="252" fill="#888" style="font-size:6.5px;">×1 · Specs · CA in field</text>
+  <rect class="node-box" x="842" y="268" width="226" height="32" fill="var(--paper)" stroke="var(--green)" stroke-width="0.6" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="842" y="268" width="4" height="32" fill="var(--green)" opacity="0.4"/>
+  <text class="node-title" x="858" y="285" fill="#999" style="font-size:8.5px;">US Spec Consultant</text>
+  <text class="node-sub" x="858" y="295" fill="#bbb" style="font-size:6px;">Fractional · Project-by-project</text>
+  <!-- Operations -->
+  <rect class="node-box" x="842" y="352" width="226" height="32" fill="var(--paper)" stroke="var(--gold)" stroke-width="0.8"/>
+  <rect class="node-bar" x="842" y="352" width="4" height="32" fill="var(--gold)"/>
+  <text class="node-title" x="858" y="369" fill="var(--ink)" style="font-size:9px;">HR &amp; Finance Manager</text>
+  <text class="node-sub" x="858" y="379" fill="#888" style="font-size:6.5px;">×1 · Evolved from Studio Manager</text>
+  <rect class="node-box" x="842" y="392" width="226" height="32" fill="var(--paper)" stroke="var(--gold)" stroke-width="0.8"/>
+  <rect class="node-bar" x="842" y="392" width="4" height="32" fill="var(--gold)"/>
+  <text class="node-title" x="858" y="409" fill="var(--ink)" style="font-size:9px;">Studio Coordinator</text>
+  <text class="node-sub" x="858" y="419" fill="#888" style="font-size:6.5px;">×1 · Remote · AP/AR · Admin</text>
+  <rect class="node-box" x="842" y="432" width="226" height="32" fill="var(--paper)" stroke="var(--gold)" stroke-width="0.8"/>
+  <rect class="node-bar" x="842" y="432" width="4" height="32" fill="var(--gold)"/>
+  <text class="node-title" x="858" y="449" fill="var(--ink)" style="font-size:9px;">Marketing Coordinator</text>
+  <text class="node-sub" x="858" y="459" fill="#888" style="font-size:6.5px;">×1 · Remote · Proposals · CRM</text>
+  <rect rx="5" ry="5" x="842" y="472" width="62" height="13" fill="var(--accent)"/>
+  <text class="new-badge" x="850" y="481" style="font-size:5.5px;">NEW HIRE</text>
+  <rect class="node-box new-hire" x="842" y="488" width="226" height="32" fill="var(--paper)"/>
+  <rect class="node-bar" x="842" y="488" width="4" height="32" fill="var(--gold)"/>
+  <text class="node-title" x="858" y="505" fill="var(--ink)" style="font-size:9px;">Business Development Manager</text>
+  <text class="node-sub" x="858" y="515" fill="#888" style="font-size:6.5px;">×1 · Hybrid · Pipeline · Client relationships</text>
+  <!-- Headcount bar -->
+  <rect rx="5" ry="5" x="42" y="375" width="752" height="28" fill="var(--ink)" stroke="none"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.08em;" x="58" y="389">Phase 5</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:8.5px; fill:rgba(255,255,255,0.7);" x="120" y="389">17 FTE + 2–3 contracts · 3 project teams · 2 Associate Principals · Dedicated BD function</text>
+</svg>
+</div>
+
+<div class="summary-row">
+  <div class="sb"><div class="sl">Full-Time</div><div class="sv">17</div><div class="sn">14 in-studio · 2 remote · 1 hybrid</div></div>
+  <div class="sb"><div class="sl">Revenue Target</div><div class="sv">$4.0 – 4.8M</div><div class="sn">Net service revenue</div></div>
+  <div class="sb"><div class="sl">Principal's Role</div><div class="sv">Vision + BD</div><div class="sn">Design review · Client strategy</div></div>
+  <div class="sb"><div class="sl">EBITDA</div><div class="sv">$500 – 770K</div><div class="sn">12–16% margin</div></div>
+</div>
+
+<div class="callout purple-c">
+  <p><strong>The equity question.</strong> Phase 5 is when equity sharing must begin. The two Associate Principals need 5–10% each initially, growing to 15–20% by Phase 6. This costs founder ownership percentage but dramatically increases the firm's value: buyers see a committed leadership team with skin in the game. Structure as a vesting buy-in paid from bonus distributions.</p>
+</div>
+</div>
+
+<div class="sub-panel" id="p5-roles" data-group="p5">
+<div class="role-card">
+  <div><div class="rn">Associate Principal — Delivery <span class="mode-tag promo">PROMOTED</span></div><div class="rm">From Senior Project Architect (Team A lead) · $145–170K</div>
+  <div class="rd">Owns delivery quality across all teams. Manages Studio Director function with authority over staffing, scheduling, and budget. Holds direct client relationships on at least two active projects. Promotion path: Managing Principal if the founder exits.</div></div>
+  <div class="rt">Reports to<br/><span>Principal</span></div>
+</div>
+<div class="role-card">
+  <div><div class="rn">Associate Principal — Design <span class="mode-tag promo">PROMOTED</span></div><div class="rm">From Senior Project Architect (Team B lead) · $140–165K</div>
+  <div class="rd">Owns design quality and client experience. Leads design reviews, manages interiors and experience design capability, holds direct client relationships. Represents the firm externally. Promotion path: Design Principal.</div></div>
+  <div class="rt">Reports to<br/><span>Principal</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Senior Project Architect — Team C <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · In-studio · $120–145K</div>
+  <div class="rd">Leads the third team, focused on repeat-client work and multi-location rollouts. 10+ years experience. Must be comfortable leading a team the principal may never touch — this tests whether the firm can deliver without the founder.</div></div>
+  <div class="rt">Reports to<br/><span>AP — Delivery</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Associate Designer / Intern Architect <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · In-studio · $55–68K</div>
+  <div class="rd">Production support across all three teams. 1–4 years experience. Strong ArchiCAD and visualization. The studio's bench — deployed where workload is heaviest.</div></div>
+  <div class="rt">Reports to<br/><span>Team leads</span></div>
+</div>
+<div class="role-card gold">
+  <div><div class="rn">Business Development Manager <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · Hybrid · $85–110K</div>
+  <div class="rd">Systematizes the pipeline. Manages CRM, tracks proposals, coordinates conferences, and begins building independent client relationships. Transitions BD from a principal-dependent activity to an institutional capability. Must have AEC industry experience.</div></div>
+  <div class="rt">Reports to<br/><span>Principal</span></div>
+</div>
+<div class="role-card gold">
+  <div><div class="rn">HR &amp; Finance Manager <span class="mode-tag promo">EXPANDED</span></div><div class="rm">Evolved from Studio Manager · $75–95K</div>
+  <div class="rd">At 17 people the operational load justifies splitting into a dedicated HR/finance role. Handles benefits, recruiting, financial reporting, budget tracking, compliance.</div></div>
+  <div class="rt">Reports to<br/><span>AP — Delivery</span></div>
+</div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!--  PHASE 6 — TRANSFERABLE                     -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel" id="phase6">
+
+<h2><span class="num">06</span> Phase 6 — Transferable Practice</h2>
+<div class="phase-meta">21 FTE + contracts · 5–7 years out · Revenue trigger: $5.5–6.5M</div>
+
+<div class="sub-tabs">
+  <button class="sub-tab-btn active" data-subtab="p6-chart" data-group="p6">Org Chart</button>
+  <button class="sub-tab-btn" data-subtab="p6-roles" data-group="p6">Role Details</button>
+</div>
+
+<div class="sub-panel active" id="p6-chart" data-group="p6">
+
+<p>The firm is exit-ready. Two Associate Principals hold 30–40% combined equity and can run the firm without the founder. The BD function generates opportunities independently. Financial reporting is clean, EBITDA is consistent, and no single client represents more than 15–20% of revenue.</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 1100 580" xmlns="http://www.w3.org/2000/svg">
+  <rect class="zone-bg" x="330" y="8" width="440" height="60" fill="rgba(199,90,58,0.04)" stroke="rgba(199,90,58,0.12)"/>
+  <text class="zone-label" x="346" y="22" fill="rgba(199,90,58,0.45)">01 Founder / Board</text>
+  <rect class="zone-bg" x="160" y="78" width="780" height="54" fill="rgba(109,90,140,0.03)" stroke="rgba(109,90,140,0.1)"/>
+  <text class="zone-label" x="176" y="92" fill="rgba(109,90,140,0.45)">02 Principals (Equity Holders)</text>
+  <rect class="zone-bg" x="30" y="148" width="770" height="330" fill="rgba(58,90,124,0.03)" stroke="rgba(58,90,124,0.1)"/>
+  <text class="zone-label" x="46" y="164" fill="rgba(58,90,124,0.4)">03 Project Delivery — Three Teams + Shared</text>
+  <rect class="zone-bg" x="830" y="148" width="250" height="190" fill="rgba(74,106,90,0.04)" stroke="rgba(74,106,90,0.1)"/>
+  <text class="zone-label" x="846" y="164" fill="rgba(74,106,90,0.4)">04 Specialists</text>
+  <rect class="zone-bg" x="830" y="352" width="250" height="180" fill="rgba(138,122,90,0.04)" stroke="rgba(138,122,90,0.1)"/>
+  <text class="zone-label" x="846" y="368" fill="rgba(138,122,90,0.4)">05 Operations &amp; BD</text>
+  <!-- Founder -->
+  <rect class="node-box" x="400" y="24" width="300" height="34" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>
+  <rect class="node-bar" x="400" y="24" width="5" height="34" fill="var(--accent)"/>
+  <text class="node-title" x="420" y="40" fill="var(--ink)" style="font-size:10.5px;">Founding Principal — Board / Chairman</text>
+  <text class="node-sub" x="420" y="52" fill="#888" style="font-size:6.5px;">Vision · Strategic BD · Culture · Majority equity</text>
+  <!-- Managing + Design Principal -->
+  <rect class="node-box" x="180" y="90" width="350" height="34" fill="var(--paper)" stroke="var(--purple)" stroke-width="1.2"/>
+  <rect class="node-bar" x="180" y="90" width="5" height="34" fill="var(--purple)"/>
+  <text class="node-title" x="200" y="106" fill="var(--ink)" style="font-size:10px;">Managing Principal (Delivery)</text>
+  <text class="node-sub" x="200" y="118" fill="#888" style="font-size:6.5px;">15–20% equity · All delivery · Staffing · Financial performance</text>
+  <rect class="node-box" x="570" y="90" width="350" height="34" fill="var(--paper)" stroke="var(--purple)" stroke-width="1.2"/>
+  <rect class="node-bar" x="570" y="90" width="5" height="34" fill="var(--purple)"/>
+  <text class="node-title" x="590" y="106" fill="var(--ink)" style="font-size:10px;">Design Principal</text>
+  <text class="node-sub" x="590" y="118" fill="#888" style="font-size:6.5px;">15–20% equity · Design quality · Interiors · External reputation</text>
+  <!-- Lines -->
+  <line class="line-report" x1="470" y1="58" x2="350" y2="90" style="stroke-width:1.2; opacity:0.15;"/>
+  <line class="line-report" x1="630" y1="58" x2="740" y2="90" style="stroke-width:1.2; opacity:0.15;"/>
+  <path class="line-report" d="M 280,124 Q 280,140 165,172"/>
+  <path class="line-report" d="M 400,124 Q 420,140 420,172"/>
+  <path class="line-report" d="M 700,124 Q 680,140 660,172"/>
+  <!-- Team A -->
+  <rect rx="5" ry="5" x="42" y="168" width="248" height="135" fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.08)" stroke-width="0.8"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6.5px; fill:rgba(58,90,124,0.5); letter-spacing:0.1em; text-transform:uppercase;" x="54" y="180">Team A</text>
+  <rect class="node-box" x="50" y="186" width="232" height="28" fill="var(--paper)" stroke="var(--blue)" stroke-width="0.8"/>
+  <rect class="node-bar" x="50" y="186" width="4" height="28" fill="var(--blue)"/>
+  <text class="node-title" x="66" y="202" fill="var(--ink)" style="font-size:9px;">Senior Project Architect</text>
+  <rect class="node-box" x="50" y="220" width="112" height="24" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="50" y="220" width="3" height="24" fill="var(--blue)"/>
+  <text class="node-title" x="62" y="234" fill="var(--ink)" style="font-size:8px;">Proj. Designer</text>
+  <rect class="node-box" x="170" y="220" width="112" height="24" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="170" y="220" width="3" height="24" fill="var(--blue)"/>
+  <text class="node-title" x="182" y="234" fill="var(--ink)" style="font-size:8px;">Arch. Designer</text>
+  <rect class="node-box" x="50" y="250" width="232" height="24" fill="var(--paper)" stroke="rgba(58,90,124,0.4)" stroke-width="0.6"/>
+  <rect class="node-bar" x="50" y="250" width="3" height="24" fill="var(--blue)" opacity="0.5"/>
+  <text class="node-title" x="62" y="264" fill="#999" style="font-size:8px;">Assoc. Designer / Intern</text>
+  <!-- Team B -->
+  <rect rx="5" ry="5" x="302" y="168" width="248" height="135" fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.08)" stroke-width="0.8"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6.5px; fill:rgba(58,90,124,0.5); letter-spacing:0.1em; text-transform:uppercase;" x="314" y="180">Team B</text>
+  <rect class="node-box" x="310" y="186" width="232" height="28" fill="var(--paper)" stroke="var(--blue)" stroke-width="0.8"/>
+  <rect class="node-bar" x="310" y="186" width="4" height="28" fill="var(--blue)"/>
+  <text class="node-title" x="326" y="202" fill="var(--ink)" style="font-size:9px;">Senior Project Architect</text>
+  <rect class="node-box" x="310" y="220" width="112" height="24" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="310" y="220" width="3" height="24" fill="var(--blue)"/>
+  <text class="node-title" x="322" y="234" fill="var(--ink)" style="font-size:8px;">Proj. Architect</text>
+  <rect class="node-box" x="430" y="220" width="112" height="24" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="430" y="220" width="3" height="24" fill="var(--blue)"/>
+  <text class="node-title" x="442" y="234" fill="var(--ink)" style="font-size:8px;">Proj. Designer</text>
+  <rect class="node-box new-hire" x="310" y="250" width="232" height="24" fill="var(--paper)"/>
+  <rect class="node-bar" x="310" y="250" width="3" height="24" fill="var(--accent)"/>
+  <text class="node-title" x="322" y="264" fill="var(--ink)" style="font-size:8px;">Proj. Architect II <span style="font-size:6px;fill:var(--accent);">NEW</span></text>
+  <!-- Team C -->
+  <rect rx="5" ry="5" x="562" y="168" width="232" height="135" fill="rgba(58,90,124,0.02)" stroke="rgba(58,90,124,0.08)" stroke-width="0.8"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:6.5px; fill:rgba(58,90,124,0.5); letter-spacing:0.1em; text-transform:uppercase;" x="574" y="180">Team C</text>
+  <rect class="node-box" x="570" y="186" width="216" height="28" fill="var(--paper)" stroke="var(--blue)" stroke-width="0.8"/>
+  <rect class="node-bar" x="570" y="186" width="4" height="28" fill="var(--blue)"/>
+  <text class="node-title" x="586" y="202" fill="var(--ink)" style="font-size:9px;">Sr. Project Architect</text>
+  <rect class="node-box" x="570" y="220" width="216" height="24" fill="var(--paper)" stroke="rgba(58,90,124,0.5)" stroke-width="0.6"/>
+  <rect class="node-bar" x="570" y="220" width="3" height="24" fill="var(--blue)"/>
+  <text class="node-title" x="586" y="234" fill="var(--ink)" style="font-size:8px;">Assoc. Designer</text>
+  <rect class="node-box new-hire" x="570" y="250" width="216" height="24" fill="var(--paper)"/>
+  <rect class="node-bar" x="570" y="250" width="3" height="24" fill="var(--accent)"/>
+  <text class="node-title" x="586" y="264" fill="var(--ink)" style="font-size:8px;">Assoc. Designer II <span style="font-size:6px;fill:var(--accent);">NEW</span></text>
+  <!-- Shared -->
+  <rect class="node-box" x="42" y="325" width="228" height="28" fill="var(--paper)" stroke="rgba(58,90,124,0.3)" stroke-width="0.6" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="42" y="325" width="3" height="28" fill="var(--blue)" opacity="0.4"/>
+  <text class="node-title" x="56" y="341" fill="#999" style="font-size:8.5px;">Colombia Contracts ×2–3</text>
+  <rect rx="5" ry="5" x="286" y="325" width="508" height="28" fill="var(--warm)" stroke="var(--blue)" stroke-width="0.8" stroke-dasharray="5 3"/>
+  <rect class="node-bar" x="286" y="325" width="4" height="28" fill="var(--blue)"/>
+  <text class="node-title" x="302" y="341" fill="var(--ink)" style="font-size:9px;">Technical Coordinator &amp; BIM Lead</text>
+  <!-- Specialists -->
+  <rect class="node-box" x="842" y="170" width="226" height="32" fill="var(--paper)" stroke="var(--green)" stroke-width="0.8"/>
+  <rect class="node-bar" x="842" y="170" width="4" height="32" fill="var(--green)"/>
+  <text class="node-title" x="858" y="187" fill="var(--ink)" style="font-size:9px;">Experience &amp; Interiors Designer</text>
+  <rect class="node-box new-hire" x="842" y="208" width="226" height="32" fill="var(--paper)"/>
+  <rect class="node-bar" x="842" y="208" width="4" height="32" fill="var(--green)"/>
+  <text class="node-title" x="858" y="225" fill="var(--ink)" style="font-size:9px;">Exp. &amp; Interiors Designer II <span style="font-size:6px;fill:var(--accent);">NEW</span></text>
+  <rect class="node-box" x="842" y="248" width="226" height="32" fill="var(--paper)" stroke="var(--green)" stroke-width="0.8"/>
+  <rect class="node-bar" x="842" y="248" width="4" height="32" fill="var(--green)"/>
+  <text class="node-title" x="858" y="265" fill="var(--ink)" style="font-size:9px;">Specifications &amp; Field Lead</text>
+  <rect class="node-box" x="842" y="288" width="226" height="28" fill="var(--paper)" stroke="var(--green)" stroke-width="0.6" stroke-dasharray="4 3"/>
+  <rect class="node-bar" x="842" y="288" width="4" height="28" fill="var(--green)" opacity="0.4"/>
+  <text class="node-title" x="858" y="304" fill="#999" style="font-size:8.5px;">US Spec Consultant</text>
+  <!-- Operations -->
+  <rect rx="5" ry="5" x="842" y="362" width="62" height="13" fill="var(--accent)"/>
+  <text class="new-badge" x="850" y="371" style="font-size:5.5px;">NEW HIRE</text>
+  <rect class="node-box new-hire" x="842" y="378" width="226" height="32" fill="var(--paper)"/>
+  <rect class="node-bar" x="842" y="378" width="4" height="32" fill="var(--gold)"/>
+  <text class="node-title" x="858" y="395" fill="var(--ink)" style="font-size:9px;">Operations Director</text>
+  <text class="node-sub" x="858" y="405" fill="#888" style="font-size:6.5px;">HR · Finance · Contracts · Compliance · Exit-ready</text>
+  <rect class="node-box" x="842" y="418" width="226" height="28" fill="var(--paper)" stroke="var(--gold)" stroke-width="0.6"/>
+  <rect class="node-bar" x="842" y="418" width="4" height="28" fill="var(--gold)"/>
+  <text class="node-title" x="858" y="434" fill="var(--ink)" style="font-size:8.5px;">Studio Coordinator · BD Manager · Mktg Coord</text>
+  <!-- Headcount bar -->
+  <rect rx="5" ry="5" x="42" y="380" width="752" height="36" fill="var(--ink)" stroke="none"/>
+  <text style="font-family:'JetBrains Mono',monospace; font-size:7px; fill:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.08em;" x="58" y="394">Phase 6 — Transferable Practice</text>
+  <text style="font-family:'DM Sans',sans-serif; font-size:8.5px; fill:rgba(255,255,255,0.7);" x="58" y="408">21 FTE + 2–3 contracts · 3 project teams · 2 equity-holding Principals · Operations Director</text>
+</svg>
+</div>
+
+<div class="summary-row">
+  <div class="sb"><div class="sl">Full-Time</div><div class="sv">21</div><div class="sn">16 in-studio · 3 remote · 2 hybrid</div></div>
+  <div class="sb"><div class="sl">Revenue Target</div><div class="sv">$5.5 – 6.5M</div><div class="sn">Net service revenue</div></div>
+  <div class="sb"><div class="sl">Enterprise Value</div><div class="sv">$3.1 – 6.4M</div><div class="sn">4–5.5x EBITDA · Niche premium</div></div>
+  <div class="sb"><div class="sl">Principal's Role</div><div class="sv">Optional</div><div class="sn">Board-level · Firm runs without founder</div></div>
+</div>
+</div>
+
+<div class="sub-panel" id="p6-roles" data-group="p6">
+<div class="role-card">
+  <div><div class="rn">Founding Principal — Board Level</div><div class="rm">Operational authority transfers to Associate Principals</div>
+  <div class="rd">The principal's operational involvement is optional. Vision, strategic BD relationships, and design culture remain — but day-to-day decisions are made by the Associate Principals. The firm can run for months without the principal in the building. Retains majority equity until sale.</div></div>
+  <div class="rt">Role<br/><span>Chairman / Founder</span></div>
+</div>
+<div class="role-card purple">
+  <div><div class="rn">Managing Principal (Delivery)</div><div class="rm">Equity: 15–20% · Designated successor · $170–195K + distributions</div>
+  <div class="rd">Runs all delivery, staffing, financial performance. The buyer's primary point of contact during due diligence and the anchor of any earn-out agreement. Their commitment to stay post-sale is the single biggest factor in deal valuation.</div></div>
+  <div class="rt">Reports to<br/><span>Principal (Board)</span></div>
+</div>
+<div class="role-card purple">
+  <div><div class="rn">Design Principal</div><div class="rm">Equity: 15–20% · Design authority · $165–190K + distributions</div>
+  <div class="rd">Owns all design output, interiors capability, and external reputation. Represents the firm at pitches, conferences, and awards. Ensures design quality doesn't degrade under new ownership — the primary risk acquirers worry about with design-led firms.</div></div>
+  <div class="rt">Reports to<br/><span>Principal (Board)</span></div>
+</div>
+<div class="role-card gold">
+  <div><div class="rn">Operations Director <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · In-studio or hybrid · $110–140K</div>
+  <div class="rd">Consolidates HR, finance, contracts, compliance, and facilities. Ensures financial reporting meets buyer-grade standards: clean GAAP, consistent percentage-of-completion recognition, defensible backlog documentation. Not an architect — a business operator with AEC experience.</div></div>
+  <div class="rt">Reports to<br/><span>Managing Principal</span></div>
+</div>
+<div class="role-card green">
+  <div><div class="rn">Experience &amp; Interiors Designer II <span class="mode-tag new">NEW HIRE</span></div><div class="rm">×1 FTE · In-studio · $85–105K</div>
+  <div class="rd">Builds the firm's experiential design capability into a true two-person department under the Design Principal. For a firm selling into hospitality and experiential recreation, this is the recurring capability buyers see as a differentiator.</div></div>
+  <div class="rt">Reports to<br/><span>Design Principal</span></div>
+</div>
+<div class="role-card blue">
+  <div><div class="rn">Project Architect II + Associate Designer II <span class="mode-tag new">NEW HIRES</span></div><div class="rm">×2 FTE · In-studio · $85–105K + $55–68K</div>
+  <div class="rd">Additional depth across the three project teams. The Project Architect (5–8 years) can swing between teams or anchor Team C. The Associate Designer adds production support for coordination and redlines. Both create bench strength that makes the firm less fragile — a key buyer concern.</div></div>
+  <div class="rt">Reports to<br/><span>Team leads</span></div>
+</div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!--  EXIT MATH TAB                               -->
+<!-- ════════════════════════════════════════════ -->
+<div class="tab-panel" id="exit">
+
+<h2><span class="num"></span> Exit Math &amp; Readiness</h2>
+<div class="phase-meta">Valuation comparison and what a buyer sees</div>
+
+<table class="compare-table">
+  <thead>
+    <tr><th>Metric</th><th>13 People (Phase 4)</th><th>17 People (Phase 5)</th><th>21 People (Phase 6)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="metric">Net Service Revenue</td><td>$2.9 – 3.3M</td><td>$4.0 – 4.8M</td><td class="green-val">$5.5 – 6.5M</td></tr>
+    <tr><td class="metric">Target EBITDA margin</td><td>10 – 15%</td><td>12 – 16%</td><td class="green-val">14 – 18%</td></tr>
+    <tr><td class="metric">EBITDA ($)</td><td>$330 – 500K</td><td>$500 – 770K</td><td class="green-val">$770K – 1.17M</td></tr>
+    <tr><td class="metric">Likely multiple</td><td>3 – 4x <span class="muted">(high key-person risk)</span></td><td>3.5 – 4.5x</td><td class="green-val">4 – 5.5x <span class="muted">(niche premium)</span></td></tr>
+    <tr><td class="metric">Enterprise value range</td><td class="highlight">$1.0 – 2.0M</td><td>$1.75 – 3.5M</td><td class="green-val">$3.1 – 6.4M</td></tr>
+    <tr><td class="metric">Key-person dependency</td><td>Very high</td><td>Moderate</td><td class="green-val">Low</td></tr>
+    <tr><td class="metric">Buyer pool</td><td class="muted">Internal only</td><td>Small — niche acquirers</td><td class="green-val">Broad — consolidators, PE, larger firms</td></tr>
+    <tr><td class="metric">Principal's role</td><td>Vision + BD + Design</td><td>Vision + BD</td><td class="green-val">Board-level / optional</td></tr>
+  </tbody>
+</table>
+
+<div class="callout green-c">
+  <p><strong>The niche premium.</strong> DBS's specialization in experiential venues, climbing centers, and hospitality is the single most valuable thing for exit purposes. Firms with a definable niche command premium multiples because acquirers are buying a market position, not just a book of business. A generalist firm at 21 might sell for 3.5x. A firm that owns "experiential recreation architecture in the Sun Belt" could sell for 5x or more.</p>
+</div>
+
+<h3>Exit Readiness Conditions</h3>
+
+<div class="callout green-c">
+  <p><strong>Leadership depth.</strong> Two equity-holding principals who hold independent client relationships, make decisions without the founder, and are contractually committed to staying 3–5 years post-sale.</p>
+</div>
+<div class="callout blue-c">
+  <p><strong>Revenue quality.</strong> No single client exceeds 15–20% of NSR. Pipeline managed through CRM with documented BD processes. Backlog documentation is clean. Revenue recognition follows consistent percentage-of-completion methodology.</p>
+</div>
+<div class="callout gold-c">
+  <p><strong>Operational maturity.</strong> Financial reporting is GAAP-compliant and buyer-grade. Employment records, contracts, insurance, and licenses are current. The Operations Director has prepared the firm for due diligence. Profitability consistent across 3+ years.</p>
+</div>
+<div class="callout purple-c">
+  <p><strong>Niche defensibility.</strong> The firm owns a definable market position — experiential recreation architecture — that a buyer cannot easily replicate through organic hiring. The brand, portfolio, and client relationships represent a moat that justifies a premium multiple.</p>
+</div>
+
+<p><em>The most common mistake principals make with exit planning is starting too late.</em> The structural changes in Phases 5 and 6 — equity sharing, leadership development, BD institutionalization, financial cleanup — each take 2–3 years to mature. A 20-year exit horizon gives you room. A 10-year horizon does not.</p>
+</div>
+
+
+<!-- ════════ FOOTER ════════ -->
 <div class="footer-note">
-  Growth plan assumes revenue triggers are met before each phase of hiring. Compensation ranges reflect Austin, TX market rates as of early 2026. Colombian contract rates reflect Bogotá/Medellín market for architects with 3–8 years ArchiCAD experience. No phase is initiated on projected revenue — only on work in hand or under contract.
+  Growth plan assumes revenue triggers are met before each phase of hiring. Compensation ranges reflect Austin, TX market as of early 2026. Enterprise valuation ranges are approximate and based on industry multiples for niche architecture firms. No phase is initiated on projected revenue — only on work in hand or under contract. This document is for internal strategic planning only.
 </div>
 
 </div>
+
+<!-- ════════ JAVASCRIPT ════════ -->
+<script>
+// Main tab navigation
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+  const panel = document.getElementById(tabId);
+  if (btn) btn.classList.add('active');
+  if (panel) panel.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+// Sub-tab navigation
+document.querySelectorAll('.sub-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const group = btn.dataset.group;
+    const target = btn.dataset.subtab;
+    document.querySelectorAll(`.sub-tab-btn[data-group="${group}"]`).forEach(b => b.classList.remove('active'));
+    document.querySelectorAll(`.sub-panel[data-group="${group}"]`).forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(target).classList.add('active');
+  });
+});
+</script>
+
 </body>
 </html>
