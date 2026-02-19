@@ -34,7 +34,6 @@
     padding: 2.5rem 2.5rem 3rem;
   }
 
-  /* ── HEADER ── */
   .doc-header {
     margin-bottom: 1.75rem;
     padding-bottom: 1.25rem;
@@ -66,10 +65,7 @@
     line-height: 1.55;
   }
 
-  /* ── TABS ── */
-  .tab-container {
-    margin-top: 1.5rem;
-  }
+  .tab-container { margin-top: 1.5rem; }
 
   .tab-nav {
     display: flex;
@@ -93,10 +89,7 @@
   }
 
   .tab-btn:hover { color: var(--ink); }
-
-  .tab-btn.active {
-    color: var(--ink);
-  }
+  .tab-btn.active { color: var(--ink); }
 
   .tab-btn.active::after {
     content: '';
@@ -122,14 +115,9 @@
   .tab-tag.remote { background: rgba(109,90,140,0.1); color: var(--purple); }
   .tab-tag.contract { background: rgba(58,90,124,0.1); color: var(--blue); }
 
-  .tab-panel {
-    display: none;
-    padding-top: 2rem;
-  }
-
+  .tab-panel { display: none; padding-top: 2rem; }
   .tab-panel.active { display: block; }
 
-  /* ── ROLE CONTENT ── */
   h2 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -165,7 +153,6 @@
   p em { color: var(--ink); font-style: italic; }
   p strong { color: var(--ink); }
 
-  /* ── META GRID ── */
   .role-meta {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -207,7 +194,6 @@
     margin-top: 0.05rem;
   }
 
-  /* ── BUCKET LIST ── */
   .bucket-list {
     list-style: none;
     margin: 0.75rem 0 1.25rem;
@@ -244,7 +230,6 @@
   .bucket-list.gold li { border-left-color: var(--gold); }
   .bucket-list.purple li { border-left-color: var(--purple); }
 
-  /* ── SIMPLE LIST ── */
   .simple-list {
     list-style: none;
     margin: 0.5rem 0 1rem;
@@ -282,7 +267,6 @@
   .simple-list.gold li::before { background: var(--gold); }
   .simple-list.red li::before { background: #b54a3a; }
 
-  /* ── DEAL BREAKER ── */
   .deal-list {
     list-style: none;
     margin: 0.75rem 0 1.25rem;
@@ -300,7 +284,6 @@
     line-height: 1.5;
   }
 
-  /* ── KPI ── */
   .kpi-list {
     list-style: none;
     margin: 0.75rem 0 1.25rem;
@@ -320,7 +303,6 @@
 
   .kpi-list li strong { color: var(--ink); }
 
-  /* ── CALLOUT ── */
   .callout {
     background: var(--warm);
     border-left: 3px solid var(--accent);
@@ -336,7 +318,6 @@
   .callout p { margin-bottom: 0.3rem; font-size: 0.85rem; }
   .callout p:last-child { margin-bottom: 0; }
 
-  /* ── FOOTER ── */
   .role-footer {
     margin-top: 2rem;
     padding-top: 0.75rem;
@@ -347,26 +328,157 @@
     line-height: 1.6;
   }
 
+  /* ── CADENCE GROUPS ── */
+  .cadence-group { margin-bottom: 1.25rem; }
+
+  .cadence-label {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cadence-group ul { list-style: none; padding: 0; margin: 0; }
+
+  .cadence-group li {
+    font-size: 0.84rem;
+    color: #555;
+    padding: 0.35rem 0 0.35rem 0.85rem;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(224,221,216,0.4);
+  }
+
+  .cadence-group li:last-child { border-bottom: none; }
+
+  .cadence-group li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rule);
+  }
+
+  .cadence-group li strong { color: var(--ink); }
+
+  /* ── 30/60/90 TIMELINE ── */
+  .timeline-phase { margin-bottom: 1.5rem; }
+
+  .phase-header {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fff;
+    background: var(--ink);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .phase-header .phase-range { color: var(--accent); }
+
+  .phase-body {
+    background: var(--warm);
+    padding: 0.75rem 0.85rem;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid var(--rule);
+    border-top: none;
+  }
+
+  .phase-body p {
+    font-size: 0.84rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    line-height: 1.55;
+  }
+
+  .phase-body p:last-child { margin-bottom: 0; }
+
+  .phase-body ul { list-style: none; padding: 0; margin: 0.3rem 0 0; }
+
+  .phase-body li {
+    font-size: 0.82rem;
+    color: #555;
+    padding: 0.25rem 0 0.25rem 0.85rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .phase-body li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ── SCORECARD PILLARS ── */
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin: 0.75rem 0 1.25rem;
+  }
+
+  .pillar-card {
+    background: var(--warm);
+    border-left: 3px solid var(--rule);
+    border-radius: 0 4px 4px 0;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .pillar-card.purpose { border-left-color: var(--accent); }
+  .pillar-card.process { border-left-color: var(--blue); }
+  .pillar-card.people { border-left-color: var(--green); }
+  .pillar-card.profit { border-left-color: var(--gold); }
+
+  .pillar-card .pillar-name {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #aaa;
+    margin-bottom: 0.25rem;
+  }
+
+  .pillar-card .pillar-attrs {
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.45;
+  }
+
   @media (max-width: 700px) {
     .page { padding: 1.5rem; }
     .role-meta { grid-template-columns: 1fr 1fr; }
     .simple-list { columns: 1; }
     .tab-btn { padding: 0.6rem 0.75rem; font-size: 0.76rem; }
     .tab-btn .tab-tag { display: none; }
+    .pillar-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-<!-- ════════ DOCUMENT HEADER ════════ -->
 <div class="doc-header">
   <div class="firm-name">Derrington Building Studio</div>
   <h1>Phase 1 — Immediate Hires</h1>
   <div class="doc-desc">Three roles to execute simultaneously. Each removes a specific constraint on the studio's capacity and begins building the infrastructure for the next phase of growth.</div>
 </div>
 
-<!-- ════════ TABS ════════ -->
 <div class="tab-container">
 
   <div class="tab-nav">
@@ -374,7 +486,6 @@
     <button class="tab-btn" data-tab="drafter">Contract Drafter <span class="tab-tag contract">CONTRACT</span></button>
     <button class="tab-btn" data-tab="detailer">Contract Detailer <span class="tab-tag contract">CONTRACT</span></button>
   </div>
-
 
   <!-- ═══════════════════════════════════════════════════════ -->
   <!--  TAB 1 — STUDIO COORDINATOR                            -->
@@ -385,20 +496,20 @@
     <h2>Studio Coordinator</h2>
     <p style="font-family:'JetBrains Mono',Consolas,monospace; font-size:0.68rem; color:var(--accent); margin-bottom:1rem;">DERRINGTON BUILDING STUDIO</p>
 
-    <p><strong>Company Description:</strong> Derrington Building Studio is a design-focused architecture practice based in Austin, Texas, specializing in experiential venues, recreational facilities, and hospitality projects. We work with operators who understand that the built environment is their product — climbing centers, restaurants, bars, retail experiences — and our job is to turn their culture into place.</p>
+    <p><strong>Mission:</strong> We turn a project into a place. We untangle the complicated parts — budget, code, structure, operations, construction — so the outcome reads with clarity and ease. People feel it before they can name it. They linger.</p>
 
-    <p><strong>Company Vision:</strong> To build a 13-person studio where every team member goes deeper into what they're best at, producing architecture that shapes how people experience a space — not just how a building looks.</p>
+    <p><strong>Vision:</strong> A studio with the team and process to take on complicated projects — unknown unknowns, operational constraints, many stakeholders — and deliver magnetic spaces. The building works, the purpose is clear, and beautiful moments are available for everyone to enjoy.</p>
 
     <div class="role-meta">
       <div class="meta-cell">
         <div class="mc-label">Starting Pay</div>
-        <div class="mc-value">$50,000 – $65,000</div>
-        <div class="mc-note">Salary · 90-day performance review</div>
+        <div class="mc-value">$12 – $18 / hour</div>
+        <div class="mc-note">Contract · Invoiced monthly</div>
       </div>
       <div class="meta-cell">
         <div class="mc-label">Location</div>
-        <div class="mc-value">Fully Remote</div>
-        <div class="mc-note">US-based · Any time zone</div>
+        <div class="mc-value">Remote — Colombia</div>
+        <div class="mc-note">CDT timezone required</div>
       </div>
       <div class="meta-cell">
         <div class="mc-label">Reports To</div>
@@ -413,46 +524,95 @@
     </div>
 
     <h3><span class="section-num">01</span> Role Purpose</h3>
-    <p>The Studio Coordinator keeps the financial and administrative engine running so the design team can focus entirely on project delivery and client work.</p>
+    <p>The Studio Coordinator keeps the financial and administrative engine running so the design team can focus entirely on project delivery and client work. This person owns invoicing, time tracking, payroll preparation, project accounting, and the operational systems that hold the studio together — freeing the principal from screen-based administrative work that currently competes with design leadership and business development.</p>
 
     <h3><span class="section-num">02</span> Role Description</h3>
-    <p>This is the studio's first dedicated operations hire. Right now, administrative work — invoicing, timesheets, AP/AR, HR paperwork, insurance, contracts — is handled by the founding principal and informal studio support, which means it either takes time away from design leadership and business development or it doesn't get done on time. Neither is sustainable.</p>
+    <p>This is the studio's first dedicated operations hire. Right now, administrative work — invoicing, timesheets, AP/AR, payroll, contracts — is handled by the founding principal and his wife, Natalia, who currently manages the studio's day-to-day administrative support. That arrangement has reached its limit. The Studio Coordinator takes over this work entirely, with Natalia providing onboarding context and transitional guidance during the first 30 days.</p>
 
-    <p>The Studio Coordinator owns all screen-based administrative and financial coordination for the practice. This is a fully remote role with no in-person requirements — all physical building and mail tasks are handled separately. The person in this seat does not interact directly with design clients, but will coordinate with consultants, vendors, insurance carriers, and service providers on behalf of the studio.</p>
+    <p>The person in this seat does not interact directly with design clients, with the exception of sending invoices, transmitting standard project information, and other routine follow-up communications. The coordinator does not participate in design discussions, client presentations, or scope negotiations. Client-facing work stays with the principal and the project team.</p>
 
-    <p>This role is the foundation of the studio's operations infrastructure. As the firm grows from 3 to 13 people, the complexity of financial tracking, HR, and contract administration will increase significantly. The right person will build systems that scale — not just handle today's volume, but create the processes and documentation that support a studio three to four times this size. The trajectory for this role is toward a full Studio Manager position with broader authority over budgets, HR, and operational strategy.</p>
+    <p>The studio does not typically contract directly with vendors and consultants — those agreements flow through the client — though that may change as the firm grows. For now, the coordinator's vendor-facing work is limited to the studio's own service providers: software, insurance, accounting, and similar operational relationships.</p>
+
+    <p>This is a fully remote, contract role based in Colombia with CDT-aligned working hours. All communication happens through Slack, email, and screen-share. As the firm grows from 3 to 13 people — and potentially to 21 — the complexity of financial tracking, HR coordination, and process management will increase substantially. The right person will build systems that scale, not just handle today's volume. The trajectory for this role is toward a full Studio Manager position with expanded authority over budgets, HR strategy, and operational decision-making.</p>
 
     <h3><span class="section-num">03</span> Buckets of Responsibility</h3>
-    <ul class="bucket-list accent">
-      <li>
-        <strong>Financial Administration</strong>
-        <div class="bl-desc">Accounts payable and receivable. Invoice preparation and tracking. Coordinating with the studio's bookkeeper/CPA. Monitoring outstanding balances and following up on late payments. Managing expense tracking and reimbursements.</div>
-      </li>
-      <li>
-        <strong>Timesheet &amp; Project Accounting Support</strong>
-        <div class="bl-desc">Ensuring all team members submit timesheets accurately and on time through Monograph. Running utilization and budget reports for the principal. Flagging projects approaching or exceeding fee budgets before they become problems.</div>
-      </li>
-      <li>
-        <strong>Contract &amp; Proposal Administration</strong>
-        <div class="bl-desc">Formatting, assembling, and transmitting proposals and contracts from templates the principal prepares. Tracking contract status, executed documents, and insurance certificate requests. Maintaining the studio's contract archive.</div>
-      </li>
-      <li>
-        <strong>HR &amp; Benefits Coordination</strong>
-        <div class="bl-desc">Onboarding paperwork for new hires and contractors. Managing benefits enrollment, PTO tracking, and payroll coordination. Maintaining personnel files and ensuring compliance with employment requirements.</div>
-      </li>
-      <li>
-        <strong>Insurance &amp; Compliance</strong>
-        <div class="bl-desc">Coordinating professional liability, general liability, and workers' compensation renewals. Producing certificates of insurance for clients and project-specific requirements. Tracking license renewals and continuing education deadlines.</div>
-      </li>
-      <li>
-        <strong>Vendor &amp; Consultant Coordination</strong>
-        <div class="bl-desc">Managing subconsultant agreements, W-9 collection, and payment processing. Coordinating with IT, software vendors, and service providers. Maintaining the studio's vendor contact database.</div>
-      </li>
-      <li>
-        <strong>Systems &amp; Process Documentation</strong>
-        <div class="bl-desc">Building and maintaining the studio operations manual. Documenting every recurring administrative process so the studio's operational knowledge lives in a system, not in one person's head. Creating checklists and templates that make the next hire easier.</div>
-      </li>
-    </ul>
+    <p>Organized by cadence. This is the operational rhythm of the role — what gets done and when.</p>
+
+    <div class="cadence-group">
+      <div class="cadence-label">Daily</div>
+      <ul>
+        <li><strong>Time Entry Monitoring:</strong> Review daily entries in Monograph for clarity and phase accuracy. Flag miscoded or incomplete entries before they compound.</li>
+        <li><strong>Slack Monitoring:</strong> Stay current with all studio Slack channels. Surface anything the principal needs to see or act on.</li>
+        <li><strong>Project Pulse Check:</strong> Monitor daily progress against budgets to catch scope creep in real time. Flag projects approaching fee thresholds before they become surprises.</li>
+        <li><strong>Contract Filing:</strong> Ensure any correspondence regarding scope changes is captured and filed for future Additional Services documentation.</li>
+      </ul>
+    </div>
+
+    <div class="cadence-group">
+      <div class="cadence-label">Weekly</div>
+      <ul>
+        <li><strong>Monday Meeting Facilitation:</strong> Lead the weekly allocation of team hours and capture "Goals for the Week" on Slack. Ensure the meeting stays focused and that commitments are recorded.</li>
+        <li><strong>AR Follow-up:</strong> Reach out to clients with overdue invoices. Document all follow-up activity internally.</li>
+        <li><strong>Time Entry Validation:</strong> Final weekly sweep of comments and phases before timesheets lock for the period.</li>
+        <li><strong>Utilization Reporting:</strong> Extract utilization data from Monograph, verify accuracy, and report weekly rates to the principal with commentary on trends.</li>
+      </ul>
+    </div>
+
+    <div class="cadence-group">
+      <div class="cadence-label">Bi-Monthly</div>
+      <ul>
+        <li><strong>Payroll Preparation:</strong> Aggregate time entries, reimbursable expenses, and PTO through Gusto. Prepare the full payroll package for principal approval.</li>
+        <li><strong>PTO Balance Audit:</strong> Verify PTO requests against remaining balances. Ensure the office calendar reflects all approved time off. Flag discrepancies before they become payroll errors.</li>
+      </ul>
+    </div>
+
+    <div class="cadence-group">
+      <div class="cadence-label">Monthly</div>
+      <ul>
+        <li><strong>Invoicing Cycle:</strong> Generate draft invoices based on the previous month's work and unbillable fees. Submit to principal for review and approval before transmitting to clients.</li>
+        <li><strong>Benchmarking Analysis:</strong> Determine whether the studio hit its monthly revenue benchmark. If not, identify why and present findings with context.</li>
+        <li><strong>Financial Reporting:</strong> Produce the BOA's 9 SMART Practice Altitude Metrics and Visual KPI reports. Present with a "State of the Studio" summary including benchmark variance explanation.</li>
+        <li><strong>Unbilled WIP Review:</strong> Review work-in-progress that hasn't been billed. Present a plan for when and how to bill parked fees or absorb unbillable expenses.</li>
+      </ul>
+    </div>
+
+    <div class="cadence-group">
+      <div class="cadence-label">Quarterly</div>
+      <ul>
+        <li><strong>90-Day Forecasting:</strong> Allocate staff workload for the next quarter. Flag potential lulls before the studio runs out of work. Present the forecast independently with recommendations.</li>
+        <li><strong>Revenue Projection:</strong> Estimate projected billings for the next 90 days versus benchmarks.</li>
+        <li><strong>Utilization Review:</strong> Analyze long-term trends in team efficiency. Identify patterns and recommend adjustments.</li>
+        <li><strong>System Maintenance:</strong> Update Notion/Wiki with any new processes developed during the quarter. Keep the operations manual current.</li>
+      </ul>
+    </div>
+
+    <div class="cadence-group">
+      <div class="cadence-label">Annually</div>
+      <ul>
+        <li><strong>Year-End Financial Prep:</strong> Organize all financial data for the CPA. Ensure records are clean, complete, and ready for tax preparation.</li>
+      </ul>
+    </div>
+
+    <div class="cadence-group">
+      <div class="cadence-label">As Needed</div>
+      <ul>
+        <li><strong>New Project Setup:</strong> Build out Monograph profiles for newly signed contracts — fees, timelines, team assignments — within 24 hours of signature. Verify against the executed contract for 100% accuracy.</li>
+        <li><strong>Contract Follow-up:</strong> Chase signatures on contracts and Additional Service agreements. Detect stalled paperwork and escalate to the principal.</li>
+        <li><strong>Onboarding Support:</strong> Guide new hires and contractors through the studio's systems, tools, and processes.</li>
+        <li><strong>Spreadsheet Maintenance:</strong> Troubleshoot and update tracking systems and reporting templates as the studio's needs evolve.</li>
+      </ul>
+    </div>
+
+    <div class="cadence-group">
+      <div class="cadence-label">Future Scope</div>
+      <ul>
+        <li><strong>QuickBooks Reconciliation:</strong> Moving toward full bookkeeper-adjacent duties as the studio's financial complexity increases.</li>
+        <li><strong>Marketing Support:</strong> Social media content scheduling and website updates.</li>
+        <li><strong>CPA Liaison:</strong> Primary point of contact for tax season and financial audits.</li>
+        <li><strong>RFQ &amp; RFP Coordination:</strong> Submission management and tracking if the studio chooses to pursue public or competitive procurement work.</li>
+        <li><strong>Vendor &amp; Consultant Contract Administration:</strong> Managing subconsultant agreements and payment processing if the studio begins contracting directly with consultants.</li>
+      </ul>
+    </div>
 
     <h3><span class="section-num">04</span> Requirements</h3>
     <p>Non-negotiable qualifications for this role.</p>
@@ -460,21 +620,24 @@
       <li>Minimum 2 years of administrative, bookkeeping, or office management experience in a professional services firm (architecture, engineering, or design strongly preferred)</li>
       <li>Demonstrated proficiency with cloud-based financial and project management tools</li>
       <li>Experience managing accounts payable/receivable and basic bookkeeping</li>
-      <li>Strong written communication — this role produces contracts, invoices, and correspondence that represent the studio</li>
+      <li>Strong written English — this role produces invoices, contracts, and correspondence that represent the studio</li>
+      <li>Conversational English for screen-share meetings and Monday Meeting facilitation</li>
       <li>Self-directed work habits proven in a remote environment; ability to manage tasks without daily supervision</li>
+      <li>CDT-aligned working hours with minimum 6 hours of overlap with Austin business hours (8 AM – 6 PM CDT)</li>
       <li>Reliable high-speed internet and a dedicated workspace for handling confidential financial and HR information</li>
     </ul>
 
     <h3><span class="section-num">05</span> Desired Attributes</h3>
     <p>Not required, but will distinguish top candidates.</p>
     <ul class="simple-list green">
-      <li>Experience in an architecture or design firm specifically — understanding of project phases, consultant structures, and AIA contract formats</li>
+      <li>Experience in an architecture or design firm — understanding of project phases, consultant structures, and standard contract formats</li>
       <li>Familiarity with Monograph or similar architecture-specific project accounting tools</li>
       <li>Experience supporting a firm through a growth phase (3–5 people scaling to 10+)</li>
       <li>Comfort with ambiguity — processes may not exist yet and this person will need to build them</li>
       <li>Bookkeeping certification or coursework (QuickBooks ProAdvisor, etc.)</li>
       <li>Experience coordinating professional liability insurance in an A/E context</li>
       <li>Natural inclination toward documentation — the person who writes things down without being asked</li>
+      <li>Previous remote contract work with US-based firms</li>
     </ul>
 
     <h3><span class="section-num">06</span> Additional Tools &amp; Skills</h3>
@@ -482,38 +645,142 @@
       <li>Google Workspace (Gmail, Sheets, Docs, Drive) — primary platform</li>
       <li>Monograph — project tracking and time management</li>
       <li>QuickBooks Online or similar cloud accounting</li>
+      <li>Gusto — payroll processing and benefits coordination</li>
       <li>Notion — studio knowledge base and operations documentation</li>
       <li>Slack — studio communication</li>
       <li>Adobe Acrobat — contract and proposal PDF management</li>
-      <li>Gusto, Justworks, or similar payroll/benefits platform</li>
       <li>Proficiency with spreadsheets for budget tracking and reporting</li>
-      <li>Familiarity with AIA contract document formats (A101, B101, etc.) is a plus</li>
     </ul>
 
-    <h3><span class="section-num">07</span> 90-Day Deal Breakers</h3>
+    <h3><span class="section-num">07</span> 30 / 60 / 90 Day Onboarding</h3>
+    <p>The coordinator transitions from shadowing to full ownership over 90 days. Natalia provides initial context and handoff during the first phase.</p>
+
+    <div class="timeline-phase">
+      <div class="phase-header">
+        <span>Days 1–30: History, Culture, Systems</span>
+        <span class="phase-range">Settling In</span>
+      </div>
+      <div class="phase-body">
+        <p>The highest priority is enrollment in the studio's vision, culture, and principles — and establishing command of the tools. This phase is about absorbing context, not producing output.</p>
+        <ul>
+          <li>Set up Slack, Monograph, Gmail, Gusto, and Google Drive accounts</li>
+          <li>Meet the team individually — understand each person's role, workflow, and common friction points</li>
+          <li>Attend all Monday Morning meetings and observe how allocation and goal capture work</li>
+          <li>Read through the Notion wiki to understand the studio's culture, mission, and history</li>
+          <li>Review the website to get to know the projects and their descriptions</li>
+          <li>Shadow Natalia during invoicing, payroll prep, timesheet reviews, and PTO processing</li>
+          <li>Audit the last 3–6 months of project history in Monograph — study how phases were billed and where scope creep occurred</li>
+          <li>Watch all training tutorials and review the financial legacy documentation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-phase">
+      <div class="phase-header">
+        <span>Days 31–60: Learning &amp; Mastering Platforms</span>
+        <span class="phase-range">Taking Over</span>
+      </div>
+      <div class="phase-body">
+        <p>The coordinator begins leading processes with supervision. By day 60, the trainer should be hands-off on routine tasks.</p>
+        <ul>
+          <li>Take over the daily review of time entries in Monograph</li>
+          <li>Lead the monthly invoicing process — prepare all drafts, track AR, present the invoicing plan to the principal</li>
+          <li>Prepare the first full set of SMART Practice Altitude Metrics and Visual KPI reports</li>
+          <li>Take over tracking of signed contracts and Additional Service approvals — flag any work being done without a signature</li>
+          <li>Lead payroll preparation by aggregating Monograph data and PTO for principal approval</li>
+          <li>Autonomously set up new projects in Monograph within 24 hours of contract signature</li>
+          <li>Attend Monograph webinars and recommend improvements to the studio's workflow</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-phase">
+      <div class="phase-header">
+        <span>Days 61–90: Full Ownership</span>
+        <span class="phase-range">Independent</span>
+      </div>
+      <div class="phase-body">
+        <p>No hand-holding, all training complete. The coordinator performs 100% in the role and begins contributing strategic insight — not just task execution.</p>
+        <ul>
+          <li>Deliver the first 90-day workload and revenue forecast — proactively flag if the team will run out of work or miss a benchmark</li>
+          <li>Update the Notion/Wiki with improved workflows developed during the first 60 days</li>
+          <li>Lead utilization recalibration conversations — if a project is over budget, the coordinator flags it and suggests hour shifts</li>
+          <li>Report on why benchmarks were or were not hit, with proposed solutions — not just whether they were hit</li>
+          <li>Be fully prepared to lead onboarding of any future new hires using the systems now mastered</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3><span class="section-num">08</span> 90-Day Deal Breakers</h3>
     <p>What must or must not occur for this person to remain in the role past 90 days.</p>
     <ul class="deal-list">
       <li><strong>Invoices are late or inaccurate more than twice.</strong> The studio's cash flow depends on timely, correct invoicing. If the person responsible for it can't deliver consistency in the first 90 days, the role isn't working.</li>
+      <li><strong>Data negligence.</strong> Repeatedly setting up payroll, invoices, or new projects with the wrong numbers. This role handles the studio's financial accuracy — errors compound and erode trust.</li>
       <li><strong>Requires repeated follow-up on recurring tasks.</strong> This is a self-directed remote role. If the principal has to remind the coordinator to do the same task more than once, the autonomy required for remote work isn't there.</li>
+      <li><strong>Inconsistent reporting.</strong> Failure to produce required reports and deliverables without being prompted. The coordinator owns the cadence — the principal should not have to ask for things that are already on the calendar.</li>
+      <li><strong>No-show for scheduled meetings.</strong> Attendance and reliability during agreed working hours are non-negotiable for a remote role.</li>
       <li><strong>No operations manual progress.</strong> By day 90, every recurring administrative process should be documented in at least draft form. If the person hasn't started building the system that makes the studio's operations transferable, they're doing tasks — not building infrastructure.</li>
       <li><strong>Confidentiality breach or careless handling of financial/HR data.</strong> This role handles sensitive information. Any lapse is immediate and non-negotiable.</li>
     </ul>
 
-    <h3><span class="section-num">08</span> Key Performance Indicators</h3>
+    <h3><span class="section-num">09</span> Key Performance Indicators</h3>
     <ul class="kpi-list">
-      <li><strong>Invoice accuracy and timeliness:</strong> 100% of invoices sent within 3 business days of billing cycle close, with zero errors requiring correction</li>
-      <li><strong>Timesheet compliance:</strong> All team members submitting complete timesheets weekly, with no more than one late submission per month studio-wide</li>
-      <li><strong>Budget flag rate:</strong> Projects approaching 80% of fee budget flagged to principal before exceeding threshold — zero surprises</li>
-      <li><strong>Operations manual coverage:</strong> All recurring admin processes documented within first 6 months; updated quarterly thereafter</li>
-      <li><strong>AR aging:</strong> No receivable over 60 days without documented follow-up and principal notification</li>
+      <li><strong>Invoicing accuracy:</strong> 100% of drafts require minimal edits by the principal. All invoices sent within 3 business days of billing cycle close.</li>
+      <li><strong>Time entry compliance:</strong> 100% of team entries submitted on time with clear comments. No more than one late submission per month studio-wide.</li>
+      <li><strong>AR status:</strong> No invoice older than 45 days without a documented follow-up and principal notification.</li>
+      <li><strong>Payroll accuracy:</strong> 100% of payroll drafts require minimal edits by the principal.</li>
+      <li><strong>Budget flag rate:</strong> Projects approaching 80% of fee budget flagged to principal before exceeding threshold — zero surprises.</li>
+      <li><strong>Operations manual coverage:</strong> All recurring admin processes documented within first 6 months; updated quarterly thereafter.</li>
     </ul>
 
+    <h3><span class="section-num">10</span> Performance Scorecard</h3>
+    <p>Quarterly evaluation across four pillars. Each attribute is scored 1–10, with the "10" description representing full mastery at year-end.</p>
+
+    <div class="pillar-grid">
+      <div class="pillar-card purpose">
+        <div class="pillar-name">Purpose — Mindset &amp; Passion</div>
+        <div class="pillar-attrs">
+          Ownership mentality: takes charge of tasks beyond daily chores.
+          Mission alignment: references the studio's values as personal standards.
+          Adaptive resilience: shows up with solutions, not just problems.
+          Continuous improvement: innovates beyond expected results.
+        </div>
+      </div>
+      <div class="pillar-card process">
+        <div class="pillar-name">Process — Systems</div>
+        <div class="pillar-attrs">
+          Accuracy: principal finds no mistakes in their numbers.
+          Workflow documentation: prompts wiki edits without being asked.
+          System maintenance: reports come with insights, not just data.
+          Data hygiene: notices mistakes before anyone else does.
+        </div>
+      </div>
+      <div class="pillar-card people">
+        <div class="pillar-name">People — Team &amp; Clients</div>
+        <div class="pillar-attrs">
+          Radical candor: independently reaches out to team members with confidence and grace.
+          Resource forecasting: notices problems before they start.
+          Client communication: handles routine client correspondence seamlessly without prompting.
+          Onboarding success: fully guides new hires with no supervisor assistance.
+        </div>
+      </div>
+      <div class="pillar-card profit">
+        <div class="pillar-name">Profit — Money Management</div>
+        <div class="pillar-attrs">
+          Benchmark achievement: autonomously flags issues and develops corrective strategies.
+          Utilization &amp; realization: recalibrates staff hours to keep workflow flowing.
+          WIP &amp; AR management: always has a plan to fully bill work-in-progress.
+          Reporting: reports are clear and include insights and recommendations.
+        </div>
+      </div>
+    </div>
+
     <div class="callout">
-      <p><em>Note: This role is critical to the evolution of the studio. As the firm grows from 3 to 13 people, the Studio Coordinator role is expected to evolve into a full Studio Manager position with expanded authority over budgets, HR strategy, and operational decision-making. Job duties will grow with the business.</em></p>
+      <p><em>Note: This role is critical to the evolution of the studio. As the firm grows from 3 to 13 people — and potentially to 21 — the Studio Coordinator role is expected to evolve into a full Studio Manager position with expanded authority over budgets, HR strategy, and operational decision-making. Job duties will grow with the business.</em></p>
     </div>
 
     <div class="role-footer">
-      Derrington Building Studio · Austin, TX · Role descriptions reflect Phase 1 of the studio growth plan. Compensation ranges reflect market rates as of early 2026. — Tim Derrington, Founding Principal
+      Derrington Building Studio · Austin, TX · Role descriptions reflect Phase 1 of the studio growth plan. Contract rates reflect Bogotá/Medellín market for coordinators with 2+ years professional services administration experience. — Tim Derrington, Founding Principal
     </div>
 
   </div>
@@ -528,9 +795,9 @@
     <h2>Contract Drafter</h2>
     <p style="font-family:'JetBrains Mono',Consolas,monospace; font-size:0.68rem; color:var(--accent); margin-bottom:1rem;">DERRINGTON BUILDING STUDIO</p>
 
-    <p><strong>Company Description:</strong> Derrington Building Studio is a design-focused architecture practice based in Austin, Texas, specializing in experiential venues, recreational facilities, and hospitality projects. We work with operators who understand that the built environment is their product — climbing centers, restaurants, bars, retail experiences — and our job is to turn their culture into place.</p>
+    <p><strong>Mission:</strong> We turn a project into a place. We untangle the complicated parts — budget, code, structure, operations, construction — so the outcome reads with clarity and ease. People feel it before they can name it. They linger.</p>
 
-    <p><strong>Company Vision:</strong> To build a 13-person studio where every team member goes deeper into what they're best at, producing architecture that shapes how people experience a space — not just how a building looks.</p>
+    <p><strong>Vision:</strong> A studio with the team and process to take on complicated projects — unknown unknowns, operational constraints, many stakeholders — and deliver magnetic spaces. The building works, the purpose is clear, and beautiful moments are available for everyone to enjoy.</p>
 
     <div class="role-meta">
       <div class="meta-cell">
@@ -567,26 +834,11 @@
 
     <h3><span class="section-num">03</span> Buckets of Responsibility</h3>
     <ul class="bucket-list blue">
-      <li>
-        <strong>Construction Document Sheet Production</strong>
-        <div class="bl-desc">Floor plans, reflected ceiling plans, roof plans, building sections, exterior and interior elevations. Working from design development documents and redlines provided by the project team. Producing sheets that are dimensioned, annotated, and ready for permit review.</div>
-      </li>
-      <li>
-        <strong>Schedule Production</strong>
-        <div class="bl-desc">Door schedules, window schedules, finish schedules, room finish matrices, and similar tabular documentation. Extracting and formatting data from the ArchiCAD model into standardized schedule formats.</div>
-      </li>
-      <li>
-        <strong>Sheet Assembly &amp; Standards Compliance</strong>
-        <div class="bl-desc">Setting up sheets per the studio's title block, scale conventions, and annotation standards. Ensuring all sheets follow the established layer structure, pen sets, and graphic conventions. Maintaining consistency across the document set.</div>
-      </li>
-      <li>
-        <strong>Redline Incorporation</strong>
-        <div class="bl-desc">Receiving marked-up PDFs and screen-share review comments from the project team and incorporating revisions accurately. Flagging conflicts or ambiguities in redlines rather than guessing. Tracking revision status across sheets.</div>
-      </li>
-      <li>
-        <strong>Model Hygiene</strong>
-        <div class="bl-desc">Working cleanly within the shared ArchiCAD model. Correct layer usage, object placement, and zone management. Not creating workarounds, custom hacks, or off-standard elements that break the model for others. Asking before improvising.</div>
-      </li>
+      <li><strong>Construction Document Sheet Production</strong><div class="bl-desc">Floor plans, reflected ceiling plans, roof plans, building sections, exterior and interior elevations. Working from design development documents and redlines provided by the project team. Producing sheets that are dimensioned, annotated, and ready for permit review.</div></li>
+      <li><strong>Schedule Production</strong><div class="bl-desc">Door schedules, window schedules, finish schedules, room finish matrices, and similar tabular documentation. Extracting and formatting data from the ArchiCAD model into standardized schedule formats.</div></li>
+      <li><strong>Sheet Assembly &amp; Standards Compliance</strong><div class="bl-desc">Setting up sheets per the studio's title block, scale conventions, and annotation standards. Ensuring all sheets follow the established layer structure, pen sets, and graphic conventions. Maintaining consistency across the document set.</div></li>
+      <li><strong>Redline Incorporation</strong><div class="bl-desc">Receiving marked-up PDFs and screen-share review comments from the project team and incorporating revisions accurately. Flagging conflicts or ambiguities in redlines rather than guessing. Tracking revision status across sheets.</div></li>
+      <li><strong>Model Hygiene</strong><div class="bl-desc">Working cleanly within the shared ArchiCAD model. Correct layer usage, object placement, and zone management. Not creating workarounds, custom hacks, or off-standard elements that break the model for others. Asking before improvising.</div></li>
     </ul>
 
     <h3><span class="section-num">04</span> Requirements</h3>
@@ -656,9 +908,9 @@
     <h2>Contract Detailer</h2>
     <p style="font-family:'JetBrains Mono',Consolas,monospace; font-size:0.68rem; color:var(--accent); margin-bottom:1rem;">DERRINGTON BUILDING STUDIO</p>
 
-    <p><strong>Company Description:</strong> Derrington Building Studio is a design-focused architecture practice based in Austin, Texas, specializing in experiential venues, recreational facilities, and hospitality projects. We work with operators who understand that the built environment is their product — climbing centers, restaurants, bars, retail experiences — and our job is to turn their culture into place.</p>
+    <p><strong>Mission:</strong> We turn a project into a place. We untangle the complicated parts — budget, code, structure, operations, construction — so the outcome reads with clarity and ease. People feel it before they can name it. They linger.</p>
 
-    <p><strong>Company Vision:</strong> To build a 13-person studio where every team member goes deeper into what they're best at, producing architecture that shapes how people experience a space — not just how a building looks.</p>
+    <p><strong>Vision:</strong> A studio with the team and process to take on complicated projects — unknown unknowns, operational constraints, many stakeholders — and deliver magnetic spaces. The building works, the purpose is clear, and beautiful moments are available for everyone to enjoy.</p>
 
     <div class="role-meta">
       <div class="meta-cell">
@@ -695,30 +947,12 @@
 
     <h3><span class="section-num">03</span> Buckets of Responsibility</h3>
     <ul class="bucket-list blue">
-      <li>
-        <strong>Wall Section &amp; Building Envelope Details</strong>
-        <div class="bl-desc">Producing full-height wall sections, foundation-to-roof, showing all assembly layers, flashing, waterproofing, insulation, structure, and finish. Exterior wall type details including transitions between cladding systems, window head/jamb/sill conditions, and parapet assemblies.</div>
-      </li>
-      <li>
-        <strong>Custom Assembly Details</strong>
-        <div class="bl-desc">Bar tops, reception desks, climbing wall connections to structure, custom millwork sections, specialty ceiling conditions, and other project-specific assemblies. Working from design team sketches and reference images to produce drawings that a contractor can build from.</div>
-      </li>
-      <li>
-        <strong>Enlarged Plans &amp; Partition Details</strong>
-        <div class="bl-desc">Restroom enlarged plans, entry vestibule details, rated partition assemblies, acoustic separation details, and other conditions that require larger-scale drawing to communicate properly. Coordinating with the drafter to ensure enlarged plans align with the overall floor plan.</div>
-      </li>
-      <li>
-        <strong>Connection &amp; Transition Details</strong>
-        <div class="bl-desc">Steel-to-concrete, wood-to-steel, dissimilar material transitions, expansion joint details, and structural connection conditions. Referencing structural engineer drawings and coordinating detail dimensions with the consultant's design.</div>
-      </li>
-      <li>
-        <strong>Detail Library Maintenance</strong>
-        <div class="bl-desc">Adapting the studio's standard detail library for project-specific conditions. Creating new standard details when a project-specific detail has broader application. Maintaining clean, reusable detail files within the ArchiCAD environment.</div>
-      </li>
-      <li>
-        <strong>Constructability Flagging</strong>
-        <div class="bl-desc">Identifying conditions in sketches or design documents where the indicated assembly may not be buildable, where clearances are insufficient, where material interfaces create maintenance or waterproofing risks, or where the detail contradicts the structural or MEP drawings. Flagging — not solving — is the expectation; resolution is the project team's decision.</div>
-      </li>
+      <li><strong>Wall Section &amp; Building Envelope Details</strong><div class="bl-desc">Producing full-height wall sections, foundation-to-roof, showing all assembly layers, flashing, waterproofing, insulation, structure, and finish. Exterior wall type details including transitions between cladding systems, window head/jamb/sill conditions, and parapet assemblies.</div></li>
+      <li><strong>Custom Assembly Details</strong><div class="bl-desc">Bar tops, reception desks, climbing wall connections to structure, custom millwork sections, specialty ceiling conditions, and other project-specific assemblies. Working from design team sketches and reference images to produce drawings that a contractor can build from.</div></li>
+      <li><strong>Enlarged Plans &amp; Partition Details</strong><div class="bl-desc">Restroom enlarged plans, entry vestibule details, rated partition assemblies, acoustic separation details, and other conditions that require larger-scale drawing to communicate properly. Coordinating with the drafter to ensure enlarged plans align with the overall floor plan.</div></li>
+      <li><strong>Connection &amp; Transition Details</strong><div class="bl-desc">Steel-to-concrete, wood-to-steel, dissimilar material transitions, expansion joint details, and structural connection conditions. Referencing structural engineer drawings and coordinating detail dimensions with the consultant's design.</div></li>
+      <li><strong>Detail Library Maintenance</strong><div class="bl-desc">Adapting the studio's standard detail library for project-specific conditions. Creating new standard details when a project-specific detail has broader application. Maintaining clean, reusable detail files within the ArchiCAD environment.</div></li>
+      <li><strong>Constructability Flagging</strong><div class="bl-desc">Identifying conditions in sketches or design documents where the indicated assembly may not be buildable, where clearances are insufficient, where material interfaces create maintenance or waterproofing risks, or where the detail contradicts the structural or MEP drawings. Flagging — not solving — is the expectation; resolution is the project team's decision.</div></li>
     </ul>
 
     <h3><span class="section-num">04</span> Requirements</h3>
@@ -780,20 +1014,17 @@
 
   </div>
 
-</div><!-- end tab-container -->
+</div>
 
-</div><!-- end page -->
+</div>
 
 <script>
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      // Remove active from all
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      // Activate clicked
       btn.classList.add('active');
       document.getElementById(btn.dataset.tab).classList.add('active');
-      // Scroll to top of panel
       window.scrollTo({ top: document.querySelector('.tab-nav').offsetTop - 20, behavior: 'smooth' });
     });
   });
