@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBS — Studio Responsibility Editor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --accent: #c75a3a;
+    --ink: #1a1a1a;
+    --paper: #faf9f7;
+    --warm: #f5f3ef;
+    --rule: #e0ddd8;
+    --blue: #2c6494;
+    --green: #2a7d56;
+    --purple: #6d5a8c;
+    --gold: #b08630;
+    --wine: #8c4a68;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', Calibri, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  .page {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 2rem;
+  }
+
+  .doc-header {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .doc-header-left { flex: 1; }
+  .firm-name {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.65rem;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.2rem;
+  }
+  .doc-desc {
+    font-size: 0.78rem;
+    color: #999;
+    max-width: 620px;
+    line-height: 1.5;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .action-btn {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: #999;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+  .action-btn:hover { color: var(--ink); border-color: #bbb; }
+  .action-btn.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .action-btn.primary:hover { background: #b5502f; }
+
+  .controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .ctrl-btn {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: #999;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s;
+  }
+  .ctrl-btn:hover { color: var(--ink); border-color: #ccc; }
+  .ctrl-btn.active { color: #fff; border-color: transparent; }
+  .ctrl-btn.active[data-role="principal"] { background: var(--accent); }
+  .ctrl-btn.active[data-role="staffa"] { background: var(--blue); }
+  .ctrl-btn.active[data-role="staffb"] { background: var(--green); }
+  .ctrl-btn.active[data-role="admin"] { background: var(--gold); }
+  .ctrl-btn.active[data-role="cfo"] { background: var(--wine); }
+  .ctrl-btn.active[data-role="all"] { background: var(--ink); }
+  .ctrl-btn.active[data-role="handoffs"] { background: var(--purple); }
+
+  .main-area {
+    display: flex;
+    gap: 0;
+    position: relative;
+  }
+
+  .canvas-wrap {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .canvas-wrap.has-panel { border-radius: 6px 0 0 6px; border-right: none; }
+
+  svg { display: block; width: 100%; height: 100%; }
+
+  .role-label {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    pointer-events: none;
+  }
+  .role-subtitle {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    pointer-events: none;
+  }
+  .bubble-label {
+    font-family: 'DM Sans', sans-serif;
+    pointer-events: none;
+    user-select: none;
+  }
+  .conn-line { fill: none; pointer-events: none; }
+  .handoff-line { fill: none; pointer-events: none; }
+
+  .tooltip {
+    position: absolute;
+    background: var(--ink);
+    color: #fff;
+    padding: 0.55rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    max-width: 260px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 10;
+  }
+  .tooltip .tt-title { font-weight: 700; margin-bottom: 0.2rem; font-size: 0.76rem; }
+  .tooltip .tt-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── EDIT PANEL ── */
+  .edit-panel {
+    width: 0;
+    overflow: hidden;
+    background: var(--warm);
+    border: 1px solid var(--rule);
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    transition: width 0.3s ease;
+    flex-shrink: 0;
+  }
+  .edit-panel.open { width: 320px; }
+
+  .edit-panel-inner {
+    width: 320px;
+    padding: 1.25rem 1.2rem;
+    overflow-y: auto;
+    max-height: 920px;
+  }
+
+  .panel-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: #bbb;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    transition: all 0.15s;
+  }
+  .panel-close:hover { color: var(--ink); background: rgba(0,0,0,0.04); }
+
+  .panel-header {
+    position: relative;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .panel-section-num {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.55rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+  .panel-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+    padding-right: 1.5rem;
+  }
+  .panel-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.3rem;
+  }
+
+  .panel-section {
+    margin-bottom: 1.2rem;
+  }
+  .panel-section-label {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.58rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.6rem;
+  }
+
+  /* Role assignment rows */
+  .role-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .role-row:last-child { border-bottom: none; }
+
+  .role-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .role-name {
+    flex: 1;
+    font-size: 0.78rem;
+    color: var(--ink);
+  }
+
+  .weight-select {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.6rem;
+    padding: 0.25rem 0.4rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    min-width: 90px;
+    text-align: center;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23999'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    padding-right: 18px;
+  }
+  .weight-select:focus { outline: none; border-color: var(--accent); }
+
+  /* Effort slider */
+  .effort-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .effort-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--rule);
+    outline: none;
+  }
+  .effort-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 2px solid var(--paper);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .effort-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 2px solid var(--paper);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .effort-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  /* Toggles */
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0;
+  }
+  .toggle-label {
+    font-size: 0.78rem;
+    color: var(--ink);
+    flex: 1;
+  }
+  .toggle-switch {
+    width: 32px;
+    height: 18px;
+    border-radius: 9px;
+    background: var(--rule);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle-switch.on { background: var(--accent); }
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s;
+  }
+  .toggle-switch.on::after { transform: translateX(14px); }
+
+  .panel-apply-btn {
+    width: 100%;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.6rem 1rem;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.15s;
+    margin-top: 0.5rem;
+  }
+  .panel-apply-btn:hover { background: #b5502f; }
+  .panel-apply-btn:active { background: #a04828; }
+
+  .panel-delete-btn {
+    width: 100%;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: #bbb;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s;
+    margin-top: 0.4rem;
+  }
+  .panel-delete-btn:hover { color: #c44; border-color: #c44; }
+
+  /* Change indicator */
+  .change-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.35rem;
+    border-radius: 2px;
+    background: var(--accent);
+    color: #fff;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .change-badge.visible { opacity: 1; }
+
+  /* Effort summary bar */
+  .effort-summary {
+    margin-top: 1.2rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--rule);
+  }
+  .effort-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .effort-bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    width: 80px;
+    flex-shrink: 0;
+  }
+  .effort-bar-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(0,0,0,0.04);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .effort-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .effort-bar-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: #999;
+    width: 28px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .legend-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.68rem;
+    color: #999;
+  }
+  .legend-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 20px; height: 2px; flex-shrink: 0; }
+  .legend-line.dashed { background: repeating-linear-gradient(90deg, var(--purple) 0 4px, transparent 4px 8px); }
+
+  .footer-note {
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.68rem;
+    color: #ccc;
+    font-style: italic;
+  }
+
+  /* Add responsibility modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,26,26,0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1.5rem;
+    width: 380px;
+    max-width: 90vw;
+  }
+  .modal h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .modal-field {
+    margin-bottom: 0.8rem;
+  }
+  .modal-field label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .modal-field input, .modal-field select {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: #fff;
+    color: var(--ink);
+  }
+  .modal-field input:focus, .modal-field select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .modal-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .modal-actions button { flex: 1; }
+
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 200;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="doc-header">
+  <div class="doc-header-left">
+    <div class="firm-name">Derrington Building Studio</div>
+    <h1>Studio Responsibility Editor <span class="change-badge" id="changeBadge">Unsaved Changes</span></h1>
+    <div class="doc-desc">Click any bubble to reassign ownership and effort. Changes update the force layout in real time.</div>
+  </div>
+  <div class="header-actions">
+    <button class="action-btn" id="btnAdd" title="Add a new responsibility">+ Add</button>
+    <button class="action-btn" id="btnReset">Reset</button>
+    <button class="action-btn primary" id="btnExport">Export JSON</button>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn active" data-role="all">All Roles</button>
+  <button class="ctrl-btn" data-role="principal">Principal</button>
+  <button class="ctrl-btn" data-role="staffa">Construction Lead</button>
+  <button class="ctrl-btn" data-role="staffb">Design Lead</button>
+  <button class="ctrl-btn" data-role="admin">Coordinator</button>
+  <button class="ctrl-btn" data-role="cfo">Fractional CFO</button>
+  <button class="ctrl-btn" data-role="handoffs">Handoffs</button>
+</div>
+
+<div class="main-area">
+  <div class="canvas-wrap" id="canvasWrap">
+    <svg id="diagram"></svg>
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+
+  <div class="edit-panel" id="editPanel">
+    <div class="edit-panel-inner" id="editPanelInner">
+      <!-- populated dynamically -->
+    </div>
+  </div>
+</div>
+
+<div class="effort-summary" id="effortSummary"></div>
+
+<div class="legend-row">
+  <div class="legend-item"><div class="legend-circle" style="background:var(--accent);"></div>Founding Principal</div>
+  <div class="legend-item"><div class="legend-circle" style="background:var(--blue);"></div>Construction Lead</div>
+  <div class="legend-item"><div class="legend-circle" style="background:var(--green);"></div>Design Lead</div>
+  <div class="legend-item"><div class="legend-circle" style="background:var(--gold);"></div>Studio Coordinator</div>
+  <div class="legend-item"><div class="legend-circle" style="background:var(--wine);"></div>Fractional CFO</div>
+  <div class="legend-item"><div class="legend-line dashed"></div>Handoff</div>
+  <div class="legend-item"><span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;color:var(--accent);text-transform:uppercase;">T</span>&nbsp;Transitional</div>
+</div>
+
+<div class="footer-note">
+  Click any responsibility bubble to edit its ownership and effort weight. Use the filter buttons to isolate individual roles. Export saves the current configuration as JSON.
+</div>
+
+</div>
+
+<!-- Add modal -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <h2>Add Responsibility</h2>
+    <div class="modal-field">
+      <label>Name</label>
+      <input type="text" id="newName" placeholder="e.g., Code Analysis">
+    </div>
+    <div class="modal-field">
+      <label>Category</label>
+      <select id="newCat">
+        <option value="design">Design & Creative</option>
+        <option value="technical">Technical Production</option>
+        <option value="coordination">Project Coordination</option>
+        <option value="construction">Construction Phase</option>
+        <option value="bd">BD & Marketing</option>
+        <option value="ops">Operations</option>
+        <option value="leadership">Leadership</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Primary Owner</label>
+      <select id="newOwner">
+        <option value="principal">Founding Principal</option>
+        <option value="staffa">Construction Lead</option>
+        <option value="staffb">Design Lead</option>
+        <option value="admin">Studio Coordinator</option>
+        <option value="cfo">Fractional CFO</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Effort (1–10)</label>
+      <input type="number" id="newEffort" min="1" max="10" value="5">
+    </div>
+    <div class="modal-actions">
+      <button class="action-btn" id="modalCancel">Cancel</button>
+      <button class="action-btn primary" id="modalAdd">Add</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+(function() {
+
+const COLORS = {
+  principal: "#c75a3a",
+  staffa: "#2c6494",
+  staffb: "#2a7d56",
+  admin: "#b08630",
+  cfo: "#8c4a68",
+  purple: "#6d5a8c",
+  ink: "#1a1a1a",
+  paper: "#faf9f7",
+  warm: "#f5f3ef",
+  rule: "#e0ddd8"
+};
+
+const CAT_LABELS = {
+  design: "Design & Creative",
+  technical: "Technical Production",
+  coordination: "Project Coordination",
+  construction: "Construction Phase",
+  bd: "BD & Marketing",
+  ops: "Operations",
+  leadership: "Leadership"
+};
+
+const roles = [
+  { id: "principal", label: "Founding Principal", subtitle: "Tim", fx: 0.25, fy: 0.22, color: COLORS.principal },
+  { id: "staffa",    label: "Construction Lead",  subtitle: "Staff A", fx: 0.75, fy: 0.22, color: COLORS.staffa },
+  { id: "staffb",    label: "Design Lead",        subtitle: "Staff B", fx: 0.25, fy: 0.78, color: COLORS.staffb },
+  { id: "admin",     label: "Studio Coordinator",  subtitle: "Coordinator", fx: 0.75, fy: 0.78, color: COLORS.admin },
+  { id: "cfo",       label: "Fractional CFO",       subtitle: "CPA · Fractional", fx: 0.92, fy: 0.50, color: COLORS.cfo },
+];
+
+// Master data — mutable
+let responsibilities = [
+  // ── Design & Creative ──
+  { id: "r1",  name: "Design Vision\n& Direction",       effort: 7, owners: [{role:"principal",weight:"primary"},{role:"staffb",weight:"secondary"}], cat: "design" },
+  { id: "r2",  name: "Schematic\nDesign",                effort: 7, owners: [{role:"staffb",weight:"primary"},{role:"principal",weight:"secondary"},{role:"staffa",weight:"support"}], cat: "design" },
+  { id: "r3",  name: "Design\nDevelopment",              effort: 9, owners: [{role:"staffb",weight:"primary"},{role:"principal",weight:"support"},{role:"staffa",weight:"support"}], cat: "design" },
+  { id: "r4",  name: "Visualization\n& Rendering",       effort: 6, owners: [{role:"staffb",weight:"primary"}], cat: "design" },
+  { id: "r5",  name: "Client Presentations\n(Design)",   effort: 5, owners: [{role:"principal",weight:"primary"},{role:"staffb",weight:"secondary"}], cat: "design", handoff: [["principal","staffb"]] },
+  { id: "r6",  name: "Interiors &\nMaterials",           effort: 6, owners: [{role:"staffb",weight:"primary"},{role:"staffa",weight:"support"}], cat: "design", transitional: true, handoff: [["staffb","staffa"]] },
+  { id: "r7",  name: "Design Critiques\n& Studio Culture",effort: 3, owners: [{role:"staffb",weight:"primary"},{role:"principal",weight:"secondary"},{role:"staffa",weight:"support"}], cat: "design" },
+
+  // ── Technical Production ──
+  { id: "r8",  name: "Construction\nDocuments",           effort: 10, owners: [{role:"staffa",weight:"primary"},{role:"principal",weight:"support"}], cat: "technical" },
+  { id: "r9",  name: "Detailing &\nWall Sections",       effort: 7, owners: [{role:"staffa",weight:"primary"},{role:"staffb",weight:"support"}], cat: "technical" },
+  { id: "r10", name: "BIM Environment\n& Standards",      effort: 5, owners: [{role:"staffa",weight:"primary"},{role:"staffb",weight:"support"}], cat: "technical" },
+  { id: "r11", name: "Specification\nWriting",            effort: 5, owners: [{role:"staffa",weight:"primary"},{role:"principal",weight:"secondary"}], cat: "technical", transitional: true },
+  { id: "r12", name: "Code Analysis\n& Compliance",       effort: 5, owners: [{role:"staffa",weight:"primary"},{role:"principal",weight:"support"}], cat: "technical" },
+  { id: "r13", name: "QA/QC\nDocument Review",            effort: 4, owners: [{role:"principal",weight:"primary"},{role:"staffa",weight:"secondary"},{role:"staffb",weight:"support"}], cat: "technical" },
+
+  // ── Project Coordination ──
+  { id: "r14", name: "Consultant Coord.\n(Technical)",    effort: 6, owners: [{role:"staffa",weight:"primary"},{role:"admin",weight:"support"},{role:"staffb",weight:"support"}], cat: "coordination" },
+  { id: "r15", name: "Consultant Coord.\n(Design)",       effort: 4, owners: [{role:"staffb",weight:"primary"},{role:"principal",weight:"secondary"},{role:"staffa",weight:"support"}], cat: "coordination" },
+  { id: "r16", name: "Permit &\nInspection Tracking",     effort: 5, owners: [{role:"admin",weight:"primary"},{role:"staffa",weight:"secondary"}], cat: "coordination" },
+  { id: "r17", name: "Project Schedule\nManagement",      effort: 6, owners: [{role:"staffa",weight:"primary"},{role:"principal",weight:"support"}], cat: "coordination" },
+  { id: "r18", name: "Scope & Fee\nManagement",           effort: 5, owners: [{role:"principal",weight:"primary"}], cat: "coordination" },
+  { id: "r19", name: "Cost Estimating\nSupport",          effort: 3, owners: [{role:"staffa",weight:"primary"},{role:"principal",weight:"secondary"}], cat: "coordination", transitional: true },
+
+  // ── Construction Phase ──
+  { id: "r20", name: "Site Observations\n& Field Reports", effort: 5, owners: [{role:"staffa",weight:"primary"},{role:"principal",weight:"secondary"}], cat: "construction" },
+  { id: "r21", name: "RFI\nResponses",                    effort: 5, owners: [{role:"staffa",weight:"primary"},{role:"admin",weight:"secondary"},{role:"staffb",weight:"support"}], cat: "construction", handoff: [["staffa","admin"]] },
+  { id: "r22", name: "Submittal &\nShop Drawing Review",  effort: 4, owners: [{role:"staffa",weight:"primary"},{role:"admin",weight:"secondary"},{role:"staffb",weight:"support"}], cat: "construction", handoff: [["staffa","admin"]] },
+  { id: "r23", name: "OAC\nMeetings",                     effort: 4, owners: [{role:"staffa",weight:"primary"},{role:"admin",weight:"secondary"},{role:"principal",weight:"support"}], cat: "construction" },
+  { id: "r24", name: "Punchlist\n& Closeout",             effort: 3, owners: [{role:"staffa",weight:"primary"},{role:"admin",weight:"secondary"}], cat: "construction" },
+  { id: "r25", name: "Change Order\nEvaluation",          effort: 3, owners: [{role:"principal",weight:"primary"},{role:"staffa",weight:"secondary"}], cat: "construction" },
+
+  // ── BD & Marketing ──
+  { id: "r26", name: "Client\nRelationships",             effort: 8, owners: [{role:"principal",weight:"primary"}], cat: "bd" },
+  { id: "r27", name: "Proposals &\nAgreements",           effort: 6, owners: [{role:"principal",weight:"primary"},{role:"admin",weight:"secondary"},{role:"staffb",weight:"support"}], cat: "bd" },
+  { id: "r28", name: "Marketing\n& Content",              effort: 5, owners: [{role:"principal",weight:"primary"},{role:"admin",weight:"support"},{role:"staffb",weight:"secondary"}], cat: "bd" },
+  { id: "r29", name: "Video &\nDocumentary",              effort: 4, owners: [{role:"principal",weight:"primary"},{role:"staffb",weight:"support"}], cat: "bd" },
+  { id: "r30", name: "Networking\n& Conferences",         effort: 3, owners: [{role:"principal",weight:"primary"}], cat: "bd" },
+  { id: "r31", name: "Project\nPhotography",              effort: 2, owners: [{role:"staffb",weight:"primary"},{role:"principal",weight:"secondary"}], cat: "bd" },
+
+  // ── Studio Operations (Coordinator-led) ──
+  { id: "r32", name: "Invoicing, AR\n& WIP Review",       effort: 5, owners: [{role:"admin",weight:"primary"},{role:"cfo",weight:"secondary"}], cat: "ops" },
+  { id: "r33", name: "Payroll, PTO\n& AP",                effort: 3, owners: [{role:"admin",weight:"primary"},{role:"cfo",weight:"secondary"}], cat: "ops" },
+  { id: "r34", name: "Time & Utilization\nTracking",      effort: 5, owners: [{role:"admin",weight:"primary"}], cat: "ops" },
+  { id: "r35", name: "Insurance &\nCompliance",           effort: 2, owners: [{role:"cfo",weight:"primary"},{role:"admin",weight:"support"},{role:"principal",weight:"support"}], cat: "ops" },
+  { id: "r36", name: "Studio Comms &\nMeeting Lead",      effort: 5, owners: [{role:"admin",weight:"primary"},{role:"principal",weight:"secondary"}], cat: "ops" },
+  { id: "r37", name: "Document Control\n& Filing",        effort: 4, owners: [{role:"admin",weight:"primary"},{role:"staffa",weight:"support"}], cat: "ops" },
+  { id: "r42", name: "Financial Reporting\n& KPIs",       effort: 5, owners: [{role:"cfo",weight:"primary"},{role:"principal",weight:"secondary"}], cat: "ops" },
+  { id: "r43", name: "Project Setup &\nClient Onboarding",effort: 4, owners: [{role:"admin",weight:"primary"},{role:"principal",weight:"support"}], cat: "ops" },
+  { id: "r44", name: "Proposal &\nContract Assembly",     effort: 4, owners: [{role:"admin",weight:"primary"},{role:"principal",weight:"secondary"}], cat: "ops" },
+  { id: "r45", name: "Consultant\nDeliverable Tracking",  effort: 4, owners: [{role:"admin",weight:"primary"},{role:"staffa",weight:"support"}], cat: "ops" },
+  { id: "r46", name: "Bid Package\nAssembly",             effort: 3, owners: [{role:"admin",weight:"primary"},{role:"staffa",weight:"support"}], cat: "ops" },
+  { id: "r47", name: "Client Comms\nDrafting",            effort: 4, owners: [{role:"admin",weight:"primary"},{role:"principal",weight:"support"},{role:"staffa",weight:"support"}], cat: "ops" },
+  { id: "r48", name: "Forecasting &\n90-Day Planning",    effort: 4, owners: [{role:"cfo",weight:"primary"},{role:"principal",weight:"secondary"}], cat: "ops" },
+  { id: "r49", name: "Onboarding &\nSystems Upkeep",      effort: 2, owners: [{role:"admin",weight:"primary"}], cat: "ops" },
+
+  // ── Leadership ──
+  { id: "r38", name: "Vision &\nStrategy",                effort: 6, owners: [{role:"principal",weight:"primary"}], cat: "leadership" },
+  { id: "r39", name: "Financial\nManagement",             effort: 5, owners: [{role:"cfo",weight:"primary"},{role:"principal",weight:"secondary"},{role:"admin",weight:"support"}], cat: "leadership" },
+  { id: "r40", name: "Hiring &\nTeam Dev",                effort: 4, owners: [{role:"principal",weight:"primary"},{role:"admin",weight:"support"}], cat: "leadership" },
+  { id: "r41", name: "Process\nImprovement",              effort: 3, owners: [{role:"principal",weight:"primary"},{role:"staffa",weight:"support"},{role:"admin",weight:"support"}], cat: "leadership" },
+];
+
+// Deep copy for reset
+const originalData = JSON.parse(JSON.stringify(responsibilities));
+
+const handoffs = [
+  { from: "staffb", to: "staffa", label: "DD → CD\nHandoff", x: 0.50, y: 0.42 },
+  { from: "principal", to: "staffb", label: "SD Direction\n→ Resolution", x: 0.18, y: 0.48 },
+  { from: "principal", to: "staffa", label: "QA/QC\nGate", x: 0.55, y: 0.15 },
+  { from: "staffb", to: "staffa", label: "Interiors Intent\n→ Specification", x: 0.42, y: 0.62 },
+  { from: "principal", to: "admin", label: "Approve →\nExecute", x: 0.58, y: 0.72 },
+  { from: "staffa", to: "admin", label: "RFI / Submittal\nRouting", x: 0.80, y: 0.55 },
+  { from: "admin", to: "cfo", label: "Data Assembly\n→ Analysis", x: 0.85, y: 0.72 },
+];
+
+// ── STATE ──
+let selectedId = null;
+let hasChanges = false;
+let nextId = 50;
+
+// ── SVG SETUP ──
+const W = 1350, H = 920;
+const svg = d3.select("#diagram").attr("viewBox", `0 0 ${W} ${H}`);
+const tooltip = document.getElementById("tooltip");
+
+const lineLayer = svg.append("g").attr("class", "line-layer");
+const handoffLayer = svg.append("g").attr("class", "handoff-layer");
+const bubbleLayer = svg.append("g").attr("class", "bubble-layer");
+const roleLayer = svg.append("g").attr("class", "role-layer");
+const labelLayer = svg.append("g").attr("class", "label-layer");
+
+const rScale = d3.scaleSqrt().domain([1, 10]).range([16, 46]);
+
+const rolePositions = {};
+roles.forEach(r => {
+  rolePositions[r.id] = { x: r.fx * W, y: r.fy * H };
+});
+
+let nodes = [];
+let simulation;
+let connLines, bubbleGroups;
+
+function buildNodes() {
+  return responsibilities.map(r => {
+    const primary = r.owners.find(o => o.weight === "primary") || r.owners[0];
+    let tx = 0, ty = 0, count = 0;
+    r.owners.forEach(o => {
+      const w = o.weight === "primary" ? 10 : o.weight === "secondary" ? 1.5 : 0.5;
+      tx += rolePositions[o.role].x * w;
+      ty += rolePositions[o.role].y * w;
+      count += w;
+    });
+    tx /= count; ty /= count;
+
+    // Preserve existing positions if they exist
+    const existing = nodes.find(n => n.id === r.id);
+    return {
+      ...r,
+      x: existing ? existing.x : tx + (Math.random() - 0.5) * 40,
+      y: existing ? existing.y : ty + (Math.random() - 0.5) * 40,
+      targetX: tx,
+      targetY: ty,
+      radius: rScale(r.effort),
+      primaryRole: primary.role,
+    };
+  });
+}
+
+function drawStaticElements() {
+  roleLayer.selectAll("*").remove();
+  labelLayer.selectAll("*").remove();
+  handoffLayer.selectAll("*").remove();
+
+  // Role anchors
+  roles.forEach(r => {
+    const x = r.fx * W, y = r.fy * H;
+    roleLayer.append("circle").attr("cx", x).attr("cy", y).attr("r", 52)
+      .attr("fill", r.color).attr("opacity", 0.04)
+      .attr("stroke", r.color).attr("stroke-width", 1).attr("stroke-opacity", 0.12);
+    roleLayer.append("circle").attr("cx", x).attr("cy", y).attr("r", 7).attr("fill", r.color);
+
+    const isTop = r.fy < 0.5;
+    labelLayer.append("text").attr("class", "role-label")
+      .attr("x", x).attr("y", isTop ? y - 22 : y + 22)
+      .attr("text-anchor", "middle").attr("dominant-baseline", isTop ? "auto" : "hanging")
+      .attr("fill", r.color).attr("font-size", "15px").text(r.label);
+    labelLayer.append("text").attr("class", "role-subtitle")
+      .attr("x", x).attr("y", isTop ? y - 8 : y + 37)
+      .attr("text-anchor", "middle").attr("dominant-baseline", isTop ? "auto" : "hanging")
+      .attr("fill", r.color).attr("font-size", "8px").attr("letter-spacing", "0.08em").attr("opacity", 0.5)
+      .text(r.subtitle.toUpperCase());
+  });
+
+  // Handoff arcs
+  handoffs.forEach(h => {
+    const from = rolePositions[h.from], to = rolePositions[h.to];
+    const mx = h.x * W, my = h.y * H;
+    handoffLayer.append("path").attr("class", "handoff-line")
+      .attr("d", `M ${from.x},${from.y} Q ${mx},${my} ${to.x},${to.y}`)
+      .attr("stroke", COLORS.purple).attr("stroke-width", 1.8)
+      .attr("stroke-dasharray", "6 5").attr("opacity", 0.3);
+    const lines = h.label.split("\n");
+    const g = handoffLayer.append("g");
+    const bgW = 90, bgH = lines.length * 12 + 8;
+    g.append("rect").attr("x", mx - bgW/2).attr("y", my - bgH/2)
+      .attr("width", bgW).attr("height", bgH)
+      .attr("rx", 3).attr("fill", COLORS.paper).attr("stroke", COLORS.purple)
+      .attr("stroke-width", 0.8).attr("stroke-opacity", 0.3);
+    lines.forEach((line, i) => {
+      g.append("text").attr("x", mx).attr("y", my - (lines.length - 1) * 6 + i * 12)
+        .attr("text-anchor", "middle").attr("dominant-baseline", "central")
+        .attr("font-family", "'JetBrains Mono', monospace").attr("font-size", "7.5px")
+        .attr("fill", COLORS.purple).attr("letter-spacing", "0.03em").text(line);
+    });
+  });
+}
+
+function render() {
+  nodes = buildNodes();
+
+  // Stop old simulation
+  if (simulation) simulation.stop();
+
+  // Clear dynamic layers
+  lineLayer.selectAll("*").remove();
+  bubbleLayer.selectAll("*").remove();
+
+  // Connection lines
+  const lineData = nodes.flatMap(n => n.owners.map(o => ({ node: n, role: o.role, weight: o.weight })));
+  connLines = lineLayer.selectAll(".conn-line").data(lineData).join("line")
+    .attr("class", "conn-line")
+    .attr("stroke", d => { const r = roles.find(r => r.id === d.role); return r ? r.color : "#ccc"; })
+    .attr("stroke-width", d => d.weight === "primary" ? 1.2 : 0.6)
+    .attr("stroke-opacity", d => d.weight === "primary" ? 0.15 : 0.07);
+
+  // Bubble groups
+  bubbleGroups = bubbleLayer.selectAll(".bubble-g").data(nodes, d => d.id).join("g")
+    .attr("class", "bubble-g").style("cursor", "pointer");
+
+  // Outer ring for shared
+  bubbleGroups.each(function(d) {
+    const g = d3.select(this);
+    if (d.owners.length > 1) {
+      const arc = d3.arc();
+      const anglePerOwner = (2 * Math.PI) / d.owners.length;
+      d.owners.forEach((o, i) => {
+        const r = roles.find(r => r.id === o.role);
+        g.append("path").attr("d", arc({
+          innerRadius: d.radius - 2.5, outerRadius: d.radius,
+          startAngle: i * anglePerOwner, endAngle: (i + 1) * anglePerOwner,
+        })).attr("fill", r ? r.color : "#ccc").attr("opacity", o.weight === "primary" ? 0.7 : 0.3);
+      });
+    }
+  });
+
+  // Main bubble
+  bubbleGroups.append("circle").attr("r", d => d.radius - 3)
+    .attr("fill", d => { const r = roles.find(r => r.id === d.primaryRole); return r ? r.color : "#ccc"; })
+    .attr("fill-opacity", d => d.id === selectedId ? 0.22 : 0.08)
+    .attr("stroke", d => { const r = roles.find(r => r.id === d.primaryRole); return r ? r.color : "#ccc"; })
+    .attr("stroke-width", d => d.id === selectedId ? 2 : 1)
+    .attr("stroke-opacity", d => d.id === selectedId ? 0.8 : 0.25);
+
+  // Transitional marker
+  bubbleGroups.filter(d => d.transitional).append("text")
+    .attr("text-anchor", "end").attr("x", d => d.radius - 6).attr("y", d => -d.radius + 11)
+    .attr("font-family", "'JetBrains Mono', monospace").attr("font-size", "7px").attr("font-weight", "500")
+    .attr("fill", COLORS.principal).attr("letter-spacing", "0.04em").text("T");
+
+  // Label text
+  bubbleGroups.each(function(d) {
+    const g = d3.select(this);
+    const lines = d.name.split("\n");
+    lines.forEach((line, i) => {
+      g.append("text").attr("class", "bubble-label")
+        .attr("text-anchor", "middle").attr("y", (i - (lines.length - 1) / 2) * 11)
+        .attr("dominant-baseline", "central")
+        .attr("font-size", d.radius > 30 ? "9px" : d.radius > 22 ? "7.5px" : "6.5px")
+        .attr("fill", COLORS.ink).attr("opacity", 0.75).text(line);
+    });
+  });
+
+  // Click handler
+  bubbleGroups.on("click", function(event, d) {
+    event.stopPropagation();
+    selectedId = d.id;
+    openPanel(d);
+    render();
+  });
+
+  // Hover
+  bubbleGroups
+    .on("mouseenter", function(event, d) {
+      if (selectedId === d.id) return;
+      d3.select(this).select("circle").attr("stroke-opacity", 0.6).attr("fill-opacity", 0.18);
+      connLines.attr("stroke-opacity", l => l.node.id === d.id ? (l.weight === "primary" ? 0.4 : 0.2) : 0.03);
+    })
+    .on("mouseleave", function(event, d) {
+      if (selectedId === d.id) return;
+      d3.select(this).select("circle").attr("stroke-opacity", 0.25).attr("fill-opacity", 0.08);
+      connLines.attr("stroke-opacity", l => l.weight === "primary" ? 0.15 : 0.07);
+    });
+
+  // Simulation
+  simulation = d3.forceSimulation(nodes)
+    .force("x", d3.forceX(d => d.targetX).strength(0.22))
+    .force("y", d3.forceY(d => d.targetY).strength(0.22))
+    .force("collide", d3.forceCollide(d => d.radius + 4).strength(0.9))
+    .force("bounds", function() {
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        n.x = Math.max(n.radius + 10, Math.min(W - n.radius - 10, n.x));
+        n.y = Math.max(n.radius + 10, Math.min(H - n.radius - 10, n.y));
+      }
+    })
+    .alphaDecay(0.02)
+    .on("tick", () => {
+      connLines.attr("x1", d => d.node.x).attr("y1", d => d.node.y)
+        .attr("x2", d => rolePositions[d.role].x).attr("y2", d => rolePositions[d.role].y);
+      bubbleGroups.attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+  updateEffortSummary();
+}
+
+// ── EDIT PANEL ──
+function openPanel(d) {
+  const panel = document.getElementById("editPanel");
+  const wrap = document.getElementById("canvasWrap");
+  const inner = document.getElementById("editPanelInner");
+  panel.classList.add("open");
+  wrap.classList.add("has-panel");
+
+  const resp = responsibilities.find(r => r.id === d.id);
+  const ownerMap = {};
+  resp.owners.forEach(o => ownerMap[o.role] = o.weight);
+
+  inner.innerHTML = `
+    <div class="panel-header">
+      <button class="panel-close" id="panelClose">&times;</button>
+      <div class="panel-section-num">${resp.id}</div>
+      <div class="panel-title">${resp.name.replace(/\n/g, " ")}</div>
+      <div class="panel-cat">${CAT_LABELS[resp.cat] || resp.cat}</div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Ownership</div>
+      ${roles.map(r => `
+        <div class="role-row">
+          <div class="role-dot" style="background:${r.color};"></div>
+          <div class="role-name">${r.label}</div>
+          <select class="weight-select" data-role="${r.id}">
+            <option value="none" ${!ownerMap[r.id] ? 'selected' : ''}>None</option>
+            <option value="primary" ${ownerMap[r.id] === 'primary' ? 'selected' : ''}>Primary</option>
+            <option value="secondary" ${ownerMap[r.id] === 'secondary' ? 'selected' : ''}>Secondary</option>
+            <option value="support" ${ownerMap[r.id] === 'support' ? 'selected' : ''}>Support</option>
+          </select>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Effort Weight</div>
+      <div class="effort-row">
+        <input type="range" class="effort-slider" id="effortSlider" min="1" max="10" value="${resp.effort}">
+        <div class="effort-value" id="effortVal">${resp.effort}</div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Flags</div>
+      <div class="toggle-row">
+        <div class="toggle-label">Transitional</div>
+        <div class="toggle-switch ${resp.transitional ? 'on' : ''}" id="toggleTransitional"></div>
+      </div>
+    </div>
+
+    <button class="panel-apply-btn" id="panelApply">Apply Changes</button>
+    <button class="panel-delete-btn" id="panelDelete">Remove Responsibility</button>
+  `;
+
+  // Effort slider live update
+  document.getElementById("effortSlider").addEventListener("input", function() {
+    document.getElementById("effortVal").textContent = this.value;
+  });
+
+  // Toggle
+  document.getElementById("toggleTransitional").addEventListener("click", function() {
+    this.classList.toggle("on");
+  });
+
+  // Close
+  document.getElementById("panelClose").addEventListener("click", closePanel);
+
+  // Apply
+  document.getElementById("panelApply").addEventListener("click", () => {
+    const newOwners = [];
+    inner.querySelectorAll(".weight-select").forEach(sel => {
+      if (sel.value !== "none") {
+        newOwners.push({ role: sel.dataset.role, weight: sel.value });
+      }
+    });
+
+    if (newOwners.length === 0) {
+      showToast("At least one owner is required.");
+      return;
+    }
+    if (!newOwners.some(o => o.weight === "primary")) {
+      // Auto-promote first to primary
+      newOwners[0].weight = "primary";
+    }
+
+    resp.owners = newOwners;
+    resp.effort = parseInt(document.getElementById("effortSlider").value);
+    resp.transitional = document.getElementById("toggleTransitional").classList.contains("on");
+
+    markChanged();
+    render();
+    openPanel(nodes.find(n => n.id === resp.id) || resp);
+    showToast(`Updated: ${resp.name.replace(/\n/g, " ")}`);
+  });
+
+  // Delete
+  document.getElementById("panelDelete").addEventListener("click", () => {
+    if (confirm(`Remove "${resp.name.replace(/\n/g, " ")}" from the map?`)) {
+      responsibilities = responsibilities.filter(r => r.id !== resp.id);
+      selectedId = null;
+      closePanel();
+      markChanged();
+      render();
+      showToast("Responsibility removed.");
+    }
+  });
+}
+
+function closePanel() {
+  document.getElementById("editPanel").classList.remove("open");
+  document.getElementById("canvasWrap").classList.remove("has-panel");
+  selectedId = null;
+  render();
+}
+
+// Click on background to deselect
+document.addEventListener("click", (e) => {
+  if (selectedId && !e.target.closest(".edit-panel") && !e.target.closest(".bubble-g") && !e.target.closest(".modal-overlay")) {
+    closePanel();
+  }
+});
+
+// ── EFFORT SUMMARY ──
+function updateEffortSummary() {
+  const container = document.getElementById("effortSummary");
+  const totals = {};
+  roles.forEach(r => totals[r.id] = 0);
+
+  responsibilities.forEach(resp => {
+    resp.owners.forEach(o => {
+      const multiplier = o.weight === "primary" ? 1.0 : o.weight === "secondary" ? 0.5 : 0.25;
+      totals[o.role] += resp.effort * multiplier;
+    });
+  });
+
+  const maxTotal = Math.max(...Object.values(totals), 1);
+
+  container.innerHTML = `
+    <div class="panel-section-label" style="margin-bottom:0.5rem;">Weighted Effort Distribution</div>
+    ${roles.map(r => `
+      <div class="effort-bar-row">
+        <div class="effort-bar-label" style="color:${r.color};">${r.subtitle.split('·')[0].trim()}</div>
+        <div class="effort-bar-track">
+          <div class="effort-bar-fill" style="width:${(totals[r.id]/maxTotal)*100}%;background:${r.color};"></div>
+        </div>
+        <div class="effort-bar-num">${totals[r.id].toFixed(0)}</div>
+      </div>
+    `).join('')}
+  `;
+}
+
+// ── FILTER CONTROLS ──
+document.querySelectorAll(".ctrl-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".ctrl-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const role = btn.dataset.role;
+
+    if (role === "all") {
+      bubbleGroups.attr("opacity", 1);
+      connLines.attr("opacity", 1);
+      handoffLayer.attr("opacity", 1);
+    } else if (role === "handoffs") {
+      bubbleGroups.attr("opacity", d => d.handoff ? 1 : 0.08);
+      connLines.attr("opacity", d => {
+        const n = nodes.find(n => n.id === d.node.id);
+        return n && n.handoff ? 1 : 0.03;
+      });
+      handoffLayer.attr("opacity", 1);
+    } else {
+      bubbleGroups.attr("opacity", d => d.owners.some(o => o.role === role) ? 1 : 0.06);
+      connLines.attr("opacity", d => d.role === role ? 1 : 0.02);
+      handoffLayer.attr("opacity", 0.15);
+    }
+  });
+});
+
+// ── ADD MODAL ──
+document.getElementById("btnAdd").addEventListener("click", () => {
+  document.getElementById("addModal").classList.add("open");
+  document.getElementById("newName").value = "";
+  document.getElementById("newName").focus();
+});
+document.getElementById("modalCancel").addEventListener("click", () => {
+  document.getElementById("addModal").classList.remove("open");
+});
+document.getElementById("addModal").addEventListener("click", (e) => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove("open");
+});
+document.getElementById("modalAdd").addEventListener("click", () => {
+  const name = document.getElementById("newName").value.trim();
+  if (!name) { showToast("Name is required."); return; }
+  const cat = document.getElementById("newCat").value;
+  const owner = document.getElementById("newOwner").value;
+  const effort = Math.min(10, Math.max(1, parseInt(document.getElementById("newEffort").value) || 5));
+
+  const newResp = {
+    id: "r" + nextId++,
+    name: name.length > 18 ? name.substring(0, 18) + "\n" + name.substring(18).trim() : name,
+    effort: effort,
+    owners: [{ role: owner, weight: "primary" }],
+    cat: cat,
+  };
+  responsibilities.push(newResp);
+  markChanged();
+  document.getElementById("addModal").classList.remove("open");
+  render();
+  showToast(`Added: ${name}`);
+});
+
+// ── EXPORT ──
+document.getElementById("btnExport").addEventListener("click", () => {
+  const data = responsibilities.map(r => ({
+    id: r.id,
+    name: r.name.replace(/\n/g, " "),
+    effort: r.effort,
+    owners: r.owners,
+    category: r.cat,
+    transitional: r.transitional || false,
+    handoff: r.handoff || null,
+  }));
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "dbs_responsibilities_" + new Date().toISOString().slice(0,10) + ".json";
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("Exported configuration.");
+  hasChanges = false;
+  document.getElementById("changeBadge").classList.remove("visible");
+});
+
+// ── RESET ──
+document.getElementById("btnReset").addEventListener("click", () => {
+  if (hasChanges && !confirm("Reset to original assignments? This will discard all changes.")) return;
+  responsibilities = JSON.parse(JSON.stringify(originalData));
+  selectedId = null;
+  closePanel();
+  nodes = [];
+  hasChanges = false;
+  document.getElementById("changeBadge").classList.remove("visible");
+  render();
+  showToast("Reset to original.");
+});
+
+// ── HELPERS ──
+function markChanged() {
+  hasChanges = true;
+  document.getElementById("changeBadge").classList.add("visible");
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+// ── INIT ──
+drawStaticElements();
+render();
+
+})();
+</script>
+</body>
+</html>
