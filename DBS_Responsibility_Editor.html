@@ -598,7 +598,7 @@
   <div class="header-actions">
     <button class="action-btn" id="btnAdd" title="Add a new responsibility">+ Add</button>
     <button class="action-btn" id="btnReset">Reset</button>
-    <button class="action-btn primary" id="btnExport">Export JSON</button>
+    <button class="action-btn primary" id="btnExport">Save HTML</button>
   </div>
 </div>
 
@@ -721,7 +721,7 @@ const roles = [
   { id: "cfo",       label: "Fractional CFO",       subtitle: "CPA · Fractional", fx: 0.92, fy: 0.50, color: COLORS.cfo },
 ];
 
-// Master data — mutable
+// __RESPONSIBILITIES_START__
 let responsibilities = [
   // ── Design & Creative ──
   { id: "r1",  name: "Design Vision\n& Direction",       effort: 7, owners: [{role:"principal",weight:"primary"},{role:"staffb",weight:"secondary"}], cat: "design" },
@@ -786,6 +786,7 @@ let responsibilities = [
   { id: "r40", name: "Hiring &\nTeam Dev",                effort: 4, owners: [{role:"principal",weight:"primary"},{role:"admin",weight:"support"}], cat: "leadership" },
   { id: "r41", name: "Process\nImprovement",              effort: 3, owners: [{role:"principal",weight:"primary"},{role:"staffa",weight:"support"},{role:"admin",weight:"support"}], cat: "leadership" },
 ];
+// __RESPONSIBILITIES_END__
 
 // Deep copy for reset
 const originalData = JSON.parse(JSON.stringify(responsibilities));
@@ -1222,25 +1223,39 @@ document.getElementById("modalAdd").addEventListener("click", () => {
   showToast(`Added: ${name}`);
 });
 
-// ── EXPORT ──
+// ── SAVE HTML ──
+function serializeResponsibilities() {
+  // Rebuild the JS source block in the same format as the original
+  const lines = responsibilities.map(r => {
+    const ownersStr = r.owners.map(o => `{role:"${o.role}",weight:"${o.weight}"}`).join(",");
+    let line = `  { id: "${r.id}", name: "${r.name}", effort: ${r.effort}, owners: [${ownersStr}], cat: "${r.cat}"`;
+    if (r.transitional) line += `, transitional: true`;
+    if (r.handoff) line += `, handoff: ${JSON.stringify(r.handoff)}`;
+    line += ` },`;
+    return line;
+  });
+  return lines.join("\n");
+}
+
 document.getElementById("btnExport").addEventListener("click", () => {
-  const data = responsibilities.map(r => ({
-    id: r.id,
-    name: r.name.replace(/\n/g, " "),
-    effort: r.effort,
-    owners: r.owners,
-    category: r.cat,
-    transitional: r.transitional || false,
-    handoff: r.handoff || null,
-  }));
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const fullHTML = "<!DOCTYPE html>\n<html " + document.documentElement.outerHTML.slice(document.documentElement.outerHTML.indexOf("lang"));
+  const startMarker = "// __RESPONSIBILITIES_START__\nlet responsibilities = [\n";
+  const endMarker = "\n];\n// __RESPONSIBILITIES_END__";
+  const startIdx = fullHTML.indexOf("// __RESPONSIBILITIES_START__");
+  const endIdx = fullHTML.indexOf("// __RESPONSIBILITIES_END__");
+  if (startIdx === -1 || endIdx === -1) { showToast("Error: could not locate data markers."); return; }
+  const before = fullHTML.slice(0, startIdx) + startMarker;
+  const after = endMarker + fullHTML.slice(endIdx + "// __RESPONSIBILITIES_END__".length);
+  const newHTML = before + serializeResponsibilities() + after;
+
+  const blob = new Blob([newHTML], { type: "text/html" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "dbs_responsibilities_" + new Date().toISOString().slice(0,10) + ".json";
+  a.download = "DBS_Responsibility_Editor.html";
   a.click();
   URL.revokeObjectURL(url);
-  showToast("Exported configuration.");
+  showToast("Saved — commit this file to your repo.");
   hasChanges = false;
   document.getElementById("changeBadge").classList.remove("visible");
 });
