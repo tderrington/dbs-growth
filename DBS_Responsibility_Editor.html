@@ -145,12 +145,13 @@
   <div class="doc-header-left">
     <div class="firm-name">Derrington Building Studio</div>
     <h1>Studio Responsibility Editor <span class="change-badge" id="changeBadge">Unsaved Changes</span></h1>
-    <div class="doc-desc">Click any bubble to reassign ownership and effort. Use phase tabs to view responsibility maps at each growth stage.</div>
+    <div class="doc-desc">Click any bubble to reassign ownership and effort. Use phase tabs to view responsibility maps at each growth stage. Click &#9881; to configure your GitHub repo.</div>
   </div>
   <div class="header-actions">
     <button class="action-btn" id="btnAdd" title="Add a new responsibility">+ Add</button>
     <button class="action-btn" id="btnReset">Reset</button>
-    <button class="action-btn primary" id="btnExport">Save HTML</button>
+    <button class="action-btn" id="btnGitSettings" title="GitHub connection settings">&#9881;</button>
+    <button class="action-btn primary" id="btnExport">Save to GitHub</button>
   </div>
 </div>
 
@@ -169,7 +170,7 @@
 
 <div class="effort-summary" id="effortSummary"></div>
 <div class="legend-row" id="legendRow"></div>
-<div class="footer-note">Click any responsibility bubble to edit its ownership and effort weight. Use the phase tabs to compare team structures across growth stages. Save HTML downloads this file with your edits baked in.</div>
+<div class="footer-note">Click any responsibility bubble to edit its ownership and effort weight. Use the phase tabs to compare team structures across growth stages. Save to GitHub commits directly to your repo.</div>
 </div>
 
 <div class="modal-overlay" id="addModal">
@@ -197,6 +198,34 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- GitHub Settings Modal -->
+<div class="modal-overlay" id="gitModal">
+  <div class="modal">
+    <h2>GitHub Connection</h2>
+    <div class="modal-field">
+      <label>Repository (owner/repo)</label>
+      <input type="text" id="gitRepo" placeholder="e.g., derrington/dbs-tools">
+    </div>
+    <div class="modal-field">
+      <label>File Path</label>
+      <input type="text" id="gitPath" placeholder="e.g., DBS_Responsibility_Editor.html">
+    </div>
+    <div class="modal-field">
+      <label>Branch</label>
+      <input type="text" id="gitBranch" placeholder="main" value="main">
+    </div>
+    <div class="modal-field">
+      <label>Personal Access Token</label>
+      <input type="password" id="gitToken" placeholder="ghp_...">
+    </div>
+    <div style="font-size:0.72rem;color:#999;margin-top:-0.4rem;margin-bottom:0.8rem;line-height:1.45;">Token needs <em>repo</em> or <em>contents:write</em> scope. Stored in your browser only.</div>
+    <div class="modal-actions">
+      <button class="action-btn" id="gitCancel">Cancel</button>
+      <button class="action-btn primary" id="gitSave">Save Settings</button>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>
@@ -898,7 +927,46 @@ document.getElementById("modalAdd").addEventListener("click", () => {
   showToast(`Added: ${name}`);
 });
 
-// ── SAVE HTML ──
+// ── GITHUB SETTINGS ──
+function getGitConfig() {
+  try {
+    return JSON.parse(localStorage.getItem("dbs_git_config") || "null");
+  } catch { return null; }
+}
+function setGitConfig(config) {
+  localStorage.setItem("dbs_git_config", JSON.stringify(config));
+}
+
+document.getElementById("btnGitSettings").addEventListener("click", () => {
+  const config = getGitConfig() || {};
+  document.getElementById("gitRepo").value = config.repo || "";
+  document.getElementById("gitPath").value = config.path || "";
+  document.getElementById("gitBranch").value = config.branch || "main";
+  document.getElementById("gitToken").value = config.token || "";
+  document.getElementById("gitModal").classList.add("open");
+});
+document.getElementById("gitCancel").addEventListener("click", () => {
+  document.getElementById("gitModal").classList.remove("open");
+});
+document.getElementById("gitModal").addEventListener("click", (e) => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove("open");
+});
+document.getElementById("gitSave").addEventListener("click", () => {
+  const repo = document.getElementById("gitRepo").value.trim();
+  const path = document.getElementById("gitPath").value.trim();
+  const branch = document.getElementById("gitBranch").value.trim() || "main";
+  const token = document.getElementById("gitToken").value.trim();
+  if (!repo || !path || !token) {
+    showToast("Repository, file path, and token are all required.");
+    return;
+  }
+  setGitConfig({ repo, path, branch, token });
+  document.getElementById("gitModal").classList.remove("open");
+  document.getElementById("btnExport").title = `Connected: ${repo}/${path}`;
+  showToast("GitHub settings saved.");
+});
+
+// ── SAVE HTML (rebuild source) ──
 function serializePhases() {
   let out = "";
   for (const [key, phase] of Object.entries(PHASES)) {
@@ -926,27 +994,111 @@ function serializePhases() {
   return out;
 }
 
-document.getElementById("btnExport").addEventListener("click", () => {
+function buildFullHTML() {
   const fullHTML = "<!DOCTYPE html>\n<html " + document.documentElement.outerHTML.slice(document.documentElement.outerHTML.indexOf("lang"));
   const startMarker = "// __PHASES_START__\nconst PHASES = {\n";
   const endMarker = "\n};\n// __PHASES_END__";
   const startIdx = fullHTML.indexOf("// __PHASES_START__");
   const endIdx = fullHTML.indexOf("// __PHASES_END__");
-  if (startIdx === -1 || endIdx === -1) { showToast("Error: could not locate data markers."); return; }
+  if (startIdx === -1 || endIdx === -1) return null;
   const before = fullHTML.slice(0, startIdx) + startMarker;
   const after = endMarker + fullHTML.slice(endIdx + "// __PHASES_END__".length);
-  const newHTML = before + serializePhases() + after;
-  const blob = new Blob([newHTML], { type: "text/html" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "DBS_Responsibility_Editor.html";
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast("Saved \u2014 commit this file to your repo.");
-  hasChanges = false;
-  document.getElementById("changeBadge").classList.remove("visible");
-});
+  return before + serializePhases() + after;
+}
+
+// ── GITHUB COMMIT ──
+async function commitToGitHub() {
+  const config = getGitConfig();
+  if (!config || !config.repo || !config.token) {
+    document.getElementById("gitModal").classList.add("open");
+    showToast("Configure GitHub connection first.");
+    return;
+  }
+
+  const btn = document.getElementById("btnExport");
+  const origText = btn.textContent;
+  btn.textContent = "Saving\u2026";
+  btn.disabled = true;
+  btn.style.opacity = "0.6";
+
+  try {
+    const newHTML = buildFullHTML();
+    if (!newHTML) throw new Error("Could not serialize — data markers missing.");
+
+    const apiBase = `https://api.github.com/repos/${config.repo}/contents/${encodeURIComponent(config.path)}`;
+    const headers = {
+      "Authorization": `Bearer ${config.token}`,
+      "Accept": "application/vnd.github.v3+json",
+      "Content-Type": "application/json",
+    };
+
+    // Get current file SHA (needed for update)
+    let sha = null;
+    try {
+      const getResp = await fetch(`${apiBase}?ref=${config.branch}`, { headers });
+      if (getResp.ok) {
+        const fileData = await getResp.json();
+        sha = fileData.sha;
+      }
+      // 404 means new file — no SHA needed
+    } catch (e) {
+      // If network fails here, we'll still try the PUT
+    }
+
+    // Base64 encode the content
+    const contentBytes = new TextEncoder().encode(newHTML);
+    let base64 = "";
+    const chunk = 8192;
+    for (let i = 0; i < contentBytes.length; i += chunk) {
+      base64 += String.fromCharCode(...contentBytes.slice(i, i + chunk));
+    }
+    base64 = btoa(base64);
+
+    // Commit
+    const body = {
+      message: `Update responsibility map — ${new Date().toISOString().slice(0, 16).replace("T", " ")}`,
+      content: base64,
+      branch: config.branch,
+    };
+    if (sha) body.sha = sha;
+
+    const putResp = await fetch(apiBase, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify(body),
+    });
+
+    if (!putResp.ok) {
+      const err = await putResp.json().catch(() => ({}));
+      throw new Error(err.message || `GitHub returned ${putResp.status}`);
+    }
+
+    hasChanges = false;
+    document.getElementById("changeBadge").classList.remove("visible");
+    btn.textContent = "Saved \u2713";
+    btn.style.background = "#2a7d56";
+    showToast("Committed to GitHub.");
+    setTimeout(() => {
+      btn.textContent = origText;
+      btn.style.background = "";
+      btn.style.opacity = "";
+    }, 2500);
+
+  } catch (err) {
+    btn.textContent = "Error";
+    btn.style.background = "#c44";
+    showToast(`GitHub error: ${err.message}`);
+    setTimeout(() => {
+      btn.textContent = origText;
+      btn.style.background = "";
+      btn.style.opacity = "";
+    }, 3000);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+document.getElementById("btnExport").addEventListener("click", commitToGitHub);
 
 // ── RESET ──
 document.getElementById("btnReset").addEventListener("click", () => {
@@ -980,11 +1132,31 @@ function showToast(msg) {
 }
 
 // ── INIT ──
+// Ctrl/Cmd+S to save
+document.addEventListener("keydown", (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+    e.preventDefault();
+    if (hasChanges) commitToGitHub();
+  }
+});
+// Warn before leaving with unsaved changes
+window.addEventListener("beforeunload", (e) => {
+  if (hasChanges) { e.preventDefault(); e.returnValue = ""; }
+});
+
 buildPhaseTabs();
 buildFilterControls();
 buildLegend();
 drawStaticElements();
 render();
+
+// Show GitHub connection status on load
+const initConfig = getGitConfig();
+if (initConfig && initConfig.repo && initConfig.token) {
+  document.getElementById("btnExport").title = `Connected: ${initConfig.repo}/${initConfig.path}`;
+} else {
+  document.getElementById("btnExport").title = "Click gear icon to configure GitHub first";
+}
 
 })();
 </script>
